@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCM Solution Team Persona - Pricing System Architect</title>
+    <style>
+        :root {
+            --primary: #047857;
+            --primary-light: #ecfdf5;
+            --primary-dark: #065f46;
+            --accent: #10b981;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--text-dark);
+        }
+
+        .infographic {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            color: var(--white);
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(4, 120, 87, 0.3);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .header-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-info .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .header-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-box .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-box .label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Section Styles */
+        .section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .section-title .icon {
+            font-size: 1.5rem;
+        }
+
+        /* Two Column Grid */
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Three Column Grid */
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Jobs Cards */
+        .job-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(4, 120, 87, 0.15);
+        }
+
+        .job-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .job-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Design Decision Cards */
+        .decision-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .decision-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .decision-card .decision-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .decision-card h4 {
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .decision-card .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-tobe {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .status-current {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-painpoint {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .decision-card p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Integration Architecture */
+        .architecture-container {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .arch-layer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed var(--gray-200);
+        }
+
+        .arch-layer:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .layer-label {
+            min-width: 120px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .layer-boxes {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .arch-box {
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .arch-box.highlight {
+            background: var(--primary);
+            color: white;
+        }
+
+        .arch-box.warning {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        /* Technical Challenges Grid */
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .challenge-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border-left: 4px solid var(--info);
+        }
+
+        .challenge-card.resolved {
+            border-left-color: var(--success);
+        }
+
+        .challenge-card.open {
+            border-left-color: var(--warning);
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-header h4 {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .challenge-badge {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .badge-analysis {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-design {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+
+        .badge-integration {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .challenge-card p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        /* Data Structure Cards */
+        .data-structure {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .data-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .data-card .data-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .data-card h4 {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .data-card p {
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        /* Information Flow - Horizontal */
+        .flow-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+
+        .flow-step {
+            flex: 0 0 auto;
+            min-width: 140px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .flow-step .step-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step h4 {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .flow-step p {
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        .flow-arrow {
+            flex: 0 0 auto;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* Open Questions */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .question-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .question-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .status-red {
+            background: var(--danger);
+        }
+
+        .status-yellow {
+            background: var(--warning);
+        }
+
+        .status-green {
+            background: var(--success);
+        }
+
+        .question-content h4 {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .question-content p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        
+            
+            .two-col, .three-col, .challenges-grid, .data-structure, .questions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+
+    <style>
+        /* Collapsible Side Menu - Icon Only when collapsed */
+        .side-menu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 60px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .side-menu:hover, .side-menu.expanded {
+            width: 280px;
+        }
+        .menu-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
+            color: white;
+            padding: 16px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-header-icon {
+            font-size: 24px;
+        }
+        .menu-header-text {
+            display: none;
+            flex-direction: column;
+        }
+        .side-menu:hover .menu-header-icon,
+        .side-menu.expanded .menu-header-icon {
+            display: none;
+        }
+        .side-menu:hover .menu-header-text,
+        .side-menu.expanded .menu-header-text {
+            display: flex;
+        }
+        .menu-header h2 {
+            font-size: 15px;
+            margin: 0;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .menu-header p {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        .menu-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 8px;
+        }
+        .menu-section {
+            margin-bottom: 8px;
+        }
+        .menu-section-title {
+            font-size: 9px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 6px 8px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .side-menu:hover .menu-section-title,
+        .side-menu.expanded .menu-section-title {
+            opacity: 1;
+            height: auto;
+            padding: 6px 8px;
+        }
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #334155;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            justify-content: center;
+        }
+        .side-menu:hover .menu-link,
+        .side-menu.expanded .menu-link {
+            justify-content: flex-start;
+            padding: 10px 12px;
+        }
+        .menu-link:hover {
+            background: #f1f5f9;
+            color: #1e3a5f;
+        }
+        .menu-link.active {
+            background: #1e3a5f;
+            color: white;
+        }
+        .menu-link .icon {
+            font-size: 18px;
+            min-width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .menu-link .link-text {
+            display: none;
+            overflow: hidden;
+        }
+        .side-menu:hover .menu-link .link-text,
+        .side-menu.expanded .menu-link .link-text {
+            display: inline;
+        }
+        .menu-link .badge {
+            margin-left: auto;
+            font-size: 8px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: none;
+        }
+        .side-menu:hover .menu-link .badge,
+        .side-menu.expanded .menu-link .badge {
+            display: inline;
+        }
+        .badge-key { background: #dbeafe; color: #1d4ed8; }
+        .badge-sol { background: #f3e8ff; color: #7c3aed; }
+        .menu-footer {
+            padding: 8px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .menu-footer a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            background: #f1f5f9;
+            color: #1e3a5f;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .menu-footer a:hover {
+            background: #e2e8f0;
+        }
+        .menu-footer .footer-text {
+            display: none;
+        }
+        .side-menu:hover .menu-footer .footer-text,
+        .side-menu.expanded .menu-footer .footer-text {
+            display: inline;
+        }
+        /* Adjust body padding for collapsed menu */
+        body {
+            padding-left: 70px;
+        }
+        @media (max-width: 768px) {
+            .side-menu { width: 50px; }
+            .side-menu:hover, .side-menu.expanded { width: 260px; }
+            body { padding-left: 60px; }
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Collapsible Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <span class="menu-header-icon">🛫</span>
+            <div class="menu-header-text">
+                <h2>🛫 Cargo Personas</h2>
+                <p>Module Navigation</p>
+            </div>
+        </div>
+        
+        <div class="menu-content">
+            <div class="menu-section">
+                <div class="menu-section-title">✈️ FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" class="menu-link" data-page="flm-key-user" title="Schedule Planner">
+                    <span class="icon">👨‍✈️</span>
+                    <span class="link-text">Schedule Planner</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="flm-solution-team-infographic-EN.html" class="menu-link" data-page="flm-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📦 AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" class="menu-link" data-page="awb-key-user" title="Stock Controller">
+                    <span class="icon">📋</span>
+                    <span class="link-text">Stock Controller</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="awb-solution-team-infographic-EN.html" class="menu-link" data-page="awb-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link" data-page="bkr-key-user" title="Booking Agent">
+                    <span class="icon">📞</span>
+                    <span class="link-text">Booking Agent</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="bkr-solution-team-infographic-EN.html" class="menu-link" data-page="bkr-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📊 CAM - Capacity Management</div>
+                <a href="cam-key-user-infographic-EN.html" class="menu-link" data-page="cam-key-user" title="Capacity Analyst">
+                    <span class="icon">📊</span>
+                    <span class="link-text">Capacity Analyst</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">🛡️ COM - Compliance Management</div>
+                <a href="com-key-user-infographic-EN.html" class="menu-link" data-page="com-key-user" title="Compliance Officer">
+                    <span class="icon">🛡️</span>
+                    <span class="link-text">Compliance Officer</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="com-solution-team-infographic-EN.html" class="menu-link" data-page="com-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">💰 PCM - Pricing Management</div>
+                <a href="pcm-key-user-infographic-EN.html" class="menu-link" data-page="pcm-key-user" title="Pricing Analyst">
+                    <span class="icon">💰</span>
+                    <span class="link-text">Pricing Analyst</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="pcm-solution-team-infographic-EN.html" class="menu-link" data-page="pcm-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">🔴 SCM - Special Cargo</div>
+                <a href="scm-key-user-infographic-EN.html" class="menu-link" data-page="scm-key-user" title="Special Cargo Specialist">
+                    <span class="icon">🔴</span>
+                    <span class="link-text">Special Cargo Specialist</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="menu-footer">
+            <a href="persona-hub.html" title="Persona Hub">
+                <span>🏠</span>
+                <span class="footer-text">Persona Hub</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop().replace('.html', '').replace('-infographic-EN', '');
+            document.querySelectorAll('.menu-link').forEach(link => {
+                if (link.dataset.page === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+<div class="infographic">
+        <!-- Header -->
+        <header class="header">
+            <div class="avatar">⚙️</div>
+            <div class="header-info">
+                <h1>Solution Team - PCM</h1>
+                <p class="subtitle">Pricing System Architecture • ACRM-COMIS Integration Design</p>
+                <div class="header-tags">
+                    <span class="tag">System Integration</span>
+                    <span class="tag">Fee Architecture</span>
+                    <span class="tag">Subrates Elimination</span>
+                    <span class="tag">ACRM Unification</span>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-box">
+                    <div class="value">100%</div>
+                    <div class="label">ACRM Target</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value">0</div>
+                    <div class="label">CSV Goal</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Persona Snapshot -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">👤</span>
+                Persona Snapshot
+            </h2>
+            <div class="two-col">
+                <div class="job-card">
+                    <h4>📍 Who They Are</h4>
+                    <p>BA/PO team members (Cansel) designing the Sungur pricing module architecture. Focus on eliminating manual processes, unifying all fee requests through ACRM, and establishing service-based integrations.</p>
+                </div>
+                <div class="job-card">
+                    <h4>🎯 Primary Goal</h4>
+                    <p>Design a unified pricing system where all fee requests flow through ACRM with direct service integrations to Sungur. Eliminate Subrates dependency and CSV-based manual uploads.</p>
+                </div>
+                <div class="job-card">
+                    <h4>⚡ Key Challenges</h4>
+                    <p>Managing complex data structures (Ratecard → Rateline), ensuring currency consistency across systems, and designing the "most matching" parameter priority logic in the new platform.</p>
+                </div>
+                <div class="job-card">
+                    <h4>📊 Success Metrics</h4>
+                    <p>100% ACRM request flow, zero CSV uploads, real-time ACRM-Sungur sync (vs. current 1-hour job), and elimination of duplicate fee line issues.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jobs to be Done -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">✅</span>
+                Jobs to be Done
+            </h2>
+            <div class="two-col">
+                <div class="job-card">
+                    <h4>🔧 Subrates Elimination Architecture</h4>
+                    <p>Design direct ACRM → Sungur integration replacing the Excel → Subrates → CSV → COMIS flow. Build service-based APIs for fee uploads and validation.</p>
+                </div>
+                <div class="job-card">
+                    <h4>📊 Fee Matching Logic Design</h4>
+                    <p>Implement "most matching" parameter priority for fee selection. Define hierarchy: Commodity → Handling Code → Handling Code Group. Manage Priority screen integration.</p>
+                </div>
+                <div class="job-card">
+                    <h4>🔄 Real-time Sync Architecture</h4>
+                    <p>Replace hourly batch job with real-time GoldenGate → Kafka event streaming. Ensure ACRM and Sungur remain synchronized without accepted losses.</p>
+                </div>
+                <div class="job-card">
+                    <h4>💱 Currency Management System</h4>
+                    <p>Design centralized currency mapping (USD→EUR) with station-based definitions. Ensure COMIS currency is master, with automated Subrates sync when updates occur.</p>
+                </div>
+                <div class="job-card">
+                    <h4>📐 Ratecard/Rateline Data Model</h4>
+                    <p>Design Ratecard → Rateline hierarchical structure. Rateline ID as unique identifier. Replica tables for ACRM output without touching main COMIS tables.</p>
+                </div>
+                <div class="job-card">
+                    <h4>🎯 Dynamic Pricing Integration</h4>
+                    <p>Design integration with RM teams for MCR/MMR/Bid Price calculations. Build coefficient-based pricing (Base Rate × Multiplier) for product variations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Design Decisions -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">🎯</span>
+                Key Design Decisions
+            </h2>
+            <div class="three-col">
+                <div class="decision-card">
+                    <div class="decision-icon">🔗</div>
+                    <span class="status-badge status-tobe">To-Be</span>
+                    <h4>Direct Service Integration</h4>
+                    <p>Replace CSV-based flow with direct service calls. ACRM → Sungur API integration eliminates Subrates intermediary and manual file transfers.</p>
+                </div>
+                <div class="decision-card">
+                    <div class="decision-icon">⚡</div>
+                    <span class="status-badge status-tobe">To-Be</span>
+                    <h4>Real-time Event Streaming</h4>
+                    <p>GoldenGate + Kafka infrastructure for fee line updates. LAD (Last Activity Date) tracking for incremental sync instead of full table scans.</p>
+                </div>
+                <div class="decision-card">
+                    <div class="decision-icon">📊</div>
+                    <span class="status-badge status-tobe">To-Be</span>
+                    <h4>Coefficient-Based Pricing</h4>
+                    <p>Base Rate × Multiplier card logic in Sungur. Dynamic pricing for products: Pharma (×1.5), Pharma Premium (×3), Urgent (×4).</p>
+                </div>
+                <div class="decision-card">
+                    <div class="decision-icon">📝</div>
+                    <span class="status-badge status-current">Current</span>
+                    <h4>Most Matching Priority</h4>
+                    <p>Fee selection based on parameter match count. Separate Priority screen defines tie-breaker rules. To be replicated in Sungur.</p>
+                </div>
+                <div class="decision-card">
+                    <div class="decision-icon">🔄</div>
+                    <span class="status-badge status-painpoint">Pain Point</span>
+                    <h4>Date Range Overlap</h4>
+                    <p>Current: Old line marked inactive, new line active. To-Be: Proper valid-from/valid-to range splitting without data loss.</p>
+                </div>
+                <div class="decision-card">
+                    <div class="decision-icon">📦</div>
+                    <span class="status-badge status-tobe">To-Be</span>
+                    <h4>Replica Table Isolation</h4>
+                    <p>Replica tables feed ACRM without touching main COMIS tables. Views created for read-only access to protect operational data.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration Architecture -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">🏗️</span>
+                System Integration Architecture
+            </h2>
+            <div class="architecture-container">
+                <div class="arch-layer">
+                    <span class="layer-label">Request Sources</span>
+                    <div class="layer-boxes">
+                        <div class="arch-box">📧 Email (20%)</div>
+                        <div class="arch-box highlight">🔵 ACRM Portal (80%)</div>
+                        <div class="arch-box">📱 TK GO</div>
+                        <div class="arch-box">🌐 Online Channels</div>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <span class="layer-label">Processing Layer</span>
+                    <div class="layer-boxes">
+                        <div class="arch-box warning">📊 Subrates (To Be Eliminated)</div>
+                        <div class="arch-box">📋 Excel Templates</div>
+                        <div class="arch-box highlight">🔧 ACRM Rules Engine</div>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <span class="layer-label">Integration</span>
+                    <div class="layer-boxes">
+                        <div class="arch-box warning">📁 CSV/SFTP (Current)</div>
+                        <div class="arch-box highlight">⚡ GoldenGate + Kafka (To-Be)</div>
+                        <div class="arch-box">🔄 Hourly Job (IBS View)</div>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <span class="layer-label">Data Store</span>
+                    <div class="layer-boxes">
+                        <div class="arch-box highlight">💾 COMIS (Master)</div>
+                        <div class="arch-box">📊 Replica Tables</div>
+                        <div class="arch-box">🔵 ACRM DB</div>
+                        <div class="arch-box highlight">🚀 Sungur (To-Be)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Structure -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">📐</span>
+                Key Data Structures
+            </h2>
+            <div class="data-structure">
+                <div class="data-card">
+                    <div class="data-icon">📦</div>
+                    <h4>Ratecard</h4>
+                    <p>Container for all fee lines (e.g., "HKGBSA"). Groups active/inactive rates by market.</p>
+                </div>
+                <div class="data-card">
+                    <div class="data-icon">📋</div>
+                    <h4>Rateline ID</h4>
+                    <p>Unique identifier per fee line. Ensures complete uniqueness across system.</p>
+                </div>
+                <div class="data-card">
+                    <div class="data-icon">📊</div>
+                    <h4>Subrate Card</h4>
+                    <p>Product-specific coefficients. Gen cargo, DGR cargo variations on base rate.</p>
+                </div>
+                <div class="data-card">
+                    <div class="data-icon">🔢</div>
+                    <h4>Priority</h4>
+                    <p>Tie-breaker when multiple lines match equally. Defined on separate screen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Challenges -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">🔧</span>
+                Technical Challenges & Solutions
+            </h2>
+            <div class="challenges-grid">
+                <div class="challenge-card open">
+                    <div class="challenge-header">
+                        <h4>LAD Update Failures</h4>
+                        <span class="challenge-badge badge-integration">Integration</span>
+                    </div>
+                    <p>If LAD cannot be updated during file upload, fee lines appear active and duplicate/clone in ACRM. Most issues stem from upload job failures.</p>
+                </div>
+                <div class="challenge-card open">
+                    <div class="challenge-header">
+                        <h4>Duplicate Line Prevention</h4>
+                        <span class="challenge-badge badge-design">Design</span>
+                    </div>
+                    <p>CSV-based flow can create duplicate fee lines in production. To-Be: Service integration with transactional guarantees.</p>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <h4>ULD Type Pricing</h4>
+                        <span class="challenge-badge badge-analysis">Analysis Needed</span>
+                    </div>
+                    <p>Complex calculation: 1250kg × 2.7 + 250kg × 1.5 for AKE. Maindeck vs. lowerdeck variations require fresh analysis in Sungur design.</p>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <h4>IATA Fare Upload</h4>
+                        <span class="challenge-badge badge-integration">Integration</span>
+                    </div>
+                    <p>Current process involves manual DB operations + scripts. End date manipulation, new file date setting, then IATA file upload.</p>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <h4>Currency Sync Priority</h4>
+                        <span class="challenge-badge badge-design">Design</span>
+                    </div>
+                    <p>COMIS must be up-to-date as master. If Subrates outdated, pricing team runs manual control process for currency alignment.</p>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-header">
+                        <h4>Flight Control for Future Bookings</h4>
+                        <span class="challenge-badge badge-analysis">Analysis Needed</span>
+                    </div>
+                    <p>1-month advance bookings may get old fees due to hourly sync. RM-side "flight control" logic needed in Sungur for accurate pricing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Flow Diagram -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">🔄</span>
+                To-Be Information Flow
+            </h2>
+            <div class="flow-horizontal">
+                <div class="flow-step">
+                    <div class="step-icon">🔵</div>
+                    <h4>ACRM Portal</h4>
+                    <p>100% Request Source</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">⚡</div>
+                    <h4>Rules Engine</h4>
+                    <p>Auto Approve/Reject</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🔗</div>
+                    <h4>API Call</h4>
+                    <p>Direct Service</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🚀</div>
+                    <h4>Sungur</h4>
+                    <p>Fee Processing</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">📊</div>
+                    <h4>Kafka Event</h4>
+                    <p>Real-time Update</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🔵</div>
+                    <h4>ACRM Sync</h4>
+                    <p>Instant Visibility</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🌐</div>
+                    <h4>All Channels</h4>
+                    <p>TK GO / Digital</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Open Questions -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">❓</span>
+                Open Questions & Action Items
+            </h2>
+            <div class="questions-grid">
+                <div class="question-card">
+                    <span class="question-status status-red"></span>
+                    <div class="question-content">
+                        <h4>Priority Screen Details</h4>
+                        <p>Action: Ask Ahmet for Priority screen specifications. How is tie-breaker logic defined when multiple fee lines match?</p>
+                    </div>
+                </div>
+                <div class="question-card">
+                    <span class="question-status status-red"></span>
+                    <div class="question-content">
+                        <h4>ULD Pricing Analysis</h4>
+                        <p>ULD type pricing (AKE, maindeck, lowerdeck) needs fresh analysis. Complex weight-based calculation logic to redesign.</p>
+                    </div>
+                </div>
+                <div class="question-card">
+                    <span class="question-status status-yellow"></span>
+                    <div class="question-content">
+                        <h4>Promo vs Contract in To-Be</h4>
+                        <p>Should promos override rates differently in Sungur? Consider rule-based special promos vs. simple parameter matching.</p>
+                    </div>
+                </div>
+                <div class="question-card">
+                    <span class="question-status status-yellow"></span>
+                    <div class="question-content">
+                        <h4>Agent Grouping Granularity</h4>
+                        <p>More granular agent grouping and country-based agent management needed. Not currently available, planned for future development.</p>
+                    </div>
+                </div>
+                <div class="question-card">
+                    <span class="question-status status-yellow"></span>
+                    <div class="question-content">
+                        <h4>ACRM Truck Structure</h4>
+                        <p>Action: Look at ACRM truck structure in detail. Route-based surcharges (train + truck) need separate analysis.</p>
+                    </div>
+                </div>
+                <div class="question-card">
+                    <span class="question-status status-green"></span>
+                    <div class="question-content">
+                        <h4>COMIS DB Authorization</h4>
+                        <p>Authorization obtained for COMIS DB access. TRH06 and TRF08 screens confirmed as frequently used for new fee definitions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>PCM Solution Team Persona • Pricing System Architecture • Cargo Module Infographic Series</p>
+        </footer>
+    </div>
+</body>
+</html>

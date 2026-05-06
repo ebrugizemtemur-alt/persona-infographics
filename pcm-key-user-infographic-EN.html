@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCM Key User Persona - Pricing Analyst</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-light: #ecfdf5;
+            --primary-dark: #047857;
+            --accent: #10b981;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--text-dark);
+        }
+
+        .infographic {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            color: var(--white);
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.3);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .header-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-info .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .header-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-box .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-box .label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Section Styles */
+        .section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .section-title .icon {
+            font-size: 1.5rem;
+        }
+
+        /* Two Column Grid */
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Jobs to be Done */
+        .job-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.15);
+        }
+
+        .job-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .job-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Fee Types Grid */
+        .fee-types-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .fee-type-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .fee-type-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .fee-type-card .fee-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .fee-type-card h4 {
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .fee-type-card .fee-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .fee-type-card .fee-desc {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .badge-dynamic {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-fixed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-negotiated {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .badge-shortterm {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        /* ACRM vs COMIS Comparison */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .system-box {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .system-box h4 {
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .system-box.acrm h4 {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        .system-box.comis h4 {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .system-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .feature-item .check {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .integration-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .integration-arrow .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .integration-arrow .label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        /* Pain Points Matrix */
+        .pain-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .pain-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border-left: 4px solid var(--danger);
+        }
+
+        .pain-card.medium {
+            border-left-color: var(--warning);
+        }
+
+        .pain-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .pain-header h4 {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .severity-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .severity-high {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .severity-medium {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .pain-card p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        /* Information Flow - Horizontal */
+        .flow-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+
+        .flow-step {
+            flex: 0 0 auto;
+            min-width: 140px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .flow-step .step-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step h4 {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .flow-step p {
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        .flow-arrow {
+            flex: 0 0 auto;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* Request Types Grid */
+        .request-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .request-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .request-card .req-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .request-card h4 {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .request-card .source {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .request-card .sla {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Screens Grid */
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .screen-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .screen-card:hover {
+            background: var(--primary-light);
+        }
+
+        .screen-card .screen-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .screen-card h4 {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        
+            
+            .two-col, .fee-types-grid, .pain-matrix, .screens-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .request-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+
+    <style>
+        /* Collapsible Side Menu - Icon Only when collapsed */
+        .side-menu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 60px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .side-menu:hover, .side-menu.expanded {
+            width: 280px;
+        }
+        .menu-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
+            color: white;
+            padding: 16px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-header-icon {
+            font-size: 24px;
+        }
+        .menu-header-text {
+            display: none;
+            flex-direction: column;
+        }
+        .side-menu:hover .menu-header-icon,
+        .side-menu.expanded .menu-header-icon {
+            display: none;
+        }
+        .side-menu:hover .menu-header-text,
+        .side-menu.expanded .menu-header-text {
+            display: flex;
+        }
+        .menu-header h2 {
+            font-size: 15px;
+            margin: 0;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .menu-header p {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        .menu-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 8px;
+        }
+        .menu-section {
+            margin-bottom: 8px;
+        }
+        .menu-section-title {
+            font-size: 9px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 6px 8px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .side-menu:hover .menu-section-title,
+        .side-menu.expanded .menu-section-title {
+            opacity: 1;
+            height: auto;
+            padding: 6px 8px;
+        }
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #334155;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            justify-content: center;
+        }
+        .side-menu:hover .menu-link,
+        .side-menu.expanded .menu-link {
+            justify-content: flex-start;
+            padding: 10px 12px;
+        }
+        .menu-link:hover {
+            background: #f1f5f9;
+            color: #1e3a5f;
+        }
+        .menu-link.active {
+            background: #1e3a5f;
+            color: white;
+        }
+        .menu-link .icon {
+            font-size: 18px;
+            min-width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .menu-link .link-text {
+            display: none;
+            overflow: hidden;
+        }
+        .side-menu:hover .menu-link .link-text,
+        .side-menu.expanded .menu-link .link-text {
+            display: inline;
+        }
+        .menu-link .badge {
+            margin-left: auto;
+            font-size: 8px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: none;
+        }
+        .side-menu:hover .menu-link .badge,
+        .side-menu.expanded .menu-link .badge {
+            display: inline;
+        }
+        .badge-key { background: #dbeafe; color: #1d4ed8; }
+        .badge-sol { background: #f3e8ff; color: #7c3aed; }
+        .menu-footer {
+            padding: 8px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .menu-footer a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            background: #f1f5f9;
+            color: #1e3a5f;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .menu-footer a:hover {
+            background: #e2e8f0;
+        }
+        .menu-footer .footer-text {
+            display: none;
+        }
+        .side-menu:hover .menu-footer .footer-text,
+        .side-menu.expanded .menu-footer .footer-text {
+            display: inline;
+        }
+        /* Adjust body padding for collapsed menu */
+        body {
+            padding-left: 70px;
+        }
+        @media (max-width: 768px) {
+            .side-menu { width: 50px; }
+            .side-menu:hover, .side-menu.expanded { width: 260px; }
+            body { padding-left: 60px; }
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Collapsible Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <span class="menu-header-icon">🛫</span>
+            <div class="menu-header-text">
+                <h2>🛫 Cargo Personas</h2>
+                <p>Module Navigation</p>
+            </div>
+        </div>
+        
+        <div class="menu-content">
+            <div class="menu-section">
+                <div class="menu-section-title">✈️ FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" class="menu-link" data-page="flm-key-user" title="Schedule Planner">
+                    <span class="icon">👨‍✈️</span>
+                    <span class="link-text">Schedule Planner</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="flm-solution-team-infographic-EN.html" class="menu-link" data-page="flm-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📦 AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" class="menu-link" data-page="awb-key-user" title="Stock Controller">
+                    <span class="icon">📋</span>
+                    <span class="link-text">Stock Controller</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="awb-solution-team-infographic-EN.html" class="menu-link" data-page="awb-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link" data-page="bkr-key-user" title="Booking Agent">
+                    <span class="icon">📞</span>
+                    <span class="link-text">Booking Agent</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="bkr-solution-team-infographic-EN.html" class="menu-link" data-page="bkr-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📊 CAM - Capacity Management</div>
+                <a href="cam-key-user-infographic-EN.html" class="menu-link" data-page="cam-key-user" title="Capacity Analyst">
+                    <span class="icon">📊</span>
+                    <span class="link-text">Capacity Analyst</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">🛡️ COM - Compliance Management</div>
+                <a href="com-key-user-infographic-EN.html" class="menu-link" data-page="com-key-user" title="Compliance Officer">
+                    <span class="icon">🛡️</span>
+                    <span class="link-text">Compliance Officer</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="com-solution-team-infographic-EN.html" class="menu-link" data-page="com-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">💰 PCM - Pricing Management</div>
+                <a href="pcm-key-user-infographic-EN.html" class="menu-link" data-page="pcm-key-user" title="Pricing Analyst">
+                    <span class="icon">💰</span>
+                    <span class="link-text">Pricing Analyst</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="pcm-solution-team-infographic-EN.html" class="menu-link" data-page="pcm-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">🔴 SCM - Special Cargo</div>
+                <a href="scm-key-user-infographic-EN.html" class="menu-link" data-page="scm-key-user" title="Special Cargo Specialist">
+                    <span class="icon">🔴</span>
+                    <span class="link-text">Special Cargo Specialist</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="menu-footer">
+            <a href="persona-hub.html" title="Persona Hub">
+                <span>🏠</span>
+                <span class="footer-text">Persona Hub</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop().replace('.html', '').replace('-infographic-EN', '');
+            document.querySelectorAll('.menu-link').forEach(link => {
+                if (link.dataset.page === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+<div class="infographic">
+        <!-- Header -->
+        <header class="header">
+            <div class="avatar">💰</div>
+            <div class="header-info">
+                <h1>Pricing Analyst</h1>
+                <p class="subtitle">PCM - Pricing & Contract Management • Tariff & Fee Specialist</p>
+                <div class="header-tags">
+                    <span class="tag">Tariff Management</span>
+                    <span class="tag">Contract Pricing</span>
+                    <span class="tag">Spot Approvals</span>
+                    <span class="tag">Revenue Optimization</span>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-box">
+                    <div class="value">4</div>
+                    <div class="label">Fee Types</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value">70-80%</div>
+                    <div class="label">Auto Approval</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Persona Snapshot -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">👤</span>
+                Persona Snapshot
+            </h2>
+            <div class="two-col">
+                <div class="job-card">
+                    <h4>📍 Who They Are</h4>
+                    <p>Pricing team members (Yusuf, Gizem, Dilara) managing cargo tariffs, contracts, and promotional pricing. They work closely with Sales teams and Revenue Management to optimize pricing strategies across all products and routes.</p>
+                </div>
+                <div class="job-card">
+                    <h4>🎯 Primary Goal</h4>
+                    <p>Define and maintain competitive pricing that maximizes revenue while meeting customer needs. Ensure all fee types (tariff, promo, contract, spot) are accurately configured in both COMIS and ACRM systems.</p>
+                </div>
+                <div class="job-card">
+                    <h4>⚡ Key Trigger</h4>
+                    <p>Sales team requests for price changes, seasonal tariff updates (especially October-December), and spot pricing requests that require evaluation against MCR (Minimum Contributive Revenue) thresholds.</p>
+                </div>
+                <div class="job-card">
+                    <h4>📊 Success Metrics</h4>
+                    <p>Spot approval turnaround time (target: reduce from 300 min avg), contract SLA compliance (5 business days), tariff accuracy, and integration consistency between ACRM-COMIS systems.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jobs to be Done -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">✅</span>
+                Jobs to be Done
+            </h2>
+            <div class="two-col">
+                <div class="job-card">
+                    <h4>📋 Tariff Definition & Updates</h4>
+                    <p>Define tariffs based on product, SCC, handling code, commodity, O/D, and date ranges. Upload via Subrates → CSV → COMIS flow. Update pricing seasonally (avg. twice/year).</p>
+                </div>
+                <div class="job-card">
+                    <h4>⚡ Spot Request Processing</h4>
+                    <p>Evaluate spot pricing requests from ACRM/COMIS/TK GO. Check against MCR/hurdle rate. Apply auto-approval rules (Red/Yellow/Green) or manual review within SLA.</p>
+                </div>
+                <div class="job-card">
+                    <h4>📝 Contract Management</h4>
+                    <p>Process contract requests from Sales via ACRM (80%) or email (20%). Define fixed prices for key accounts. Manage BSA, allotment, and protocol agreements.</p>
+                </div>
+                <div class="job-card">
+                    <h4>🎁 Promo Pricing</h4>
+                    <p>Define monthly promotional pricing (deadline: 20th of month). Promos override tariff prices when lower. Coordinate with Sales teams on campaign periods.</p>
+                </div>
+                <div class="job-card">
+                    <h4>💱 Currency Management</h4>
+                    <p>Monitor exchange rate changes via Rate Tracking Robot (5% threshold alerts). Update fees when currency fluctuations exceed thresholds. Coordinate with Accounting on SHR054.</p>
+                </div>
+                <div class="job-card">
+                    <h4>📊 MCR/Hurdle Rate Compliance</h4>
+                    <p>Ensure all prices meet MCR (MMR + Bid Price) requirements. Work with RM teams on dynamic pricing parameters. Validate that no fee falls below hurdle rate.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fee Types -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">💵</span>
+                Fee Types & Pricing Hierarchy
+            </h2>
+            <div class="fee-types-grid">
+                <div class="fee-type-card">
+                    <div class="fee-icon">📊</div>
+                    <span class="fee-badge badge-dynamic">Dynamic</span>
+                    <h4>Tariff (Bulletin)</h4>
+                    <p class="fee-desc">Long-term base pricing. Updated seasonally. City-to-city default if no other fee applies.</p>
+                </div>
+                <div class="fee-type-card">
+                    <div class="fee-icon">🎁</div>
+                    <span class="fee-badge badge-shortterm">Short-term</span>
+                    <h4>Promo</h4>
+                    <p class="fee-desc">Monthly promotional pricing. Overrides tariff when lower. Campaign-based validity periods.</p>
+                </div>
+                <div class="fee-type-card">
+                    <div class="fee-icon">📝</div>
+                    <span class="fee-badge badge-fixed">Fixed</span>
+                    <h4>Contract</h4>
+                    <p class="fee-desc">Customer-specific fixed pricing. No MCR check in super contracts. Force contract bypasses promo.</p>
+                </div>
+                <div class="fee-type-card">
+                    <div class="fee-icon">⚡</div>
+                    <span class="fee-badge badge-negotiated">Negotiated</span>
+                    <h4>Spot (Adhoc)</h4>
+                    <p class="fee-desc">One-time negotiated rates. Sales can reject up to 3 times. Auto-approval rules apply.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACRM vs COMIS -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">🔄</span>
+                Systems Comparison: ACRM vs COMIS
+            </h2>
+            <div class="comparison-container">
+                <div class="system-box acrm">
+                    <h4>🔵 ACRM (Revenue Management)</h4>
+                    <div class="system-features">
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Dynamic pricing based on occupancy & demand
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Spot request portal for Sales teams
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Auto-approval rules (Red/Yellow/Green)
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            MCR/MMR/Bid Price calculations
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Returns lowest applicable price
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Hourly sync job with COMIS
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="integration-arrow">
+                    <div class="arrow">⟷</div>
+                    <div class="label">1-hour sync<br/>via DB job</div>
+                </div>
+                
+                <div class="system-box comis">
+                    <h4>🟢 COMIS (Operational)</h4>
+                    <div class="system-features">
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Master fee repository
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Parameter-based fee matching
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Hurdle rate & all other charges
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            Reservation & fee application
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            SHR118 screen for uploads
+                        </div>
+                        <div class="feature-item">
+                            <span class="check">✓</span>
+                            TACT fee fallback (IATA)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Screens -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">🖥️</span>
+                Key COMIS Screens
+            </h2>
+            <div class="screens-grid">
+                <div class="screen-card">
+                    <span class="screen-code">TRF017</span>
+                    <h4>Spot Fee Creation</h4>
+                </div>
+                <div class="screen-card">
+                    <span class="screen-code">TRF018</span>
+                    <h4>Fee Listing</h4>
+                </div>
+                <div class="screen-card">
+                    <span class="screen-code">TRF021</span>
+                    <h4>Other Charges (Global)</h4>
+                </div>
+                <div class="screen-card">
+                    <span class="screen-code">TRF030</span>
+                    <h4>Discount Authorizations</h4>
+                </div>
+                <div class="screen-card">
+                    <span class="screen-code">TRH06</span>
+                    <h4>New Fee Definition</h4>
+                </div>
+                <div class="screen-card">
+                    <span class="screen-code">TRH08</span>
+                    <h4>Fee Definition</h4>
+                </div>
+                <div class="screen-card">
+                    <span class="screen-code">SHR054</span>
+                    <h4>Currency Rates</h4>
+                </div>
+                <div class="screen-card">
+                    <span class="screen-code">SHR118</span>
+                    <h4>Tariff Upload</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pain Points Matrix -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">😤</span>
+                Pain Points & Challenges
+            </h2>
+            <div class="pain-matrix">
+                <div class="pain-card">
+                    <div class="pain-header">
+                        <h4>CCA Auto-Opening</h4>
+                        <span class="severity-badge severity-high">High</span>
+                    </div>
+                    <p>Automatic CCA revision opening when reservations update. System doesn't recalculate prices properly, causing high volume of charge corrections.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-header">
+                        <h4>ACRM-COMIS Desync</h4>
+                        <span class="severity-badge severity-high">High</span>
+                    </div>
+                    <p>Initial reservation takes ACRM price, but updates revert to COMIS price. Changes from non-reservation screens cause unexpected price changes.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-header">
+                        <h4>Excel → CSV → Subrates Manual Flow</h4>
+                        <span class="severity-badge severity-high">High</span>
+                    </div>
+                    <p>Multi-step manual process for fee uploads. Subrates → SFTP → COMIS flow is error-prone. Duplicate fee lines can occur in live environment.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-header">
+                        <h4>Date Manipulation Exploit</h4>
+                        <span class="severity-badge severity-high">High</span>
+                    </div>
+                    <p>Users can enter past shipping dates to get historical lower prices. COMIS allows this while ACRM correctly blocks promo exploitation.</p>
+                </div>
+                <div class="pain-card medium">
+                    <div class="pain-header">
+                        <h4>1-Hour Sync Delay</h4>
+                        <span class="severity-badge severity-medium">Medium</span>
+                    </div>
+                    <p>ACRM pulls from COMIS hourly. Reservations made in between may get old prices. Not fully synchronized, causing accepted losses.</p>
+                </div>
+                <div class="pain-card medium">
+                    <div class="pain-header">
+                        <h4>Email-Based Requests</h4>
+                        <span class="severity-badge severity-medium">Medium</span>
+                    </div>
+                    <p>Promo, tariff, and adhoc prices still processed via email. No SLA tracking. Target is 100% ACRM but currently ~80% for contracts.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Flow Diagram -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">🔄</span>
+                Information Flow Diagram
+            </h2>
+            <div class="flow-horizontal">
+                <div class="flow-step">
+                    <div class="step-icon">📧</div>
+                    <h4>Sales Request</h4>
+                    <p>Email / ACRM Portal</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">📊</div>
+                    <h4>Pricing Evaluation</h4>
+                    <p>MCR / Hurdle Check</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">📝</div>
+                    <h4>Excel Template</h4>
+                    <p>ACRM Download</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🔧</div>
+                    <h4>Subrates</h4>
+                    <p>Validation + CSV</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">📤</div>
+                    <h4>SFTP Upload</h4>
+                    <p>File Transfer</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">💻</div>
+                    <h4>COMIS</h4>
+                    <p>SHR118 Import</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🔄</div>
+                    <h4>ACRM Sync</h4>
+                    <p>Hourly Job</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">✈️</div>
+                    <h4>Channels</h4>
+                    <p>TK GO / Digital</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Request Types & SLA -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="icon">📨</span>
+                Request Types & Processing
+            </h2>
+            <div class="request-grid">
+                <div class="request-card">
+                    <div class="req-icon">⚡</div>
+                    <h4>Spot Requests</h4>
+                    <span class="source">COMIS / TK GO / ACRM</span>
+                    <p class="sla">Avg: 300 min • Auto: 70-80%</p>
+                </div>
+                <div class="request-card">
+                    <div class="req-icon">📝</div>
+                    <h4>Contract Requests</h4>
+                    <span class="source">ACRM (80%) / Email (20%)</span>
+                    <p class="sla">SLA: 5 Business Days</p>
+                </div>
+                <div class="request-card">
+                    <div class="req-icon">🎁</div>
+                    <h4>Promo Requests</h4>
+                    <span class="source">Email → ACRM (target)</span>
+                    <p class="sla">Deadline: 20th of month</p>
+                </div>
+                <div class="request-card">
+                    <div class="req-icon">📊</div>
+                    <h4>Tariff Updates</h4>
+                    <span class="source">Subrates (mandatory)</span>
+                    <p class="sla">Seasonally (2x/year)</p>
+                </div>
+                <div class="request-card">
+                    <div class="req-icon">📦</div>
+                    <h4>BSA (Block Space)</h4>
+                    <span class="source">Email → Subrates</span>
+                    <p class="sla">Penalty if unused</p>
+                </div>
+                <div class="request-card">
+                    <div class="req-icon">🔒</div>
+                    <h4>Allotment</h4>
+                    <span class="source">Fixed price + guarantee</span>
+                    <p class="sla">Non-ACRM (access rate)</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>PCM Key User Persona • Pricing & Contract Management • Cargo Module Infographic Series</p>
+        </footer>
+    </div>
+</body>
+</html>

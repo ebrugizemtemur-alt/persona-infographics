@@ -172,48 +172,309 @@
         
         @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
     </style>
+
+
+    <style>
+        /* Collapsible Side Menu - Icon Only when collapsed */
+        .side-menu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 60px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .side-menu:hover, .side-menu.expanded {
+            width: 280px;
+        }
+        .menu-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
+            color: white;
+            padding: 16px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-header-icon {
+            font-size: 24px;
+        }
+        .menu-header-text {
+            display: none;
+            flex-direction: column;
+        }
+        .side-menu:hover .menu-header-icon,
+        .side-menu.expanded .menu-header-icon {
+            display: none;
+        }
+        .side-menu:hover .menu-header-text,
+        .side-menu.expanded .menu-header-text {
+            display: flex;
+        }
+        .menu-header h2 {
+            font-size: 15px;
+            margin: 0;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .menu-header p {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        .menu-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 8px;
+        }
+        .menu-section {
+            margin-bottom: 8px;
+        }
+        .menu-section-title {
+            font-size: 9px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 6px 8px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .side-menu:hover .menu-section-title,
+        .side-menu.expanded .menu-section-title {
+            opacity: 1;
+            height: auto;
+            padding: 6px 8px;
+        }
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #334155;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            justify-content: center;
+        }
+        .side-menu:hover .menu-link,
+        .side-menu.expanded .menu-link {
+            justify-content: flex-start;
+            padding: 10px 12px;
+        }
+        .menu-link:hover {
+            background: #f1f5f9;
+            color: #1e3a5f;
+        }
+        .menu-link.active {
+            background: #1e3a5f;
+            color: white;
+        }
+        .menu-link .icon {
+            font-size: 18px;
+            min-width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .menu-link .link-text {
+            display: none;
+            overflow: hidden;
+        }
+        .side-menu:hover .menu-link .link-text,
+        .side-menu.expanded .menu-link .link-text {
+            display: inline;
+        }
+        .menu-link .badge {
+            margin-left: auto;
+            font-size: 8px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: none;
+        }
+        .side-menu:hover .menu-link .badge,
+        .side-menu.expanded .menu-link .badge {
+            display: inline;
+        }
+        .badge-key { background: #dbeafe; color: #1d4ed8; }
+        .badge-sol { background: #f3e8ff; color: #7c3aed; }
+        .menu-footer {
+            padding: 8px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .menu-footer a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            background: #f1f5f9;
+            color: #1e3a5f;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .menu-footer a:hover {
+            background: #e2e8f0;
+        }
+        .menu-footer .footer-text {
+            display: none;
+        }
+        .side-menu:hover .menu-footer .footer-text,
+        .side-menu.expanded .menu-footer .footer-text {
+            display: inline;
+        }
+        /* Adjust body padding for collapsed menu */
+        body {
+            padding-left: 70px;
+        }
+        @media (max-width: 768px) {
+            .side-menu { width: 50px; }
+            .side-menu:hover, .side-menu.expanded { width: 260px; }
+            body { padding-left: 60px; }
+        }
+    </style>
+
 </head>
 <body>
-    <!-- FLOATING NAVIGATION -->
-    <div id="persona-nav" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <button onclick="toggleNav()" style="background: #1e3a5f; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-            ☰ Personalar
-        </button>
-        <div id="nav-menu" style="display: none; position: absolute; top: 45px; left: 0; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 220px; overflow: hidden;">
-            <div style="background: #f1f5f9; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;">
-                <a href="persona-hub.html" style="color: #1e3a5f; text-decoration: none; font-weight: 600; font-size: 13px;">🏠 Persona Hub</a>
-            </div>
-            <div style="padding: 8px;">
-                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600;">FLM - Flight Management</div>
-                <a href="flm-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📋 Schedule Planner (Key User)</a>
-                <a href="flm-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
-                
-                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">AWB - Stock Management</div>
-                <a href="awb-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📦 Stock Controller (Key User)</a>
-                <a href="awb-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
-                
-                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">BKR - Booking & Reservation</div>
-                <a href="bkr-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📅 Booking Agent (Key User)</a>
-                <a href="bkr-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+    <!-- Collapsible Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <span class="menu-header-icon">🛫</span>
+            <div class="menu-header-text">
+                <h2>🛫 Cargo Personas</h2>
+                <p>Module Navigation</p>
             </div>
         </div>
-    </div>
+        
+        <div class="menu-content">
+            <div class="menu-section">
+                <div class="menu-section-title">✈️ FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" class="menu-link" data-page="flm-key-user" title="Schedule Planner">
+                    <span class="icon">👨‍✈️</span>
+                    <span class="link-text">Schedule Planner</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="flm-solution-team-infographic-EN.html" class="menu-link" data-page="flm-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📦 AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" class="menu-link" data-page="awb-key-user" title="Stock Controller">
+                    <span class="icon">📋</span>
+                    <span class="link-text">Stock Controller</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="awb-solution-team-infographic-EN.html" class="menu-link" data-page="awb-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link" data-page="bkr-key-user" title="Booking Agent">
+                    <span class="icon">📞</span>
+                    <span class="link-text">Booking Agent</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="bkr-solution-team-infographic-EN.html" class="menu-link" data-page="bkr-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">📊 CAM - Capacity Management</div>
+                <a href="cam-key-user-infographic-EN.html" class="menu-link" data-page="cam-key-user" title="Capacity Analyst">
+                    <span class="icon">📊</span>
+                    <span class="link-text">Capacity Analyst</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">🛡️ COM - Compliance Management</div>
+                <a href="com-key-user-infographic-EN.html" class="menu-link" data-page="com-key-user" title="Compliance Officer">
+                    <span class="icon">🛡️</span>
+                    <span class="link-text">Compliance Officer</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="com-solution-team-infographic-EN.html" class="menu-link" data-page="com-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">💰 PCM - Pricing Management</div>
+                <a href="pcm-key-user-infographic-EN.html" class="menu-link" data-page="pcm-key-user" title="Pricing Analyst">
+                    <span class="icon">💰</span>
+                    <span class="link-text">Pricing Analyst</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+                <a href="pcm-solution-team-infographic-EN.html" class="menu-link" data-page="pcm-solution-team" title="Solution Team">
+                    <span class="icon">⚙️</span>
+                    <span class="link-text">Solution Team</span>
+                    <span class="badge badge-sol">Sol</span>
+                </a>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-section-title">🔴 SCM - Special Cargo</div>
+                <a href="scm-key-user-infographic-EN.html" class="menu-link" data-page="scm-key-user" title="Special Cargo Specialist">
+                    <span class="icon">🔴</span>
+                    <span class="link-text">Special Cargo Specialist</span>
+                    <span class="badge badge-key">Key</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="menu-footer">
+            <a href="persona-hub.html" title="Persona Hub">
+                <span>🏠</span>
+                <span class="footer-text">Persona Hub</span>
+            </a>
+        </div>
+    </nav>
+    
     <script>
-        function toggleNav() {
-            var menu = document.getElementById('nav-menu');
-            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-        }
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            var nav = document.getElementById('persona-nav');
-            if (!nav.contains(e.target)) {
-                document.getElementById('nav-menu').style.display = 'none';
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop().replace('.html', '').replace('-infographic-EN', '');
+            document.querySelectorAll('.menu-link').forEach(link => {
+                if (link.dataset.page === currentPage) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 
-    
-    <header class="header">
+<header class="header">
         <h1>🎯 KEY USER — AWB STOCK ADMINISTRATOR</h1>
         <p>Cargo Marketing & Sales Solutions Directorate • Operational User • Stock & Messaging Management</p>
         <div class="header-tagline">
@@ -569,223 +830,85 @@
         </div>
         
         <!-- 6. INFORMATION FLOW DIAGRAM -->
-        <div class="card grid-span-2">
+        <div class="card grid-span-3">
             <div class="card-header">
                 <div class="card-number">6</div>
                 <div class="card-title">INFORMATION FLOW DIAGRAM</div>
             </div>
             <div class="card-body">
-                <!-- INCOMING DATA -->
-                <div style="margin-bottom: 16px;">
-                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
-                        📥 INCOMING — Data Sources
+                <!-- INCOMING DATA - Horizontal Flow -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                    <div style="text-align: center; font-size: 12px; font-weight: 600; color: #1e40af; margin-bottom: 16px;">
+                        📥 INCOMING DATA TO STOCK CONTROLLER
                     </div>
-                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
-                        <div style="display: flex; flex-direction: column; gap: 8px;">
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">🏢</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">IATA HQ</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">AWB number blocks</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">🌍</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Regional Offices</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">Allocation requests</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">📍</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Stations</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">Stock demand</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">🤝</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Agents</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">Stock requests</div>
-                                </div>
-                            </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+                                                <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 10px; text-align: center; min-width: 110px;">
+                            <div style="font-size: 11px; font-weight: 600; color: #1e40af;">🏢 IATA HQ</div>
+                            <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">AWB number blocks</div>
+                        </div>
+                        <div style="color: #9ca3af; font-size: 16px;">→</div>
+                        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 10px; text-align: center; min-width: 110px;">
+                            <div style="font-size: 11px; font-weight: 600; color: #1e40af;">🌍 Regional Offices</div>
+                            <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Allocation requests</div>
+                        </div>
+                        <div style="color: #9ca3af; font-size: 16px;">→</div>
+                        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 10px; text-align: center; min-width: 110px;">
+                            <div style="font-size: 11px; font-weight: 600; color: #1e40af;">📍 Stations</div>
+                            <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Stock demand</div>
+                        </div>
+                        <div style="color: #9ca3af; font-size: 16px;">→</div>
+                        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 10px; text-align: center; min-width: 110px;">
+                            <div style="font-size: 11px; font-weight: 600; color: #1e40af;">🤝 Agents</div>
+                            <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Stock requests</div>
+                        </div>
+                        <div style="color: #9ca3af; font-size: 16px;">→</div>
+                        <div style="background: #1e40af; color: white; padding: 14px 18px; border-radius: 10px; text-align: center; min-width: 120px;">
+                            <div style="font-size: 12px; font-weight: 700;">📦 STOCK CONTROLLER</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- PROCESSING -->
-                <div style="margin-bottom: 16px;">
-                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
-                        ⚙️ PROCESSING — Core Tasks
+                <!-- PROCESSING - Center Box -->
+                <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+                    <div style="background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 14px 28px; text-align: center;">
+                        <div style="font-size: 11px; font-weight: 600; color: #374151;">⚙️ PROCESSING</div>
+                        <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">Validates requests, allocates stock, monitors STK007</div>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
-                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
-                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">📦 Stock Allocation</div>
-                            <div style="font-size: 10px; color: var(--text-muted);">Assign AWB ranges to agents</div>
+                </div>
+                
+                <!-- OUTGOING DATA - Horizontal Flow -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                    <div style="text-align: center; font-size: 12px; font-weight: 600; color: #1e40af; margin-bottom: 16px;">
+                        📤 OUTGOING DATA FROM STOCK CONTROLLER
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+                        <div style="background: #1e40af; color: white; padding: 14px 18px; border-radius: 10px; text-align: center; min-width: 120px;">
+                            <div style="font-size: 12px; font-weight: 700;">📦 STOCK CONTROLLER</div>
                         </div>
-                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
-                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">🔄 Purge Monitor</div>
-                            <div style="font-size: 10px; color: var(--text-muted);">Check 4-year cycle status</div>
+                        <div style="color: #9ca3af; font-size: 16px;">→</div>
+                                                <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 10px; text-align: center; min-width: 110px;">
+                            <div style="font-size: 11px; font-weight: 600; color: #1e40af;">📍 Stations</div>
+                            <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Stock assigned</div>
                         </div>
-                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
-                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">📊 STK007 Reports</div>
-                            <div style="font-size: 10px; color: var(--text-muted);">Analyze usage patterns</div>
+                        <div style="color: #9ca3af; font-size: 16px;">→</div>
+                        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 10px; text-align: center; min-width: 110px;">
+                            <div style="font-size: 11px; font-weight: 600; color: #1e40af;">🤝 Agents</div>
+                            <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">AWB ranges</div>
                         </div>
-                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
-                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">♻️ Stock Reclaim</div>
-                            <div style="font-size: 10px; color: var(--text-muted);">Withdraw from inactive</div>
+                        <div style="color: #9ca3af; font-size: 16px;">→</div>
+                        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 10px; text-align: center; min-width: 110px;">
+                            <div style="font-size: 11px; font-weight: 600; color: #1e40af;">📊 Management</div>
+                            <div style="font-size: 9px; color: #6b7280; margin-top: 4px;">Stock reports</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- OUTGOING DATA -->
-                <div>
-                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
-                        📤 OUTGOING — Deliverables
-                    </div>
-                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
-                        <div style="display: flex; flex-direction: column; gap: 8px;">
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">🤝</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Agents</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">Assigned AWB numbers</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">📍</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Stations</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">Stock confirmations</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">📨</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">CHAMP/SITA</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">FWB/FHL messages</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
-                                <span style="font-size: 18px;">🗄️</span>
-                                <div>
-                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Archive</div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">Purged AWB records</div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Warning Note -->
+                <div style="background: #fefce8; border: 1px solid #fde047; border-radius: 8px; padding: 10px 14px;">
+                    <div style="font-size: 10px; color: #854d0e;">
+                        <strong>⚠️ Current State:</strong> All communication via email. No shared dashboard.
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 7. EMPATHY MAP -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-number">7</div>
-                <div class="card-title">EMPATHY MAP</div>
-            </div>
-            <div class="card-body">
-                <div class="empathy-map-container">
-                    <div class="empathy-quadrant thinking">
-                        <div class="empathy-title">🧠 Thinking</div>
-                        <ul class="empathy-items">
-                            <li>"Did the purge job run today?"</li>
-                            <li>"Which agents haven't used their stock?"</li>
-                            <li>"Will stock last 5 more years?"</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="empathy-quadrant hearing">
-                        <div class="empathy-title">👂 Hearing</div>
-                        <ul class="empathy-items">
-                            <li>From Stations: "We need more AWBs"</li>
-                            <li>From Accounting: "Don't purge yet"</li>
-                            <li>From IT: "Job stopped 10 days ago"</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="empathy-center">
-                        <div class="empathy-center-icon">👤</div>
-                    </div>
-                    
-                    <div class="empathy-quadrant seeing">
-                        <div class="empathy-title">👁️ Seeing</div>
-                        <ul class="empathy-items">
-                            <li>Excel reports daily</li>
-                            <li>Email requests from regions</li>
-                            <li>Stock numbers in STK007</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="empathy-quadrant doing">
-                        <div class="empathy-title">🤲 Doing</div>
-                        <ul class="empathy-items">
-                            <li>Manual stock allocation</li>
-                            <li>Checking purge status</li>
-                            <li>Exporting Excel for analysis</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="empathy-quadrant pain">
-                        <div class="empathy-title">😣 Pains</div>
-                        <ul class="empathy-items">
-                            <li>No automatic alerts</li>
-                            <li>Manual inactive agent tracking</li>
-                            <li>Excel dependency</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="empathy-quadrant gain">
-                        <div class="empathy-title">🎯 Gains</div>
-                        <ul class="empathy-items">
-                            <li>Stock never runs out</li>
-                            <li>Operations run smoothly</li>
-                            <li>Agents satisfied</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 8. PRIORITY ACTIONS -->
-        <div class="card grid-span-3">
-            <div class="card-header">
-                <div class="card-number">8</div>
-                <div class="card-title">PRIORITY ACTIONS FOR KEY USER</div>
-            </div>
-            <div class="card-body">
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-                    <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 16px; color: #991b1b;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                            <span style="font-size: 24px;">🚨</span>
-                            <div style="font-size: 10px; color: #b91c1c; font-weight: 600;">MOST URGENT</div>
-                        </div>
-                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Purge Job Monitoring</div>
-                        <div style="font-size: 10px; opacity: 0.85;">Dashboard + alerts when background jobs fail. Prevent 40K AWB accumulation.</div>
-                    </div>
-                    <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 12px; padding: 16px; color: #92400e;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                            <span style="font-size: 24px;">♻️</span>
-                            <div style="font-size: 10px; color: #b45309; font-weight: 600;">HIGHEST IMPACT</div>
-                        </div>
-                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Auto Stock Reclaim</div>
-                        <div style="font-size: 10px; opacity: 0.85;">Automatically withdraw unused stock from inactive agents after 1 year.</div>
-                    </div>
-                    <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 16px; color: #166534;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                            <span style="font-size: 24px;">📊</span>
-                            <div style="font-size: 10px; color: #15803d; font-weight: 600;">QUICK WIN</div>
-                        </div>
-                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Enhanced STK007</div>
-                        <div style="font-size: 10px; opacity: 0.85;">Add origin-dest + purged column. Eliminate Excel export dependency.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    
-</body>
-</html>
+
