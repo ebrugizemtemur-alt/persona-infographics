@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWB Stock Management - Solution Team Persona</title>
+    <style>
+        :root {
+            --primary: #9333ea;
+            --primary-light: #f3e8ff;
+            --secondary: #0891b2;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, var(--primary-light) 0%, #faf5ff 100%);
+            min-height: 100vh;
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+            color: white;
+            padding: 20px 32px;
+            text-align: center;
+        }
+        
+        .header h1 { font-size: 26px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; color: white; }
+        .header p { font-size: 11px; opacity: 0.85; }
+        
+        .header-tagline {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 10px 24px;
+            margin-top: 14px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 16px 24px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
+        .grid-span-2 { grid-column: span 2; }
+        .grid-span-3 { grid-column: span 3; }
+        
+        .card {
+            background: var(--bg-white);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #1e3a5f;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-number {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+        }
+        
+        .card-title { font-size: 12px; font-weight: 600; }
+        .card-body { padding: 14px; }
+        
+        .persona-center { text-align: center; margin-bottom: 16px; }
+        
+        .persona-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 40px;
+        }
+        
+        .persona-name { font-size: 16px; font-weight: 700; color: var(--primary); }
+        .persona-role { font-size: 12px; color: var(--text-muted); }
+        
+        .info-row { margin-bottom: 12px; }
+        .info-row-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+        .info-row-value { font-size: 11px; color: var(--text-dark); line-height: 1.4; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { font-size: 9px; padding: 4px 10px; border-radius: 12px; background: var(--primary-light); color: var(--primary); }
+        .tag.critical { background: var(--danger-light); color: var(--danger); }
+        .tag.warning { background: var(--warning-light); color: #92400e; }
+        .tag.tech { background: #dbeafe; color: #1e40af; }
+        
+        .success-item { font-size: 11px; color: var(--success); margin-bottom: 4px; }
+        .section-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; margin-top: 12px; }
+        
+        .mega-matrix-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .mega-matrix-table th { background: var(--bg-light); padding: 10px 6px; text-align: left; font-weight: 600; font-size: 10px; color: var(--primary); border-bottom: 2px solid var(--primary); }
+        .mega-matrix-table td { padding: 10px 6px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 10px; }
+        .mega-matrix-table tbody tr:hover { background: var(--bg-light); }
+        
+        .severity-badge { padding: 3px 10px; border-radius: 12px; font-size: 9px; font-weight: 500; }
+        .severity-badge.critical { background: var(--danger-light); color: var(--danger); }
+        .severity-badge.high { background: #fee2e2; color: #b91c1c; }
+        .severity-badge.medium { background: var(--warning-light); color: #92400e; }
+        
+        .priority-badge { padding: 4px 14px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+        .priority-badge.p1 { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .priority-badge.p2 { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .priority-badge.p3 { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        
+        .empathy-map-container { display: grid; grid-template-columns: 1fr 80px 1fr; grid-template-rows: repeat(3, auto); gap: 12px; margin-bottom: 14px; }
+        .empathy-quadrant { padding: 12px; border-radius: 10px; font-size: 10px; }
+        .empathy-quadrant.thinking { background: #eff6ff; grid-column: 1; grid-row: 1; }
+        .empathy-quadrant.hearing { background: #fef3c7; grid-column: 3; grid-row: 1; }
+        .empathy-quadrant.seeing { background: #f3e8ff; grid-column: 1; grid-row: 2; }
+        .empathy-quadrant.doing { background: #ecfdf5; grid-column: 3; grid-row: 2; }
+        .empathy-quadrant.pain { background: #fef2f2; grid-column: 1; grid-row: 3; }
+        .empathy-quadrant.gain { background: #f0fdf4; grid-column: 3; grid-row: 3; }
+        .empathy-center { grid-column: 2; grid-row: 1 / 4; display: flex; align-items: center; justify-content: center; }
+        .empathy-center-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid var(--primary); }
+        .empathy-title { font-weight: 600; margin-bottom: 8px; font-size: 11px; }
+        .empathy-items { list-style: none; }
+        .empathy-items li { margin-bottom: 4px; line-height: 1.4; }
+        
+        .tech-item { padding: 12px; background: var(--bg-light); border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 8px; }
+        .tech-item-title { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .tech-item-desc { font-size: 10px; color: var(--text-muted); }
+        
+        .quote-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+        .quote-text { font-size: 11px; font-style: italic; color: var(--text-dark); }
+        .quote-source { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+        
+        .job-flow { background: var(--bg-light); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .job-box { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: white; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--primary); }
+        .job-icon { font-size: 20px; }
+        .job-title { font-size: 11px; font-weight: 600; color: var(--primary); }
+        .job-desc { font-size: 10px; color: var(--text-muted); }
+        
+        .workaround-box { background: var(--warning-light); border-radius: 8px; padding: 12px; margin-top: 14px; }
+        .workaround-text { font-size: 11px; line-height: 1.5; }
+        
+        @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    </style>
+</head>
+<body>
+    <!-- FLOATING NAVIGATION -->
+    <div id="persona-nav" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <button onclick="toggleNav()" style="background: #1e3a5f; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            ☰ Personalar
+        </button>
+        <div id="nav-menu" style="display: none; position: absolute; top: 45px; left: 0; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 220px; overflow: hidden;">
+            <div style="background: #f1f5f9; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;">
+                <a href="persona-hub.html" style="color: #1e3a5f; text-decoration: none; font-weight: 600; font-size: 13px;">🏠 Persona Hub</a>
+            </div>
+            <div style="padding: 8px;">
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600;">FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📋 Schedule Planner (Key User)</a>
+                <a href="flm-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+                
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📦 Stock Controller (Key User)</a>
+                <a href="awb-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+                
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📅 Booking Agent (Key User)</a>
+                <a href="bkr-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleNav() {
+            var menu = document.getElementById('nav-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            var nav = document.getElementById('persona-nav');
+            if (!nav.contains(e.target)) {
+                document.getElementById('nav-menu').style.display = 'none';
+            }
+        });
+    </script>
+
+    
+    <header class="header">
+        <h1>🔧 SOLUTION TEAM — AWB SYSTEMS ANALYST</h1>
+        <p>Cargo Marketing & Sales Solutions Directorate • Technical Analyst • Stock Lifecycle & Messaging Architecture</p>
+        <div class="header-tagline">
+            ✓ Designs and maintains AWB lifecycle logic, purge algorithms, and messaging integrations in COMIS.
+        </div>
+    </header>
+    
+    <div class="main-grid">
+        
+        <!-- 1. PERSONA SNAPSHOT -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <div class="card-title">PERSONA SNAPSHOT</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">👤 IDENTITY</div>
+                        <div class="persona-center">
+                            <div class="persona-avatar">🔧</div>
+                            <div class="persona-name">Yasin / Muammer / Seda</div>
+                            <div class="persona-role">Solution Team Analyst</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">🎯 Primary Role</div>
+                            <div class="info-row-value">Analyze AWB lifecycle logic, optimize purge algorithms, design messaging integrations, coordinate with IBS for CRs</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">🔍 Focus Area</div>
+                            <div class="info-row-value">Background job optimization, purge criteria refinement, IATA IMP standards, message routing configuration</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">⏱️ Work Pattern</div>
+                            <div class="info-row-value">Deep technical analysis. Heavy involvement during purge optimization, One Record integration, and system migrations.</div>
+                        </div>
+                        
+                        <div class="section-label">🛠️ Technical Stack</div>
+                        <div class="tags">
+                            <span class="tag tech">COMIS/IBS</span>
+                            <span class="tag tech">Background Jobs</span>
+                            <span class="tag tech">IATA IMP</span>
+                            <span class="tag tech">SITA/CHAMP</span>
+                            <span class="tag tech">One Record</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 ROLE & RESPONSIBILITIES</div>
+                        <div class="info-row">
+                            <div class="info-row-label">📋 Main Responsibility</div>
+                            <div class="info-row-value">Ensure AWB stock recycling is efficient and messaging standards are correctly implemented</div>
+                        </div>
+                        
+                        <div class="section-label">✓ Success Criteria</div>
+                        <div class="success-item">✓ Purge cycle reduced from 4 to 3 years</div>
+                        <div class="success-item">✓ Background jobs running reliably with monitoring</div>
+                        <div class="success-item">✓ Messaging errors (FNA) minimized</div>
+                        <div class="success-item">✓ One Record pilot successful</div>
+                        
+                        <div class="section-label">🏷️ Technical Challenges</div>
+                        <div class="tags" style="flex-direction: column; align-items: flex-start;">
+                            <span class="tag critical">Purge job stops silently for 10+ days</span>
+                            <span class="tag critical">Executed but not flown AWBs undetectable</span>
+                            <span class="tag warning">Accounting decoupling from purge</span>
+                            <span class="tag warning">No smart logic for stock distribution</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2. JOBS TO BE DONE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <div class="card-title">JOBS TO BE DONE</div>
+            </div>
+            <div class="card-body">
+                <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 WHAT THE USER WANTS TO ACCOMPLISH</div>
+                
+                <div style="background: linear-gradient(135deg, var(--primary-light) 0%, #e9d5ff 100%); border-radius: 12px; padding: 16px; margin-bottom: 16px; border-left: 4px solid var(--primary);">
+                    <div style="font-size: 11px; color: var(--primary); font-weight: 600; margin-bottom: 6px;">📌 PRIMARY GOAL</div>
+                    <div style="font-size: 13px; color: var(--text-dark); font-style: italic; line-height: 1.5;">
+                        "I want to optimize AWB lifecycle and messaging logic, <strong>so that Key Users don't face operational disruptions.</strong>"
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--secondary); margin-bottom: 8px;">⚙️ FUNCTIONAL JOBS</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">1.</span>
+                            <span>Optimize purge criteria to reduce cycle from 4 to 3 years</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">2.</span>
+                            <span>Monitor and troubleshoot background job failures</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">3.</span>
+                            <span>Implement Pre-Check mechanism for FWB validation</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">4.</span>
+                            <span>Design One Record integration to eliminate CHAMP fees</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div style="font-size: 11px; font-weight: 600; color: var(--warning); margin-bottom: 8px;">💭 EMOTIONAL JOBS</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 8px; background: #fef3c7; border-radius: 6px;">
+                            <span>🧩</span>
+                            <span>Solve complex technical problems that impact operations</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 8px; background: #fef3c7; border-radius: 6px;">
+                            <span>🏗️</span>
+                            <span>Build robust, future-proof systems (One Record)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3. PURGE JOB ARCHITECTURE -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <div class="card-title">PURGE JOB ARCHITECTURE</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">⚙️ BACKGROUND JOBS</div>
+                        
+                        <div class="job-flow">
+                            <div class="job-box">
+                                <span class="job-icon">🔍</span>
+                                <div>
+                                    <div class="job-title">JOB 1: Mark for Purge</div>
+                                    <div class="job-desc">Scans AWBs, checks 4-year rule (Sales + Operations + Accounting complete), marks eligible ones</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: var(--text-muted); padding: 4px 0;">↓</div>
+                            <div class="job-box">
+                                <span class="job-icon">📤</span>
+                                <div>
+                                    <div class="job-title">JOB 2: Transfer to HQ</div>
+                                    <div class="job-desc">Transfers marked AWBs to HQ pool at 16:00 (batch for performance)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: var(--danger-light); border-radius: 10px; padding: 14px; margin-top: 12px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--danger); margin-bottom: 8px;">🚨 CRITICAL PROBLEM</div>
+                            <div style="font-size: 10px; color: var(--text-dark); line-height: 1.5;">
+                                If jobs stop for <strong>10 days</strong>, approximately <strong>40,000 AWBs</strong> accumulate in limbo. Stock assignment halts completely. <strong>No automatic alert exists</strong> — discovered manually by Key Users.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">📋 PURGE CRITERIA</div>
+                        
+                        <div class="tech-item">
+                            <div class="tech-item-title">✅ Sales Complete</div>
+                            <div class="tech-item-desc">Reservation closed, no pending updates</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-item-title">✅ Operations Complete</div>
+                            <div class="tech-item-desc">Cargo flown and delivered (DLV status)</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-item-title">✅ Accounting Complete</div>
+                            <div class="tech-item-desc">No pending CCA, agency objections, or claims</div>
+                        </div>
+                        <div class="tech-item" style="border-left-color: var(--warning);">
+                            <div class="tech-item-title" style="color: var(--warning);">⏱️ Time Elapsed: 4 Years</div>
+                            <div class="tech-item-desc">Target: Reduce to 3 years by decoupling accounting</div>
+                        </div>
+                        
+                        <div class="quote-box">
+                            <div class="quote-text">"With the improvement made, accounting processes can be excluded. Pop-up in system allows selecting which AWB continues in accounting."</div>
+                            <div class="quote-source">— Solution Team Meeting</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 4. MESSAGING ARCHITECTURE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <div class="card-title">MESSAGING ARCHITECTURE</div>
+            </div>
+            <div class="card-body">
+                <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">📨 INTEGRATION LANDSCAPE</div>
+                
+                <div class="tech-item">
+                    <div class="tech-item-title">SITA</div>
+                    <div class="tech-item-desc">Airline ↔ GHA communication. Traditional telex-based.</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-item-title">CHAMP (PIMA)</div>
+                    <div class="tech-item-desc">Agent ↔ Airline communication. Per-message fee.</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-item-title">TGC (Traxon Global Customs)</div>
+                    <div class="tech-item-desc">Customs declarations for EU + other regions.</div>
+                </div>
+                <div class="tech-item" style="border-left-color: var(--success);">
+                    <div class="tech-item-title" style="color: var(--success);">One Record (Future)</div>
+                    <div class="tech-item-desc">Blockchain-like shared platform. Eliminates CHAMP fees. Pilot with Basware ongoing.</div>
+                </div>
+                
+                <div style="margin-top: 12px; padding: 12px; background: var(--success-light); border-radius: 8px; border-left: 4px solid var(--success);">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--success); margin-bottom: 4px;">🚀 ONE RECORD BENEFITS</div>
+                    <div style="font-size: 10px; color: var(--text-dark);">
+                        • Eliminate per-message CHAMP fees<br/>
+                        • Real-time data sharing with all parties<br/>
+                        • Will become IATA mandatory
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5. TECHNICAL PAIN POINTS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <div class="card-title">TECHNICAL PAIN POINTS & SOLUTIONS</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">Technical Pain Point</th>
+                            <th style="width:15%">Root Cause</th>
+                            <th style="width:25%">Proposed Solution</th>
+                            <th style="width:20%">Expected Outcome</th>
+                            <th style="width:8%">Complexity</th>
+                            <th style="width:7%">Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Purge jobs stop silently</strong> — No monitoring or alerting mechanism</td>
+                            <td>Legacy job scheduler without health checks</td>
+                            <td>Job monitoring dashboard + automated alerts on failure</td>
+                            <td>Proactive issue detection</td>
+                            <td><span class="severity-badge medium">LOW</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Executed but not flown AWBs</strong> — Can't detect, stuck indefinitely</td>
+                            <td>No status tracking for "approved but abandoned" cargo</td>
+                            <td>Add status for "Executed Not Flown" + auto-detect logic</td>
+                            <td>Recover stuck AWBs automatically</td>
+                            <td><span class="severity-badge high">MEDIUM</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>4-year purge cycle too long</strong> — Stock tied up for accounting</td>
+                            <td>Accounting processes can extend 2-3 years</td>
+                            <td>Decouple accounting from purge, use pop-up selection</td>
+                            <td>Reduce cycle to 3 years</td>
+                            <td><span class="severity-badge high">MEDIUM</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FNA only catches format errors</strong> — Missing optional fields not reported</td>
+                            <td>IMP standard FNA limited scope</td>
+                            <td>Implement Pre-Check mechanism with email notifications</td>
+                            <td>Customer notified of all deficiencies</td>
+                            <td><span class="severity-badge high">MEDIUM</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>No smart stock distribution</strong> — Manual allocation based on experience</td>
+                            <td>No AI/ML for demand prediction</td>
+                            <td>Smart allocation logic based on historical usage patterns</td>
+                            <td>Optimal stock distribution</td>
+                            <td><span class="severity-badge critical">HIGH</span></td>
+                            <td><span class="priority-badge p3">P3</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Overseas FWB after RCS</strong> — Updates after cargo in air</td>
+                            <td>No execute concept at overseas stations</td>
+                            <td>Close FWB channel when GHA sends RCS (parametric)</td>
+                            <td>Data integrity maintained</td>
+                            <td><span class="severity-badge medium">LOW</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 6. INFORMATION FLOW DIAGRAM -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <div class="card-title">INFORMATION FLOW DIAGRAM</div>
+            </div>
+            <div class="card-body">
+                <!-- INCOMING DATA -->
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        📥 INCOMING — System Inputs
+                    </div>
+                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📊</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">STK007</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Stock reports</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📨</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">MSG005</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Message errors</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">⏰</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Job Scheduler</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Purge job status</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📋</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">IATA Specs</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">IMP/One Record</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PROCESSING -->
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        ⚙️ PROCESSING — Technical Analysis
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">🔧 Purge Analysis</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Reduce 4→3 year cycle</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">📨 Message Design</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Pre-check validation</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">🌐 One Record</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Replace CHAMP fees</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">⚡ Job Monitoring</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Alert when fails</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- OUTGOING DATA -->
+                <div>
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        📤 OUTGOING — Deliverables
+                    </div>
+                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📨</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">CHAMP/SITA</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Config changes</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">🌐</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">One Record</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">API specs</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">💻</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">IBS</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Change requests</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">👤</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Key Users</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Documentation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 7. EMPATHY MAP -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <div class="card-title">EMPATHY MAP</div>
+
+            </div>
+            <div class="card-body">
+                <div class="empathy-map-container">
+                    <div class="empathy-quadrant thinking">
+                        <div class="empathy-title">🧠 Thinking</div>
+                        <ul class="empathy-items">
+                            <li>"How can we reduce purge from 4 to 3 years?"</li>
+                            <li>"Why did the job stop for 10 days?"</li>
+                            <li>"One Record will change everything"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant hearing">
+                        <div class="empathy-title">👂 Hearing</div>
+                        <ul class="empathy-items">
+                            <li>From Key Users: "40K AWBs stuck!"</li>
+                            <li>From IBS: "That needs a CR"</li>
+                            <li>From Accounting: "Don't purge yet, CCA pending"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-center">
+                        <div class="empathy-center-icon">🔧</div>
+                    </div>
+                    
+                    <div class="empathy-quadrant seeing">
+                        <div class="empathy-title">👁️ Seeing</div>
+                        <ul class="empathy-items">
+                            <li>Job scheduler logs</li>
+                            <li>IATA IMP documentation</li>
+                            <li>Message error reports</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant doing">
+                        <div class="empathy-title">🤲 Doing</div>
+                        <ul class="empathy-items">
+                            <li>Analyzing purge criteria with IT</li>
+                            <li>Documenting message flows</li>
+                            <li>Testing One Record pilot</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant pain">
+                        <div class="empathy-title">😣 Pains</div>
+                        <ul class="empathy-items">
+                            <li>Legacy system constraints</li>
+                            <li>No proactive monitoring</li>
+                            <li>Slow CR process with IBS</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant gain">
+                        <div class="empathy-title">🎯 Gains</div>
+                        <ul class="empathy-items">
+                            <li>Solving complex problems</li>
+                            <li>Building future-proof systems</li>
+                            <li>Being the technical authority</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 8. KEY TECHNICAL DECISIONS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">KEY DECISIONS AHEAD</div>
+            </div>
+            <div class="card-body">
+                <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 STRATEGIC CHOICES</div>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="background: var(--danger-light); padding: 12px; border-radius: 8px; border-left: 4px solid var(--danger);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--danger); margin-bottom: 4px;">Purge Cycle Reduction</div>
+                        <div style="font-size: 10px; color: var(--text-dark);">4 → 3 years by decoupling accounting? Working with IBS to validate criteria on screens.</div>
+                    </div>
+                    
+                    <div style="background: var(--warning-light); padding: 12px; border-radius: 8px; border-left: 4px solid var(--warning);">
+                        <div style="font-size: 11px; font-weight: 600; color: #92400e; margin-bottom: 4px;">One Record Adoption Timeline</div>
+                        <div style="font-size: 10px; color: var(--text-dark);">Pilot with Basware in progress. When to expand? IT resource shortage slowing progress.</div>
+                    </div>
+                    
+                    <div style="background: var(--success-light); padding: 12px; border-radius: 8px; border-left: 4px solid var(--success);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--success); margin-bottom: 4px;">Pre-Check Mechanism Scope</div>
+                        <div style="font-size: 10px; color: var(--text-dark);">For FWB/FHL only or all message types? Include FFM errors?</div>
+                    </div>
+                </div>
+                
+                <div class="quote-box" style="margin-top: 12px;">
+                    <div class="quote-text">"IATA is no longer updating IMP format. Industry moving to XML. We need to prepare for One Record becoming mandatory."</div>
+                    <div class="quote-source">— Solution Team Meeting</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 9. PRIORITY ACTIONS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">9</div>
+                <div class="card-title">PRIORITY ACTIONS FOR SOLUTION TEAM</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 16px; color: #991b1b;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">🚨</span>
+                            <div style="font-size: 10px; color: #b91c1c; font-weight: 600;">MOST URGENT</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Job Monitoring System</div>
+                        <div style="font-size: 10px; opacity: 0.85;">Dashboard + alerts for purge jobs. Prevent 40K AWB accumulation.</div>
+                    </div>
+                    <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 12px; padding: 16px; color: #92400e;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">⏱️</span>
+                            <div style="font-size: 10px; color: #b45309; font-weight: 600;">HIGHEST IMPACT</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Reduce Purge Cycle</div>
+                        <div style="font-size: 10px; opacity: 0.85;">4 → 3 years by decoupling accounting. Faster stock turnover.</div>
+                    </div>
+                    <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 16px; color: #166534;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">🚀</span>
+                            <div style="font-size: 10px; color: #15803d; font-weight: 600;">STRATEGIC</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">One Record Expansion</div>
+                        <div style="font-size: 10px; opacity: 0.85;">Accelerate pilot, prepare for IATA mandate. Eliminate CHAMP fees.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

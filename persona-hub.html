@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo Persona Hub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #059669;
+            --primary-light: #d1fae5;
+            --secondary: #ea580c;
+            --text: #1f2937;
+            --text-muted: #6b7280;
+            --bg: #f8fafc;
+            --sidebar-width: 280px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #e5e7eb;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #047857 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        
+        .sidebar-header p {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .sidebar-section {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 13px;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+        
+        .sidebar-link:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .sidebar-link.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .sidebar-link-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: var(--primary-light);
+        }
+        
+        .sidebar-link.active .sidebar-link-icon {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .sidebar-link-info {
+            flex: 1;
+        }
+        
+        .sidebar-link-title {
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .sidebar-link-subtitle {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        
+        .sidebar-link.active .sidebar-link-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .badge-sm {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 600;
+        }
+        
+        .badge-key { background: #dbeafe; color: #1d4ed8; }
+        .badge-sol { background: #fae8ff; color: #a21caf; }
+        
+        .sidebar-link.active .badge-sm {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #047857 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .module-section {
+            margin-bottom: 40px;
+        }
+        
+        .module-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .persona-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .persona-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, #047857 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .card-header.orange {
+            background: linear-gradient(135deg, var(--secondary) 0%, #c2410c 100%);
+        }
+        
+        .card-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        
+        .card-info h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .card-info p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-description {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .card-stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .stat {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: var(--primary-light);
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        
+        .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-btn {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        .badge-key-user { background: #dbeafe; color: #1d4ed8; }
+        .badge-solution { background: #fae8ff; color: #a21caf; }
+        
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>🛫 Cargo Personas</h2>
+            <p>Interactive Navigation Hub</p>
+        </div>
+        
+        <!-- FLM Section -->
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                ✈️ FLM - Flight Management
+            </div>
+            <a href="flm-key-user-infographic-EN.html" class="sidebar-link">
+                <div class="sidebar-link-icon">👨‍✈️</div>
+                <div class="sidebar-link-info">
+                    <div class="sidebar-link-title">Schedule Planner</div>
+                    <div class="sidebar-link-subtitle">Flight Operations</div>
+                </div>
+                <span class="badge-sm badge-key">Key User</span>
+            </a>
+            <a href="flm-solution-team-infographic-EN.html" class="sidebar-link">
+                <div class="sidebar-link-icon">👩‍💻</div>
+                <div class="sidebar-link-info">
+                    <div class="sidebar-link-title">Solution Team</div>
+                    <div class="sidebar-link-subtitle">Technical Support</div>
+                </div>
+                <span class="badge-sm badge-sol">Solution</span>
+            </a>
+        </div>
+        
+        <!-- AWB Section -->
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                📦 AWB - Stock Management
+            </div>
+            <a href="awb-key-user-infographic-EN.html" class="sidebar-link">
+                <div class="sidebar-link-icon">📋</div>
+                <div class="sidebar-link-info">
+                    <div class="sidebar-link-title">Stock Controller</div>
+                    <div class="sidebar-link-subtitle">AWB Operations</div>
+                </div>
+                <span class="badge-sm badge-key">Key User</span>
+            </a>
+            <a href="awb-solution-team-infographic-EN.html" class="sidebar-link">
+                <div class="sidebar-link-icon">🔧</div>
+                <div class="sidebar-link-info">
+                    <div class="sidebar-link-title">Solution Team</div>
+                    <div class="sidebar-link-subtitle">System Support</div>
+                </div>
+                <span class="badge-sm badge-sol">Solution</span>
+            </a>
+        </div>
+        
+        <!-- BKR Section -->
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                📅 BKR - Booking & Reservation
+            </div>
+            <a href="bkr-key-user-infographic-EN.html" class="sidebar-link">
+                <div class="sidebar-link-icon">📞</div>
+                <div class="sidebar-link-info">
+                    <div class="sidebar-link-title">Booking Agent</div>
+                    <div class="sidebar-link-subtitle">Reservation Ops</div>
+                </div>
+                <span class="badge-sm badge-key">Key User</span>
+            </a>
+            <a href="bkr-solution-team-infographic-EN.html" class="sidebar-link">
+                <div class="sidebar-link-icon">⚙️</div>
+                <div class="sidebar-link-info">
+                    <div class="sidebar-link-title">Solution Team</div>
+                    <div class="sidebar-link-subtitle">Technical Config</div>
+                </div>
+                <span class="badge-sm badge-sol">Solution</span>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <h1>🛫 Cargo Module Personas</h1>
+            <p>Interactive infographics for FLM, AWB, and BKR modules</p>
+        </header>
+        
+        <div class="container">
+            <!-- FLM Module -->
+            <section class="module-section">
+                <h2 class="module-title">✈️ FLM - Flight Management</h2>
+                <div class="persona-grid">
+                    <a href="flm-key-user-infographic-EN.html" class="persona-card">
+                        <div class="card-header">
+                            <div class="card-avatar">👨‍✈️</div>
+                            <div class="card-info">
+                                <h3>Schedule Planner</h3>
+                                <p>Flight Operations Specialist</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">
+                                Manages flight schedules, coordinates capacity allocation, and ensures operational efficiency across the cargo network.
+                            </p>
+                            <div class="card-stats">
+                                <div class="stat">
+                                    <div class="stat-value">5+</div>
+                                    <div class="stat-label">Daily Tasks</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">4</div>
+                                    <div class="stat-label">Systems</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">High</div>
+                                    <div class="stat-label">Impact</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge badge-key-user">Key User</span>
+                            <span class="view-btn">View Infographic →</span>
+                        </div>
+                    </a>
+                    
+                    <a href="flm-solution-team-infographic-EN.html" class="persona-card">
+                        <div class="card-header orange">
+                            <div class="card-avatar">👩‍💻</div>
+                            <div class="card-info">
+                                <h3>Solution Team</h3>
+                                <p>Technical Implementation</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">
+                                Provides technical support, system configuration, and ensures seamless integration of flight management solutions.
+                            </p>
+                            <div class="card-stats">
+                                <div class="stat">
+                                    <div class="stat-value">6+</div>
+                                    <div class="stat-label">Responsibilities</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">5</div>
+                                    <div class="stat-label">Integrations</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">Critical</div>
+                                    <div class="stat-label">Role</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge badge-solution">Solution Team</span>
+                            <span class="view-btn">View Infographic →</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- AWB Module -->
+            <section class="module-section">
+                <h2 class="module-title">📦 AWB - Stock Management</h2>
+                <div class="persona-grid">
+                    <a href="awb-key-user-infographic-EN.html" class="persona-card">
+                        <div class="card-header">
+                            <div class="card-avatar">📋</div>
+                            <div class="card-info">
+                                <h3>Stock Controller</h3>
+                                <p>AWB Management Specialist</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">
+                                Manages AWB stock allocation, monitors inventory levels, and coordinates distribution across stations.
+                            </p>
+                            <div class="card-stats">
+                                <div class="stat">
+                                    <div class="stat-value">4+</div>
+                                    <div class="stat-label">Daily Tasks</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">3</div>
+                                    <div class="stat-label">Systems</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">High</div>
+                                    <div class="stat-label">Accuracy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge badge-key-user">Key User</span>
+                            <span class="view-btn">View Infographic →</span>
+                        </div>
+                    </a>
+                    
+                    <a href="awb-solution-team-infographic-EN.html" class="persona-card">
+                        <div class="card-header orange">
+                            <div class="card-avatar">🔧</div>
+                            <div class="card-info">
+                                <h3>Solution Team</h3>
+                                <p>System Configuration</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">
+                                Handles system setup, stock range configuration, and provides technical support for AWB management.
+                            </p>
+                            <div class="card-stats">
+                                <div class="stat">
+                                    <div class="stat-value">5+</div>
+                                    <div class="stat-label">Config Tasks</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">4</div>
+                                    <div class="stat-label">Modules</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">Expert</div>
+                                    <div class="stat-label">Level</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge badge-solution">Solution Team</span>
+                            <span class="view-btn">View Infographic →</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- BKR Module -->
+            <section class="module-section">
+                <h2 class="module-title">📅 BKR - Booking & Reservation</h2>
+                <div class="persona-grid">
+                    <a href="bkr-key-user-infographic-EN.html" class="persona-card">
+                        <div class="card-header">
+                            <div class="card-avatar">📞</div>
+                            <div class="card-info">
+                                <h3>Booking Agent</h3>
+                                <p>Reservation Specialist</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">
+                                Manages cargo bookings, handles customer requests, and ensures optimal space allocation on flights.
+                            </p>
+                            <div class="card-stats">
+                                <div class="stat">
+                                    <div class="stat-value">6+</div>
+                                    <div class="stat-label">Daily Tasks</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">5</div>
+                                    <div class="stat-label">Touchpoints</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">Fast</div>
+                                    <div class="stat-label">Response</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge badge-key-user">Key User</span>
+                            <span class="view-btn">View Infographic →</span>
+                        </div>
+                    </a>
+                    
+                    <a href="bkr-solution-team-infographic-EN.html" class="persona-card">
+                        <div class="card-header orange">
+                            <div class="card-avatar">⚙️</div>
+                            <div class="card-info">
+                                <h3>Solution Team</h3>
+                                <p>Technical Configuration</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">
+                                Configures booking rules, manages system parameters, and ensures smooth reservation workflows.
+                            </p>
+                            <div class="card-stats">
+                                <div class="stat">
+                                    <div class="stat-value">7+</div>
+                                    <div class="stat-label">Config Areas</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">6</div>
+                                    <div class="stat-label">Integrations</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">Critical</div>
+                                    <div class="stat-label">Support</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge badge-solution">Solution Team</span>
+                            <span class="view-btn">View Infographic →</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+        
+        <footer class="footer">
+            <p>Cargo Module Personas • FLM | AWB | BKR • Turkish Airlines Cargo</p>
+        </footer>
+    </main>
+</body>
+</html>

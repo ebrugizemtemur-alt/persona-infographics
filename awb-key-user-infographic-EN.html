@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWB Stock Management - Key User Persona</title>
+    <style>
+        :root {
+            --primary: #d97706;
+            --primary-light: #fef3c7;
+            --secondary: #0891b2;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --purple: #7c3aed;
+            --purple-light: #f5f3ff;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, var(--primary-light) 0%, #fffbeb 100%);
+            min-height: 100vh;
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #b45309 100%);
+            color: white;
+            padding: 20px 32px;
+            text-align: center;
+        }
+        
+        .header h1 { font-size: 26px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; color: white; }
+        .header p { font-size: 11px; opacity: 0.85; }
+        
+        .header-tagline {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 10px 24px;
+            margin-top: 14px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 16px 24px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
+        .grid-span-2 { grid-column: span 2; }
+        .grid-span-3 { grid-column: span 3; }
+        
+        .card {
+            background: var(--bg-white);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #1e3a5f;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-number {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+        }
+        
+        .card-title { font-size: 12px; font-weight: 600; }
+        .card-body { padding: 14px; }
+        
+        .persona-center { text-align: center; margin-bottom: 16px; }
+        
+        .persona-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 40px;
+        }
+        
+        .persona-name { font-size: 16px; font-weight: 700; color: var(--primary); }
+        .persona-role { font-size: 12px; color: var(--text-muted); }
+        
+        .info-row { margin-bottom: 12px; }
+        .info-row-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+        .info-row-value { font-size: 11px; color: var(--text-dark); line-height: 1.4; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { font-size: 9px; padding: 4px 10px; border-radius: 12px; background: var(--primary-light); color: var(--primary); }
+        .tag.critical { background: var(--danger-light); color: var(--danger); }
+        .tag.warning { background: var(--warning-light); color: var(--primary); }
+        
+        .success-item { font-size: 11px; color: var(--success); margin-bottom: 4px; }
+        .section-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; margin-top: 12px; }
+        
+        .system-card { padding: 10px; background: var(--bg-light); border-radius: 8px; text-align: center; margin-bottom: 8px; }
+        .system-card-name { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .system-card-role { font-size: 9px; color: var(--text-muted); margin-bottom: 6px; }
+        .system-card-data { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
+        .system-card-data span { font-size: 8px; background: white; border: 1px solid var(--border); padding: 2px 5px; border-radius: 4px; }
+        
+        .mega-matrix-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .mega-matrix-table th { background: var(--bg-light); padding: 10px 6px; text-align: left; font-weight: 600; font-size: 10px; color: var(--primary); border-bottom: 2px solid var(--primary); }
+        .mega-matrix-table td { padding: 10px 6px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 10px; }
+        .mega-matrix-table tbody tr:hover { background: var(--bg-light); }
+        
+        .severity-badge { padding: 3px 10px; border-radius: 12px; font-size: 9px; font-weight: 500; }
+        .severity-badge.critical { background: var(--danger-light); color: var(--danger); }
+        .severity-badge.high { background: #fee2e2; color: #b91c1c; }
+        .severity-badge.medium { background: var(--warning-light); color: var(--primary); }
+        
+        .priority-badge { padding: 4px 14px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+        .priority-badge.p1 { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .priority-badge.p2 { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .priority-badge.p3 { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        
+        .empathy-map-container { display: grid; grid-template-columns: 1fr 80px 1fr; grid-template-rows: repeat(3, auto); gap: 12px; margin-bottom: 14px; }
+        .empathy-quadrant { padding: 12px; border-radius: 10px; font-size: 10px; }
+        .empathy-quadrant.thinking { background: #eff6ff; grid-column: 1; grid-row: 1; }
+        .empathy-quadrant.hearing { background: #fef3c7; grid-column: 3; grid-row: 1; }
+        .empathy-quadrant.seeing { background: #f3e8ff; grid-column: 1; grid-row: 2; }
+        .empathy-quadrant.doing { background: #ecfdf5; grid-column: 3; grid-row: 2; }
+        .empathy-quadrant.pain { background: #fef2f2; grid-column: 1; grid-row: 3; }
+        .empathy-quadrant.gain { background: #f0fdf4; grid-column: 3; grid-row: 3; }
+        .empathy-center { grid-column: 2; grid-row: 1 / 4; display: flex; align-items: center; justify-content: center; }
+        .empathy-center-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid var(--primary); }
+        .empathy-title { font-weight: 600; margin-bottom: 8px; font-size: 11px; }
+        .empathy-items { list-style: none; }
+        .empathy-items li { margin-bottom: 4px; line-height: 1.4; }
+        
+        .lifecycle-flow { display: flex; flex-direction: column; gap: 8px; }
+        .lifecycle-step { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; }
+        .lifecycle-step-icon { font-size: 18px; }
+        .lifecycle-step-title { font-size: 11px; font-weight: 600; }
+        .lifecycle-step-desc { font-size: 10px; opacity: 0.8; }
+        
+        .stat-box { background: var(--bg-light); border-radius: 10px; padding: 16px; text-align: center; }
+        .stat-value { font-size: 28px; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+        
+        .workaround-box { background: var(--warning-light); border-radius: 8px; padding: 12px; margin-top: 14px; }
+        .workaround-text { font-size: 11px; line-height: 1.5; }
+        
+        .message-flow { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 16px; background: var(--bg-light); border-radius: 10px; margin-bottom: 12px; }
+        .flow-box { padding: 8px 14px; border-radius: 8px; font-size: 10px; font-weight: 600; text-align: center; color: var(--primary); }
+        .flow-arrow { font-size: 16px; color: var(--text-muted); }
+        
+        @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    </style>
+</head>
+<body>
+    <!-- FLOATING NAVIGATION -->
+    <div id="persona-nav" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <button onclick="toggleNav()" style="background: #1e3a5f; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            ☰ Personalar
+        </button>
+        <div id="nav-menu" style="display: none; position: absolute; top: 45px; left: 0; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 220px; overflow: hidden;">
+            <div style="background: #f1f5f9; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;">
+                <a href="persona-hub.html" style="color: #1e3a5f; text-decoration: none; font-weight: 600; font-size: 13px;">🏠 Persona Hub</a>
+            </div>
+            <div style="padding: 8px;">
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600;">FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📋 Schedule Planner (Key User)</a>
+                <a href="flm-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+                
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📦 Stock Controller (Key User)</a>
+                <a href="awb-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+                
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📅 Booking Agent (Key User)</a>
+                <a href="bkr-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleNav() {
+            var menu = document.getElementById('nav-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            var nav = document.getElementById('persona-nav');
+            if (!nav.contains(e.target)) {
+                document.getElementById('nav-menu').style.display = 'none';
+            }
+        });
+    </script>
+
+    
+    <header class="header">
+        <h1>🎯 KEY USER — AWB STOCK ADMINISTRATOR</h1>
+        <p>Cargo Marketing & Sales Solutions Directorate • Operational User • Stock & Messaging Management</p>
+        <div class="header-tagline">
+            ✓ Manages AWB stock lifecycle from IATA allocation to purge recovery across HQ, Regions, and Agents.
+        </div>
+    </header>
+    
+    <div class="main-grid">
+        
+        <!-- 1. PERSONA SNAPSHOT -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <div class="card-title">PERSONA SNAPSHOT</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">👤 IDENTITY</div>
+                        <div class="persona-center">
+                            <div class="persona-avatar">📋</div>
+                            <div class="persona-name">Kevser / Burak</div>
+                            <div class="persona-role">AWB Stock Administrator / Key User</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">🎯 Primary Role</div>
+                            <div class="info-row-value">Manages AWB stock allocation from HQ to Regions to Agents, monitors purge process, handles messaging configurations</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">🔍 Focus Area</div>
+                            <div class="info-row-value">Stock distribution hierarchy, purge job monitoring, messaging protocols (FWB/FHL/FSU/FFM), IATA compliance</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">⏱️ Work Pattern</div>
+                            <div class="info-row-value">Daily purge monitoring, stock requests via email, Excel exports for reporting. Heavy workload during agent onboarding.</div>
+                        </div>
+                        
+                        <div class="section-label">🔗 Connected Teams</div>
+                        <div class="tags">
+                            <span class="tag">Regional Offices</span>
+                            <span class="tag">Station Personnel</span>
+                            <span class="tag">Agents (IATA)</span>
+                            <span class="tag">Customer Care</span>
+                            <span class="tag">Accounting</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 ROLE & RESPONSIBILITIES</div>
+                        <div class="info-row">
+                            <div class="info-row-label">📋 Main Responsibility</div>
+                            <div class="info-row-value">Ensure continuous AWB stock availability across the network while maximizing reuse through timely purge cycles</div>
+                        </div>
+                        
+                        <div class="section-label">✓ Success Criteria</div>
+                        <div class="success-item">✓ No stock-out situations at any station/agent</div>
+                        <div class="success-item">✓ Purge jobs running without interruption</div>
+                        <div class="success-item">✓ AWB reuse cycle maintained (currently 4 years)</div>
+                        <div class="success-item">✓ Messaging (FWB/FSU) errors minimized</div>
+                        
+                        <div class="section-label">🏷️ Main Blockers</div>
+                        <div class="tags" style="flex-direction: column; align-items: flex-start;">
+                            <span class="tag critical">Purge job stops → 40K AWB accumulation</span>
+                            <span class="tag critical">No automatic stock withdrawal from inactive agents</span>
+                            <span class="tag warning">Excel-based reporting and requests</span>
+                            <span class="tag warning">No customs rule validation at assignment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2. JOBS TO BE DONE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <div class="card-title">JOBS TO BE DONE</div>
+            </div>
+            <div class="card-body">
+                <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 WHAT THE USER WANTS TO ACCOMPLISH</div>
+                
+                <div style="background: linear-gradient(135deg, var(--primary-light) 0%, #fef3c7 100%); border-radius: 12px; padding: 16px; margin-bottom: 16px; border-left: 4px solid var(--primary);">
+                    <div style="font-size: 11px; color: var(--primary); font-weight: 600; margin-bottom: 6px;">📌 PRIMARY GOAL</div>
+                    <div style="font-size: 13px; color: var(--text-dark); font-style: italic; line-height: 1.5;">
+                        "I want to ensure AWB stock never runs out, <strong>so that operations continue smoothly without delays.</strong>"
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--secondary); margin-bottom: 8px;">⚙️ FUNCTIONAL JOBS</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">1.</span>
+                            <span>Allocate stock from HQ → Region → Agent hierarchy</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">2.</span>
+                            <span>Monitor purge jobs daily to ensure stock recovery</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">3.</span>
+                            <span>Track used/unused AWBs and reclaim from inactive agents</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">4.</span>
+                            <span>Configure messaging rules (SHR022) for different countries</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div style="font-size: 11px; font-weight: 600; color: var(--warning); margin-bottom: 8px;">💭 EMOTIONAL JOBS</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 8px; background: #fef3c7; border-radius: 6px;">
+                            <span>😌</span>
+                            <span>Feel confident that stock will never deplete unexpectedly</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 8px; background: #fef3c7; border-radius: 6px;">
+                            <span>🎯</span>
+                            <span>Be proactively notified of issues, not discover them manually</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3. AWB LIFECYCLE & STOCK FLOW -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <div class="card-title">AWB LIFECYCLE & STOCK HIERARCHY</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">📊 AWB LIFECYCLE</div>
+                        
+                        <div class="lifecycle-flow">
+                            <div class="lifecycle-step" style="background: #dbeafe; border-left: 4px solid #3b82f6;">
+                                <span class="lifecycle-step-icon">🆕</span>
+                                <div>
+                                    <div class="lifecycle-step-title" style="color: #1e40af;">1. NEW (Reservation)</div>
+                                    <div class="lifecycle-step-desc" style="color: #3b82f6;">AWB assigned, reservation made</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #94a3b8;">↓</div>
+                            <div class="lifecycle-step" style="background: #fef3c7; border-left: 4px solid #f59e0b;">
+                                <span class="lifecycle-step-icon">✅</span>
+                                <div>
+                                    <div class="lifecycle-step-title" style="color: var(--primary);">2. EXECUTED</div>
+                                    <div class="lifecycle-step-desc" style="color: #b45309;">Physical + document acceptance done, accounting starts</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #94a3b8;">↓</div>
+                            <div class="lifecycle-step" style="background: #d1fae5; border-left: 4px solid #059669;">
+                                <span class="lifecycle-step-icon">📦</span>
+                                <div>
+                                    <div class="lifecycle-step-title" style="color: #065f46;">3. READY FOR CARRIAGE (RCS)</div>
+                                    <div class="lifecycle-step-desc" style="color: #047857;">Security cleared (X-Ray), ready for loading</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #94a3b8;">↓</div>
+                            <div class="lifecycle-step" style="background: #f3e8ff; border-left: 4px solid #9333ea;">
+                                <span class="lifecycle-step-icon">✈️</span>
+                                <div>
+                                    <div class="lifecycle-step-title" style="color: #6b21a8;">4. FLOWN (DEP → DLV)</div>
+                                    <div class="lifecycle-step-desc" style="color: #7c3aed;">Departed, arrived, delivered</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #94a3b8;">↓ <span style="font-size: 9px;">(4 years)</span></div>
+                            <div class="lifecycle-step" style="background: #fee2e2; border-left: 4px solid #dc2626;">
+                                <span class="lifecycle-step-icon">♻️</span>
+                                <div>
+                                    <div class="lifecycle-step-title" style="color: #991b1b;">5. PURGED (Recycled)</div>
+                                    <div class="lifecycle-step-desc" style="color: #b91c1c;">Returned to HQ pool for reuse</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🏢 STOCK HIERARCHY</div>
+                        
+                        <div style="background: var(--bg-light); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <div style="background: #1e40af; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 700; text-align: center;">
+                                    🏛️ IATA<br/><span style="font-size: 10px; color: #64748b;">9-10M AWBs allocated to THY</span>
+                                </div>
+                                <div style="font-size: 16px; color: var(--text-muted);">↓</div>
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-align: center;">
+                                    🏢 HQ (Headquarter)<br/><span style="font-size: 10px; color: #64748b;">Central pool</span>
+                                </div>
+                                <div style="font-size: 16px; color: var(--text-muted);">↓ Allocate</div>
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-align: center;">
+                                    🌍 REGION<br/><span style="font-size: 10px; color: #64748b;">Europe, Americas, etc.</span>
+                                </div>
+                                <div style="font-size: 16px; color: var(--text-muted);">↓ Allocate</div>
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-align: center;">
+                                    📍 STATION<br/><span style="font-size: 10px; color: #64748b;">MXP, LHR, JFK...</span>
+                                </div>
+                                <div style="font-size: 16px; color: var(--text-muted);">↓ Allocate / Transfer</div>
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-align: center;">
+                                    🏪 AGENT<br/><span style="font-size: 10px; color: #64748b;">DHL, Kühne+Nagel...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <div class="stat-box">
+                                <div class="stat-value">1.5M</div>
+                                <div class="stat-label">AWBs used per year</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">~5 yr</div>
+                                <div class="stat-label">Stock depletion if no purge</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 4. SYSTEMS & SCREENS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <div class="card-title">SYSTEMS & SCREENS</div>
+            </div>
+            <div class="card-body">
+                <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">💾 COMIS SCREENS</div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">STK007</div>
+                    <div class="system-card-role">Stock query and reporting</div>
+                    <div class="system-card-data">
+                        <span>Used/Unused</span>
+                        <span>By Agent</span>
+                        <span>Export needed</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-card-name">STK019</div>
+                    <div class="system-card-role">Stock history - last destination used</div>
+                    <div class="system-card-data">
+                        <span>Customs check</span>
+                        <span>History</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-card-name">OPR026</div>
+                    <div class="system-card-role">AWB capture & execute screen</div>
+                    <div class="system-card-data">
+                        <span>Execute</span>
+                        <span>Reopen</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-card-name">MSG005</div>
+                    <div class="system-card-role">Message listing and status</div>
+                    <div class="system-card-data">
+                        <span>FWB/FHL</span>
+                        <span>Errors</span>
+                    </div>
+                </div>
+                <div class="system-card">
+                    <div class="system-card-name">SHR022</div>
+                    <div class="system-card-role">Message configuration</div>
+                    <div class="system-card-data">
+                        <span>Recipients</span>
+                        <span>Rules</span>
+                    </div>
+                </div>
+                
+                <div class="workaround-box" style="margin-top: 8px;">
+                    <div class="workaround-text">⚠️ <strong>Missing:</strong> Origin-destination info not in STK007. Excel export required for reporting.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5. PAIN POINTS MATRIX -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <div class="card-title">PAIN POINT → SOLUTION → PRIORITIZATION MATRIX</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">Pain Point</th>
+                            <th style="width:15%">Root Cause</th>
+                            <th style="width:25%">Proposed Solution</th>
+                            <th style="width:20%">Expected Outcome</th>
+                            <th style="width:8%">Severity</th>
+                            <th style="width:7%">Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Purge job stops silently</strong> — 40K AWBs accumulate, stock assignment halts</td>
+                            <td>No monitoring/alerting for background jobs</td>
+                            <td>Job status dashboard + automatic alerts when job fails</td>
+                            <td>Proactive issue detection, no operational disruption</td>
+                            <td><span class="severity-badge critical">CRITICAL</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>No automatic stock withdrawal</strong> — Inactive agents hold unused stock indefinitely</td>
+                            <td>No business rule for automatic reclaim</td>
+                            <td>Auto-reclaim unused stock after 1 year + notification</td>
+                            <td>Stock utilization improved, no manual tracking</td>
+                            <td><span class="severity-badge high">HIGH</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>No customs validation at assignment</strong> — China has 10-year rule, can't check</td>
+                            <td>Route unknown at assignment time</td>
+                            <td>Validate at reservation time instead, with country rules</td>
+                            <td>Customs penalties avoided</td>
+                            <td><span class="severity-badge high">HIGH</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Excel-based reporting</strong> — STK007 lacks origin-dest, must export</td>
+                            <td>Report not designed for this use case</td>
+                            <td>Add origin-dest column + purged AWB column to STK007</td>
+                            <td>No Excel dependency, faster decisions</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minimum stock threshold not enforced</strong> — Can assign below safe level</td>
+                            <td>No parametric control</td>
+                            <td>Block assignment if below threshold + warning</td>
+                            <td>Stock-out prevention</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>4-year purge cycle too long</strong> — Stock tied up unnecessarily</td>
+                            <td>Accounting processes can take years</td>
+                            <td>Decouple accounting from purge, reduce to 3 years</td>
+                            <td>Faster stock turnover</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                            <td><span class="priority-badge p3">P3</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 6. INFORMATION FLOW DIAGRAM -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <div class="card-title">INFORMATION FLOW DIAGRAM</div>
+            </div>
+            <div class="card-body">
+                <!-- INCOMING DATA -->
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        📥 INCOMING — Data Sources
+                    </div>
+                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">🏢</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">IATA HQ</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">AWB number blocks</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">🌍</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Regional Offices</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Allocation requests</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📍</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Stations</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Stock demand</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">🤝</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Agents</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Stock requests</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PROCESSING -->
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        ⚙️ PROCESSING — Core Tasks
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">📦 Stock Allocation</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Assign AWB ranges to agents</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">🔄 Purge Monitor</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Check 4-year cycle status</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">📊 STK007 Reports</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Analyze usage patterns</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">♻️ Stock Reclaim</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Withdraw from inactive</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- OUTGOING DATA -->
+                <div>
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        📤 OUTGOING — Deliverables
+                    </div>
+                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">🤝</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Agents</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Assigned AWB numbers</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📍</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Stations</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Stock confirmations</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📨</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">CHAMP/SITA</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">FWB/FHL messages</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">🗄️</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Archive</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Purged AWB records</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 7. EMPATHY MAP -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <div class="card-title">EMPATHY MAP</div>
+            </div>
+            <div class="card-body">
+                <div class="empathy-map-container">
+                    <div class="empathy-quadrant thinking">
+                        <div class="empathy-title">🧠 Thinking</div>
+                        <ul class="empathy-items">
+                            <li>"Did the purge job run today?"</li>
+                            <li>"Which agents haven't used their stock?"</li>
+                            <li>"Will stock last 5 more years?"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant hearing">
+                        <div class="empathy-title">👂 Hearing</div>
+                        <ul class="empathy-items">
+                            <li>From Stations: "We need more AWBs"</li>
+                            <li>From Accounting: "Don't purge yet"</li>
+                            <li>From IT: "Job stopped 10 days ago"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-center">
+                        <div class="empathy-center-icon">👤</div>
+                    </div>
+                    
+                    <div class="empathy-quadrant seeing">
+                        <div class="empathy-title">👁️ Seeing</div>
+                        <ul class="empathy-items">
+                            <li>Excel reports daily</li>
+                            <li>Email requests from regions</li>
+                            <li>Stock numbers in STK007</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant doing">
+                        <div class="empathy-title">🤲 Doing</div>
+                        <ul class="empathy-items">
+                            <li>Manual stock allocation</li>
+                            <li>Checking purge status</li>
+                            <li>Exporting Excel for analysis</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant pain">
+                        <div class="empathy-title">😣 Pains</div>
+                        <ul class="empathy-items">
+                            <li>No automatic alerts</li>
+                            <li>Manual inactive agent tracking</li>
+                            <li>Excel dependency</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant gain">
+                        <div class="empathy-title">🎯 Gains</div>
+                        <ul class="empathy-items">
+                            <li>Stock never runs out</li>
+                            <li>Operations run smoothly</li>
+                            <li>Agents satisfied</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 8. PRIORITY ACTIONS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">PRIORITY ACTIONS FOR KEY USER</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 16px; color: #991b1b;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">🚨</span>
+                            <div style="font-size: 10px; color: #b91c1c; font-weight: 600;">MOST URGENT</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Purge Job Monitoring</div>
+                        <div style="font-size: 10px; opacity: 0.85;">Dashboard + alerts when background jobs fail. Prevent 40K AWB accumulation.</div>
+                    </div>
+                    <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 12px; padding: 16px; color: #92400e;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">♻️</span>
+                            <div style="font-size: 10px; color: #b45309; font-weight: 600;">HIGHEST IMPACT</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Auto Stock Reclaim</div>
+                        <div style="font-size: 10px; opacity: 0.85;">Automatically withdraw unused stock from inactive agents after 1 year.</div>
+                    </div>
+                    <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 16px; color: #166534;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">📊</span>
+                            <div style="font-size: 10px; color: #15803d; font-weight: 600;">QUICK WIN</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Enhanced STK007</div>
+                        <div style="font-size: 10px; opacity: 0.85;">Add origin-dest + purged column. Eliminate Excel export dependency.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

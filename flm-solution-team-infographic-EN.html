@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Management - Solution Team Persona</title>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #f5f3ff;
+            --secondary: #0891b2;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, var(--primary-light) 0%, #f8fafc 100%);
+            min-height: 100vh;
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #5b21b6 100%);
+            color: white;
+            padding: 20px 32px;
+            text-align: center;
+        }
+        
+        .header h1 { font-size: 26px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; color: white; }
+        .header p { font-size: 11px; opacity: 0.85; }
+        
+        .header-tagline {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 10px 24px;
+            margin-top: 14px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 16px 24px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
+        .grid-span-2 { grid-column: span 2; }
+        .grid-span-3 { grid-column: span 3; }
+        
+        .card {
+            background: var(--bg-white);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #1e3a5f;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-number {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+        }
+        
+        .card-title { font-size: 12px; font-weight: 600; }
+        .card-body { padding: 14px; }
+        
+        .persona-center { text-align: center; margin-bottom: 16px; }
+        
+        .persona-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 40px;
+        }
+        
+        .persona-name { font-size: 16px; font-weight: 700; color: var(--primary); }
+        .persona-role { font-size: 12px; color: var(--text-muted); }
+        
+        .info-row { margin-bottom: 12px; }
+        .info-row-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+        .info-row-value { font-size: 11px; color: var(--text-dark); line-height: 1.4; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { font-size: 9px; padding: 4px 10px; border-radius: 12px; background: var(--primary-light); color: var(--primary); }
+        .tag.critical { background: var(--danger-light); color: var(--danger); }
+        .tag.warning { background: var(--warning-light); color: #92400e; }
+        .tag.tech { background: #dbeafe; color: #1e40af; }
+        
+        .success-item { font-size: 11px; color: var(--success); margin-bottom: 4px; }
+        .section-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; margin-top: 12px; }
+        
+        .system-card { padding: 10px; background: var(--bg-light); border-radius: 8px; text-align: center; margin-bottom: 8px; }
+        .system-card-name { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .system-card-role { font-size: 9px; color: var(--text-muted); margin-bottom: 6px; }
+        .system-card-data { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
+        .system-card-data span { font-size: 8px; background: white; border: 1px solid var(--border); padding: 2px 5px; border-radius: 4px; }
+        
+        .mega-matrix-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .mega-matrix-table th { background: var(--bg-light); padding: 10px 6px; text-align: left; font-weight: 600; font-size: 10px; color: var(--primary); border-bottom: 2px solid var(--primary); }
+        .mega-matrix-table td { padding: 10px 6px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 10px; }
+        .mega-matrix-table tbody tr:hover { background: var(--bg-light); }
+        
+        .severity-badge { padding: 3px 10px; border-radius: 12px; font-size: 9px; font-weight: 500; }
+        .severity-badge.critical { background: var(--danger-light); color: var(--danger); }
+        .severity-badge.high { background: #fee2e2; color: #b91c1c; }
+        .severity-badge.medium { background: var(--warning-light); color: #92400e; }
+        
+        .priority-badge { padding: 4px 14px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+        .priority-badge.p1 { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .priority-badge.p2 { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .priority-badge.p3 { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        
+        .empathy-map-container { display: grid; grid-template-columns: 1fr 80px 1fr; grid-template-rows: repeat(3, auto); gap: 12px; margin-bottom: 14px; }
+        .empathy-quadrant { padding: 12px; border-radius: 10px; font-size: 10px; }
+        .empathy-quadrant.thinking { background: #eff6ff; grid-column: 1; grid-row: 1; }
+        .empathy-quadrant.hearing { background: #fef3c7; grid-column: 3; grid-row: 1; }
+        .empathy-quadrant.seeing { background: #f3e8ff; grid-column: 1; grid-row: 2; }
+        .empathy-quadrant.doing { background: #ecfdf5; grid-column: 3; grid-row: 2; }
+        .empathy-quadrant.pain { background: #fef2f2; grid-column: 1; grid-row: 3; }
+        .empathy-quadrant.gain { background: #f0fdf4; grid-column: 3; grid-row: 3; }
+        .empathy-center { grid-column: 2; grid-row: 1 / 4; display: flex; align-items: center; justify-content: center; }
+        .empathy-center-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid var(--primary); }
+        .empathy-title { font-weight: 600; margin-bottom: 8px; font-size: 11px; }
+        .empathy-items { list-style: none; }
+        .empathy-items li { margin-bottom: 4px; line-height: 1.4; }
+        
+        .integration-flow { display: flex; flex-direction: column; gap: 12px; }
+        .flow-row { display: flex; align-items: center; gap: 8px; }
+        .flow-box { padding: 10px 16px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; }
+        .flow-arrow { font-size: 16px; color: var(--text-muted); }
+        
+        .tech-stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .tech-item { padding: 12px; background: var(--bg-light); border-radius: 8px; border-left: 4px solid var(--primary); }
+        .tech-item-title { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .tech-item-desc { font-size: 10px; color: var(--text-muted); }
+        
+        .workaround-box { background: var(--warning-light); border-radius: 8px; padding: 12px; margin-top: 14px; }
+        .workaround-text { font-size: 11px; line-height: 1.5; }
+        
+        .quote-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+        .quote-text { font-size: 11px; font-style: italic; color: var(--text-dark); }
+        .quote-source { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+        
+        @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    </style>
+</head>
+<body>
+    <!-- FLOATING NAVIGATION -->
+    <div id="persona-nav" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <button onclick="toggleNav()" style="background: #1e3a5f; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            ☰ Personalar
+        </button>
+        <div id="nav-menu" style="display: none; position: absolute; top: 45px; left: 0; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 220px; overflow: hidden;">
+            <div style="background: #f1f5f9; padding: 12px 16px; border-bottom: 1px solid #e2e8f0;">
+                <a href="persona-hub.html" style="color: #1e3a5f; text-decoration: none; font-weight: 600; font-size: 13px;">🏠 Persona Hub</a>
+            </div>
+            <div style="padding: 8px;">
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600;">FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📋 Schedule Planner (Key User)</a>
+                <a href="flm-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+                
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📦 Stock Controller (Key User)</a>
+                <a href="awb-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+                
+                <div style="padding: 8px 12px; font-size: 11px; color: #64748b; font-weight: 600; margin-top: 8px;">BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">📅 Booking Agent (Key User)</a>
+                <a href="bkr-solution-team-infographic-EN.html" style="display: block; padding: 8px 12px; color: #334155; text-decoration: none; font-size: 12px; border-radius: 6px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔧 Solution Team</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleNav() {
+            var menu = document.getElementById('nav-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            var nav = document.getElementById('persona-nav');
+            if (!nav.contains(e.target)) {
+                document.getElementById('nav-menu').style.display = 'none';
+            }
+        });
+    </script>
+
+    
+    <header class="header">
+        <h1>🔧 SOLUTION TEAM — TECHNICAL INTEGRATION SPECIALIST</h1>
+        <p>Cargo Marketing & Sales Solutions Directorate • Technical Analyst • System Integration & Architecture</p>
+        <div class="header-tagline">
+            ✓ Designs and maintains the technical integration between NetLine, COMMIS, and ACRM systems.
+        </div>
+    </header>
+    
+    <div class="main-grid">
+        
+        <!-- 1. PERSONA SNAPSHOT -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <div class="card-title">PERSONA SNAPSHOT</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">👤 IDENTITY</div>
+                        <div class="persona-center">
+                            <div class="persona-avatar">🔧</div>
+                            <div class="persona-name">Rümeysa / Muhammed Ali</div>
+                            <div class="persona-role">Solution Team Analyst</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">🎯 Primary Role</div>
+                            <div class="info-row-value">Analyze system integrations, debug message flows (SSM, FLTREQUEST), design technical solutions for data consistency issues</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">🔍 Focus Area</div>
+                            <div class="info-row-value">Message queue architecture, UTC/Local time conversions, leg-to-flight model mapping, middleware development</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-row-label">⏱️ Work Pattern</div>
+                            <div class="info-row-value">Deep technical analysis. Heavy involvement during NetLine++ migration planning and RPA bot debugging.</div>
+                        </div>
+                        
+                        <div class="section-label">🛠️ Technical Stack</div>
+                        <div class="tags">
+                            <span class="tag tech">XML/JSON</span>
+                            <span class="tag tech">SOAP/REST</span>
+                            <span class="tag tech">Kafka</span>
+                            <span class="tag tech">Message Queue</span>
+                            <span class="tag tech">SQL/Stored Proc</span>
+                            <span class="tag tech">RPA</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 ROLE & RESPONSIBILITIES</div>
+                        <div class="info-row">
+                            <div class="info-row-label">📋 Main Responsibility</div>
+                            <div class="info-row-value">Ensure seamless data flow between NetLine (source) → COMMIS (booking) → ACRM (capacity) with proper message handling</div>
+                        </div>
+                        
+                        <div class="section-label">✓ Success Criteria</div>
+                        <div class="success-item">✓ SSM/FLTREQUEST messages processed without errors</div>
+                        <div class="success-item">✓ MSG005 error rate minimized</div>
+                        <div class="success-item">✓ Zero data loss in system transitions</div>
+                        <div class="success-item">✓ Smooth NetLine++ migration</div>
+                        
+                        <div class="section-label">🏷️ Main Challenges</div>
+                        <div class="tags" style="flex-direction: column; align-items: flex-start;">
+                            <span class="tag critical">Leg-based vs Flight-based architecture</span>
+                            <span class="tag critical">Non-standard FLTREQUEST message format</span>
+                            <span class="tag warning">NetLine SOAP → JSON middleware</span>
+                            <span class="tag warning">Diff file format instability</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2. JOBS TO BE DONE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <div class="card-title">JOBS TO BE DONE</div>
+            </div>
+            <div class="card-body">
+                <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 WHAT THE USER WANTS TO ACCOMPLISH</div>
+                
+                <div style="background: linear-gradient(135deg, var(--primary-light) 0%, #ede9fe 100%); border-radius: 12px; padding: 16px; margin-bottom: 16px; border-left: 4px solid var(--primary);">
+                    <div style="font-size: 11px; color: var(--primary); font-weight: 600; margin-bottom: 6px;">📌 PRIMARY GOAL</div>
+                    <div style="font-size: 13px; color: var(--text-dark); font-style: italic; line-height: 1.5;">
+                        "I want to ensure message-based integrations work flawlessly, <strong>so that Key Users don't face data inconsistencies.</strong>"
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--secondary); margin-bottom: 8px;">⚙️ FUNCTIONAL JOBS</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">1.</span>
+                            <span>Debug SSM/FLTREQUEST message processing errors</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">2.</span>
+                            <span>Design middleware for NetLine++ (SOAP→JSON via Kafka)</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">3.</span>
+                            <span>Maintain RPA bot for diff file reconciliation</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; padding: 8px; background: var(--bg-light); border-radius: 6px;">
+                            <span style="color: var(--primary); font-weight: 600;">4.</span>
+                            <span>Document integration flows and error codes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div style="font-size: 11px; font-weight: 600; color: var(--warning); margin-bottom: 8px;">💭 EMOTIONAL JOBS</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 8px; background: #fef3c7; border-radius: 6px;">
+                            <span>🧩</span>
+                            <span>Solve complex technical puzzles that others can't</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 8px; background: #fef3c7; border-radius: 6px;">
+                            <span>🏗️</span>
+                            <span>Build robust systems that withstand edge cases</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3. SYSTEM ARCHITECTURE -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <div class="card-title">SYSTEM ARCHITECTURE & MESSAGE FLOWS</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🔄 MESSAGE FLOW ARCHITECTURE</div>
+                        
+                        <div style="background: var(--bg-light); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 12px 20px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 12px; font-weight: 700;">NetLine</div>
+                                    <div style="font-size: 9px; color: #64748b;">SCHED + OPS</div>
+                                    <div style="font-size: 8px; margin-top: 4px; background: #dbeafe; color: #1e40af; padding: 2px 6px; border-radius: 4px;">LEG-BASED</div>
+                                </div>
+                                
+                                <div style="text-align: center;">
+                                    <div style="font-size: 20px;">→</div>
+                                    <div style="font-size: 9px; color: var(--text-muted);">SSM (telex)</div>
+                                    <div style="font-size: 9px; color: var(--text-muted);">FLTREQUEST (XML)</div>
+                                    <div style="font-size: 8px; color: #64748b; margin-top: 4px;">UTC TIME</div>
+                                </div>
+                                
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 12px 20px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 12px; font-weight: 700;">Message Queue</div>
+                                    <div style="font-size: 9px; color: #64748b;">Validation</div>
+                                </div>
+                                
+                                <div style="text-align: center;">
+                                    <div style="font-size: 20px;">→</div>
+                                    <div style="font-size: 9px; color: var(--text-muted);">Parsed</div>
+                                    <div style="font-size: 8px; color: #64748b; margin-top: 4px;">LOCAL TIME</div>
+                                </div>
+                                
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 12px 20px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 12px; font-weight: 700;">COMMIS</div>
+                                    <div style="font-size: 9px; color: #64748b;">Booking System</div>
+                                    <div style="font-size: 8px; margin-top: 4px; background: #dbeafe; color: #1e40af; padding: 2px 6px; border-radius: 4px;">FLIGHT-BASED</div>
+                                </div>
+                                
+                                <div style="text-align: center;">
+                                    <div style="font-size: 20px;">→</div>
+                                    <div style="font-size: 9px; color: var(--text-muted);">28-day schedule</div>
+                                </div>
+                                
+                                <div style="background: #eff6ff; border: 2px solid #bfdbfe; color: #1e40af; padding: 12px 20px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 12px; font-weight: 700;">ACRM</div>
+                                    <div style="font-size: 9px; color: #64748b;">Capacity Mgmt</div>
+                                    <div style="font-size: 8px; margin-top: 4px; background: #dbeafe; color: #1e40af; padding: 2px 6px; border-radius: 4px;">LEG-BASED</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <div style="background: #fefce8; border-radius: 8px; padding: 12px; border-left: 4px solid #fbbf24;">
+                                <div style="font-size: 11px; font-weight: 600; color: #92400e; margin-bottom: 6px;">⚠️ PROBLEMATIC SCENARIO</div>
+                                <div style="font-size: 10px; color: var(--text-dark); line-height: 1.5;">
+                                    Flight at 22:00 UTC delayed to 01:00 UTC next day. NetLine sends TIM update (same UTC day), but COMMIS converts to local time → sees day change → creates NEW record instead of update. <strong>Result: Duplicate.</strong>
+                                </div>
+                            </div>
+                            <div style="background: #f0fdf4; border-radius: 8px; padding: 12px; border-left: 4px solid #86efac;">
+                                <div style="font-size: 11px; font-weight: 600; color: #16a34a; margin-bottom: 6px;">✅ FUTURE STATE (NetLine++)</div>
+                                <div style="font-size: 10px; color: var(--text-dark); line-height: 1.5;">
+                                    Both leg-based AND flight-based definitions supported. JSON messages via Kafka. Turkish Technology building middleware to convert to XML for COMMIS compatibility.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">📨 MESSAGE TYPES</div>
+                        
+                        <div class="tech-stack" style="grid-template-columns: 1fr;">
+                            <div class="tech-item">
+                                <div class="tech-item-title">SSM (Standard Schedule Message)</div>
+                                <div class="tech-item-desc">Real-time flight changes. Types: NEW, TIM, CNL. Pushed from NetLine via telex format.</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-item-title">SSIM (Standard Schedules Info Message)</div>
+                                <div class="tech-item-desc">Full season schedule. Uploaded manually at season start (summer/winter).</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-item-title">FLTREQUEST (XML)</div>
+                                <div class="tech-item-desc">Rich flight data including pax count, fuel. Non-standard, but needed for capacity estimation.</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-item-title">FLTSEGCAPUTL</div>
+                                <div class="tech-item-desc">COMMIS → NetLine. Capacity utilization, AVI/HUM flags. Only reverse flow message.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quote-box">
+                            <div class="quote-text">"SSM content was not rich enough (pax count, fuel), so FLTREQUEST was created. Ideally each field should be a separate service."</div>
+                            <div class="quote-source">— Solution Team Meeting</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 4. PAIN POINTS MATRIX -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <div class="card-title">TECHNICAL PAIN POINTS & SOLUTIONS</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">Technical Pain Point</th>
+                            <th style="width:15%">Root Cause</th>
+                            <th style="width:25%">Proposed Solution</th>
+                            <th style="width:20%">Expected Outcome</th>
+                            <th style="width:8%">Complexity</th>
+                            <th style="width:7%">Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Leg-based vs Flight-based mismatch</strong> — NetLine sends leg data, COMMIS expects flight data</td>
+                            <td>Different system architectures from different eras</td>
+                            <td>NetLine++ migration with flight-based support + middleware</td>
+                            <td>Single data model across systems</td>
+                            <td><span class="severity-badge critical">HIGH</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>UTC to Local time conversion errors</strong> — Day boundary issues create duplicates</td>
+                            <td>No standardized time handling in message flow</td>
+                            <td>Unified time conversion layer in middleware</td>
+                            <td>No duplicate records from time issues</td>
+                            <td><span class="severity-badge high">MEDIUM</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FLTREQUEST is non-standard</strong> — Heavy XML payload sent on every pax change</td>
+                            <td>Created ad-hoc because SSM lacked fields</td>
+                            <td>Microservice per field instead of monolithic message</td>
+                            <td>Lighter integration, faster processing</td>
+                            <td><span class="severity-badge high">HIGH</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diff file format instability</strong> — RPA bot breaks when format changes</td>
+                            <td>No versioning or schema for diff file</td>
+                            <td>Standardized diff file schema + format detection</td>
+                            <td>Resilient automation</td>
+                            <td><span class="severity-badge medium">LOW</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multi-leg flights not auto-processed</strong> — Manual handling required</td>
+                            <td>Complex logic not implemented in RPA</td>
+                            <td>Enhanced bot with multi-leg awareness</td>
+                            <td>Reduced manual intervention</td>
+                            <td><span class="severity-badge high">MEDIUM</span></td>
+                            <td><span class="priority-badge p2">P2</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>No real-time flight validation</strong> — Booking possible on cancelled flights</td>
+                            <td>COMMIS doesn't check NetLine at booking time</td>
+                            <td>Real-time NetLine API call during reservation</td>
+                            <td>Ghost flight bookings prevented</td>
+                            <td><span class="severity-badge medium">LOW</span></td>
+                            <td><span class="priority-badge p1">P1</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 5. EMPATHY MAP -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <div class="card-title">EMPATHY MAP</div>
+            </div>
+            <div class="card-body">
+                <div class="empathy-map-container">
+                    <div class="empathy-quadrant thinking">
+                        <div class="empathy-title">🧠 Thinking & Feeling</div>
+                        <ul class="empathy-items">
+                            <li><strong>Analytical:</strong> "If I trace the message flow, I'll find the bug"</li>
+                            <li><strong>Frustrated:</strong> "Why didn't they tell us the format changed?"</li>
+                            <li><strong>Excited:</strong> "NetLine++ will finally fix the leg/flight issue"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant hearing">
+                        <div class="empathy-title">👂 Hearing</div>
+                        <ul class="empathy-items">
+                            <li>From Key Users: "Why is this flight duplicated?"</li>
+                            <li>From IBS: "We need a CR for that change"</li>
+                            <li>From NetLine team: "That's a COMMIS issue"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-center">
+                        <div class="empathy-center-icon">🔧</div>
+                    </div>
+                    
+                    <div class="empathy-quadrant seeing">
+                        <div class="empathy-title">👁️ Seeing</div>
+                        <ul class="empathy-items">
+                            <li>XML/telex message logs</li>
+                            <li>MSG005 error codes</li>
+                            <li>Diff file discrepancies</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant doing">
+                        <div class="empathy-title">🤲 Saying & Doing</div>
+                        <ul class="empathy-items">
+                            <li>Says: "We need to standardize this"</li>
+                            <li>Does: Debug message queues</li>
+                            <li>Does: Write technical documentation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant pain">
+                        <div class="empathy-title">😣 Pain Points</div>
+                        <ul class="empathy-items">
+                            <li>Legacy system constraints</li>
+                            <li>Non-standard message formats</li>
+                            <li>Cross-team coordination delays</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant gain">
+                        <div class="empathy-title">🎯 Gains</div>
+                        <ul class="empathy-items">
+                            <li>Solving complex problems</li>
+                            <li>Building future-proof systems</li>
+                            <li>Being the technical expert</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 6. INFORMATION FLOW DIAGRAM -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <div class="card-title">INFORMATION FLOW DIAGRAM</div>
+            </div>
+            <div class="card-body">
+                <!-- INCOMING DATA -->
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        📥 INCOMING — System Inputs
+                    </div>
+                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">✈️</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">NetLine++</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">New API format (SOAP)</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📝</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">FLTREQUEST</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">XML messages from NetLine</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📨</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">MSG005</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Error reports</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">📊</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Diff Reports</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Mismatch data</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PROCESSING -->
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        ⚙️ PROCESSING — Technical Analysis
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">🔌 Middleware</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Convert SOAP→JSON→XML</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">📝 Diff Schema</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Standardize format</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">🔄 Leg/Flight Mapping</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Resolve duplicates</div>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 10px 14px; border-radius: 8px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--primary);">⚡ Real-time API</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Block ghost bookings</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- OUTGOING DATA -->
+                <div>
+                    <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-light);">
+                        📤 OUTGOING — Deliverables
+                    </div>
+                    <div style="background: var(--primary-light); border-radius: 8px; padding: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">💻</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">IBS</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Change requests</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">⚙️</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">COMIS Config</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Parameter updates</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">🤖</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">RPA Bot</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">New diff logic</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 10px 14px; border-radius: 8px;">
+                                <span style="font-size: 18px;">👤</span>
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--primary);">Key Users</div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Documentation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 7. KEY TECHNICAL DECISIONS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <div class="card-title">KEY DECISIONS AHEAD</div>
+            </div>
+            <div class="card-body">
+                <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light);">🎯 STRATEGIC CHOICES</div>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="background: var(--danger-light); padding: 12px; border-radius: 8px; border-left: 4px solid var(--danger);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--danger); margin-bottom: 4px;">NetLine++ Migration Strategy</div>
+                        <div style="font-size: 10px; color: var(--text-dark);">Big bang vs incremental? Middleware approach (Turkish Tech building SOAP→JSON→XML converter)</div>
+                    </div>
+                    
+                    <div style="background: var(--warning-light); padding: 12px; border-radius: 8px; border-left: 4px solid var(--warning);">
+                        <div style="font-size: 11px; font-weight: 600; color: #92400e; margin-bottom: 4px;">FLTREQUEST Refactoring</div>
+                        <div style="font-size: 10px; color: var(--text-dark);">Keep monolithic XML or split into microservices per field?</div>
+                    </div>
+                    
+                    <div style="background: var(--success-light); padding: 12px; border-radius: 8px; border-left: 4px solid var(--success);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--success); margin-bottom: 4px;">Real-time Validation</div>
+                        <div style="font-size: 10px; color: var(--text-dark);">Add NetLine check at booking time to prevent ghost flight bookings?</div>
+                    </div>
+                </div>
+                
+                <div class="quote-box" style="margin-top: 12px;">
+                    <div class="quote-text">"After NetLine++ transition, both leg-based and flight-based definitions will be supported. This will help resolve duplicate records."</div>
+                    <div class="quote-source">— Solution Team Meeting</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 8. PRIORITY ACTIONS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">PRIORITY ACTIONS FOR SOLUTION TEAM</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 16px; color: #991b1b;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">🔌</span>
+                            <div style="font-size: 10px; color: #b91c1c; font-weight: 600;">MOST URGENT</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">NetLine++ Middleware</div>
+                        <div style="font-size: 10px; opacity: 0.85;">Complete SOAP→JSON→XML converter for smooth migration</div>
+                    </div>
+                    <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 12px; padding: 16px; color: #92400e;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">🤖</span>
+                            <div style="font-size: 10px; color: #b45309; font-weight: 600;">QUICK WIN</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Resilient RPA Bot</div>
+                        <div style="font-size: 10px; opacity: 0.85;">Add format detection + alerting to prevent silent failures</div>
+                    </div>
+                    <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 16px; color: #166534;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">✅</span>
+                            <div style="font-size: 10px; color: #15803d; font-weight: 600;">HIGH IMPACT</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Real-time Flight Validation</div>
+                        <div style="font-size: 10px; opacity: 0.85;">NetLine API check during booking to prevent ghost flight reservations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+</html>
