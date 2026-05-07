@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacity Management - Capacity Analyst Persona</title>
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-light: #f0fdfa;
+            --primary-dark: #0f766e;
+            --secondary: #14b8a6;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --orange: #ea580c;
+            --orange-light: #fff7ed;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, var(--primary-light) 0%, #f8fafc 100%);
+            min-height: 100vh;
+            font-size: 12px;
+            color: var(--text-dark);
+            padding-left: 280px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 32px;
+            text-align: center;
+        }
+        
+        .header h1 { font-size: 26px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; color: white; }
+        .header p { font-size: 11px; opacity: 0.85; }
+        
+        .header-tagline {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 10px 24px;
+            margin-top: 14px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 16px 24px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
+        .grid-span-2 { grid-column: span 2; }
+        .grid-span-3 { grid-column: span 3; }
+        
+        .card {
+            background: var(--bg-white);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #1e3a5f;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-number {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+        }
+        
+        .card-title { font-size: 12px; font-weight: 600; }
+        .card-body { padding: 14px; }
+        
+        .persona-center { text-align: center; margin-bottom: 16px; }
+        
+        .persona-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 40px;
+        }
+        
+        .persona-name { font-size: 16px; font-weight: 700; color: var(--primary); }
+        .persona-role { font-size: 12px; color: var(--text-muted); }
+        
+        .info-row { margin-bottom: 12px; }
+        .info-row-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+        .info-row-value { font-size: 11px; color: var(--text-dark); line-height: 1.4; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { font-size: 9px; padding: 4px 10px; border-radius: 12px; background: var(--primary-light); color: var(--primary-dark); }
+        .tag.warning { background: var(--warning-light); color: #92400e; }
+        .tag.danger { background: var(--danger-light); color: var(--danger); }
+        .tag.success { background: var(--success-light); color: var(--success); }
+        
+        .section-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; margin-top: 12px; }
+        
+        .job-card { padding: 10px; background: var(--bg-light); border-radius: 8px; margin-bottom: 8px; }
+        .job-card-title { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .job-card-desc { font-size: 9px; color: var(--text-muted); line-height: 1.5; }
+        
+        .system-card { padding: 10px; background: var(--bg-light); border-radius: 8px; text-align: center; margin-bottom: 8px; }
+        .system-card-name { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .system-card-role { font-size: 9px; color: var(--text-muted); margin-bottom: 6px; }
+        .system-card-data { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
+        .system-card-data span { font-size: 8px; background: white; border: 1px solid var(--border); padding: 2px 5px; border-radius: 4px; }
+        
+        .mega-matrix-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .mega-matrix-table th { background: var(--bg-light); padding: 10px 6px; text-align: left; font-weight: 600; font-size: 10px; color: var(--primary); border-bottom: 2px solid var(--primary); }
+        .mega-matrix-table td { padding: 10px 6px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 10px; }
+        .mega-matrix-table tbody tr:hover { background: var(--bg-light); }
+        
+        .severity-badge { padding: 3px 10px; border-radius: 12px; font-size: 9px; font-weight: 500; }
+        .severity-badge.critical { background: var(--danger-light); color: var(--danger); }
+        .severity-badge.high { background: #fee2e2; color: #b91c1c; }
+        .severity-badge.medium { background: var(--warning-light); color: #92400e; }
+        
+        .empathy-map-container { display: grid; grid-template-columns: 1fr 80px 1fr; grid-template-rows: repeat(3, auto); gap: 12px; margin-bottom: 14px; }
+        .empathy-quadrant { padding: 12px; border-radius: 10px; font-size: 10px; }
+        .empathy-quadrant.thinking { background: #eff6ff; grid-column: 1; grid-row: 1; }
+        .empathy-quadrant.hearing { background: #fef3c7; grid-column: 3; grid-row: 1; }
+        .empathy-quadrant.seeing { background: #f3e8ff; grid-column: 1; grid-row: 2; }
+        .empathy-quadrant.doing { background: #ecfdf5; grid-column: 3; grid-row: 2; }
+        .empathy-quadrant.pain { background: #fef2f2; grid-column: 1; grid-row: 3; }
+        .empathy-quadrant.gain { background: #f0fdf4; grid-column: 3; grid-row: 3; }
+        .empathy-center { grid-column: 2; grid-row: 1 / 4; display: flex; align-items: center; justify-content: center; }
+        .empathy-center-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid var(--primary); }
+        .empathy-title { font-weight: 600; margin-bottom: 8px; font-size: 11px; }
+        .empathy-items { list-style: none; }
+        .empathy-items li { margin-bottom: 4px; line-height: 1.4; }
+        
+        .ai-task-card { padding: 12px; border-radius: 10px; margin-bottom: 10px; }
+        .ai-task-card.auto { background: #f0fdf4; border: 2px solid #bbf7d0; color: #166534; }
+        .ai-task-card.suggest { background: #f5f3ff; border: 2px solid #ddd6fe; color: #5b21b6; }
+        .ai-task-card.human { background: #fffbeb; border: 2px solid #fde68a; color: #92400e; }
+        .ai-task-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .ai-task-icon { font-size: 18px; }
+        .ai-task-title { font-size: 11px; font-weight: 600; }
+        .ai-task-desc { font-size: 10px; line-height: 1.5; }
+
+        .workflow-step { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 8px 12px; background: var(--bg-light); border-radius: 8px; border-left: 3px solid var(--primary); }
+        .workflow-step-number { width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+        .workflow-step-content { flex: 1; }
+        .workflow-step-title { font-size: 11px; font-weight: 600; color: var(--text-dark); }
+        .workflow-step-desc { font-size: 9px; color: var(--text-muted); }
+
+        .allotment-type { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 9px; font-weight: 500; margin: 2px; }
+        .allotment-hard { background: #fef2f2; color: #dc2626; }
+        .allotment-soft { background: #f0fdf4; color: #16a34a; }
+        .allotment-schedule { background: #dbeafe; color: #1d4ed8; }
+        .allotment-flight { background: #fef3c7; color: #92400e; }
+
+        /* Side Menu - Always Open */
+        .side-menu { position: fixed; left: 0; top: 0; height: 100vh; width: 280px; background: white; box-shadow: 2px 0 20px rgba(0,0,0,0.1); z-index: 1000; display: flex; flex-direction: column; overflow: hidden; }
+        .menu-header { background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%); color: white; padding: 16px; text-align: center; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+        .menu-header h2 { font-size: 15px; margin: 0; font-weight: 600; white-space: nowrap; }
+        .menu-header p { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+        .menu-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px; }
+        .menu-section { margin-bottom: 8px; }
+        .menu-section-title { font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 8px; margin-bottom: 2px; white-space: nowrap; }
+        .menu-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; text-decoration: none; color: #334155; font-size: 12px; transition: all 0.2s ease; margin-bottom: 2px; white-space: nowrap; }
+        .menu-link:hover { background: #f1f5f9; color: #1e3a5f; }
+        .menu-link.active { background: var(--primary); color: white; }
+        .menu-link .icon { font-size: 18px; min-width: 24px; text-align: center; flex-shrink: 0; }
+        .menu-link .badge { margin-left: auto; font-size: 8px; padding: 2px 5px; border-radius: 4px; font-weight: 600; }
+        .badge-key { background: #dbeafe; color: #1d4ed8; }
+        .badge-sol { background: #f3e8ff; color: #7c3aed; }
+        .menu-footer { padding: 8px; border-top: 1px solid #e2e8f0; text-align: center; }
+        .menu-footer a { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; background: #f1f5f9; color: #1e3a5f; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        .menu-footer a:hover { background: #e2e8f0; }
+        
+        @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    </style>
+</head>
+<body>
+    <!-- Side Menu - Always Open -->
+    <nav class="side-menu">
+        <div class="menu-header">
+            <div><h2>🛫 Cargo Personas</h2><p>Module Navigation</p></div>
+        </div>
+        <div class="menu-content">
+            <div class="menu-section">
+                <div class="menu-section-title">✈️ FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" class="menu-link"><span class="icon">👨‍✈️</span>Schedule Planner<span class="badge badge-key">Key</span></a>
+                <a href="flm-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">📦 AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" class="menu-link"><span class="icon">📋</span>Stock Controller<span class="badge badge-key">Key</span></a>
+                <a href="awb-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link"><span class="icon">🌍</span>IST International Agent<span class="badge badge-key">Key</span></a>
+                <a href="bkr-domestic-key-user-infographic-EN.html" class="menu-link"><span class="icon">🏠</span>Domestic Agent<span class="badge badge-key">Key</span></a>
+                <a href="bkr-uld-key-user-infographic-EN.html" class="menu-link"><span class="icon">📦</span>ULD Specialist<span class="badge badge-key">Key</span></a>
+                <a href="bkr-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">📊 CAM - Capacity Management</div>
+                <a href="cam-optimization-key-user-infographic-EN.html" class="menu-link"><span class="icon">⚡</span>Flight Optimization Specialist<span class="badge badge-key">Key</span></a>
+                <a href="cam-analyst-key-user-infographic-EN.html" class="menu-link active"><span class="icon">📈</span>Capacity Analyst<span class="badge badge-key">Key</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">🛡️ COM - Compliance Management</div>
+                <a href="com-key-user-infographic-EN.html" class="menu-link"><span class="icon">🛡️</span>Compliance Officer<span class="badge badge-key">Key</span></a>
+                <a href="com-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">💰 PCM - Pricing Management</div>
+                <a href="pcm-key-user-infographic-EN.html" class="menu-link"><span class="icon">💰</span>Pricing Analyst<span class="badge badge-key">Key</span></a>
+                <a href="pcm-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">🔴 SCM - Special Cargo</div>
+                <a href="scm-key-user-infographic-EN.html" class="menu-link"><span class="icon">🔴</span>Special Cargo Specialist<span class="badge badge-key">Key</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">💵 CRA - Revenue Accounting</div>
+                <a href="cra-key-user-infographic-EN.html" class="menu-link"><span class="icon">💵</span>Revenue Accountant<span class="badge badge-key">Key</span></a>
+            </div>
+        </div>
+        <div class="menu-footer"><a href="persona-hub.html">🏠 Persona Hub</a></div>
+    </nav>
+
+    <header class="header">
+        <h1>📈 CAPACITY ANALYST PERSONA</h1>
+        <p>CAM - Capacity Management Module | Capacity Analysis Team Key User Profile</p>
+        <div class="header-tagline">"ACRM tahminlerini değerlendirip allotment stratejilerini planlıyoruz"</div>
+    </header>
+
+    <main class="main-grid">
+        <!-- 1. PERSONA SNAPSHOT -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <div class="card-title">PERSONA SNAPSHOT</div>
+            </div>
+            <div class="card-body">
+                <div class="persona-center">
+                    <div class="persona-avatar">📈</div>
+                    <div class="persona-name">Capacity Analyst</div>
+                    <div class="persona-role">Kargo Kapasite Analiz Şefliği</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-row-label">PRIMARY GOAL</div>
+                    <div class="info-row-value">Receive and analyze capacity forecasts from ACRM, manage allotment approvals, and ensure optimal capacity planning for cargo operations</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-row-label">KEY USERS</div>
+                    <div class="info-row-value">Ali Osman Tanır, Büşra Pehlivan (Capacity Analysis)</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-row-label">DEPARTMENT</div>
+                    <div class="info-row-value">Kargo Gelir Yönetimi Sistemleri Müdürlüğü - Kapasite Analiz Şefliği</div>
+                </div>
+                
+                <div class="section-label">ALLOTMENT TYPES MANAGED</div>
+                <div class="tags">
+                    <span class="allotment-type allotment-hard">🔒 Hard Allotment</span>
+                    <span class="allotment-type allotment-soft">🔓 Soft Allotment</span>
+                    <span class="allotment-type allotment-schedule">📅 Schedule Allotment</span>
+                    <span class="allotment-type allotment-flight">✈️ Flight Allotment</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. JOBS TO BE DONE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <div class="card-title">JOBS TO BE DONE</div>
+            </div>
+            <div class="card-body">
+                <div class="job-card">
+                    <div class="job-card-title">📊 Capacity Forecasting Analysis</div>
+                    <div class="job-card-desc">Receive capacity forecasts from ACRM for passenger aircraft. Analyze no-show forecasts and overbooking capacity definitions. Evaluate forecast accuracy over time.</div>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-card-title">✍️ Manual Cargo Aircraft Capacity</div>
+                    <div class="job-card-desc">For cargo (freighter) aircraft, enter capacity information manually in COMIS. Note: ACRM forecasting project for freighters is under development.</div>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-card-title">✅ Allotment Approval & Workflow</div>
+                    <div class="job-card-desc">Review and validate allotment workflows. Evaluate practical scenarios for allotment approval and usage. Ensure edge cases are handled properly.</div>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-card-title">📋 Allotment Lifecycle Management</div>
+                    <div class="job-card-desc">Manage allotment creation, updates, and adjustments during validity period. Coordinate between ACRM and COMIS for actions not supported in ACRM.</div>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-card-title">📈 Capacity vs Allotment Monitoring</div>
+                    <div class="job-card-desc">Track allotment usage during booking and monitoring phases. Monitor partial utilization, remaining capacity visibility, and free-sale capacity interaction.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. SYSTEMS & SCREENS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <div class="card-title">SYSTEMS & SCREENS</div>
+            </div>
+            <div class="card-body">
+                <div class="system-card">
+                    <div class="system-card-name">🖥️ ACRM</div>
+                    <div class="system-card-role">Capacity Forecasting & Allotment Requests</div>
+                    <div class="system-card-data">
+                        <span>Capacity Forecasts</span>
+                        <span>No-Show Forecast</span>
+                        <span>Overbooking</span>
+                        <span>Allotment Requests</span>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">📋 COMIS</div>
+                    <div class="system-card-role">Allotment Management & Manual Entry</div>
+                    <div class="system-card-data">
+                        <span>Freighter Capacity</span>
+                        <span>Allotment Create/Edit</span>
+                        <span>ACRM Follow-ups</span>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">🔍 CAP145</div>
+                    <div class="system-card-role">Capacity & Allotment View</div>
+                    <div class="system-card-data">
+                        <span>Allotment Capacity</span>
+                        <span>Free Sale Capacity</span>
+                        <span>Segment Check</span>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">✈️ FLT002</div>
+                    <div class="system-card-role">Flight Monitoring</div>
+                    <div class="system-card-data">
+                        <span>Active Flights</span>
+                        <span>Truck Flights</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PAIN POINTS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <div class="card-title">PAIN POINTS MATRIX</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Pain Point</th>
+                            <th>Description</th>
+                            <th>Business Impact</th>
+                            <th>Severity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ACRM-COMIS Capability Gap</strong></td>
+                            <td>Certain allotment configurations cannot be done in ACRM, requiring follow-up actions in COMIS</td>
+                            <td>Fragmented workflow between two systems; risk of missed actions</td>
+                            <td><span class="severity-badge critical">CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Freighter Manual Capacity Entry</strong></td>
+                            <td>Cargo aircraft capacity must be entered manually in COMIS while ACRM only forecasts for pax aircraft</td>
+                            <td>Time-consuming; prone to errors; inconsistent data entry</td>
+                            <td><span class="severity-badge high">HIGH</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Forecast Accuracy Tracking</strong></td>
+                            <td>Difficulty in evaluating how accurate ACRM forecasts are over time</td>
+                            <td>Cannot improve forecasting models; capacity planning uncertainty</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Allotment-Free Sale Interaction</strong></td>
+                            <td>Complexity in understanding how allotment-controlled capacity interacts with free-sale capacity</td>
+                            <td>Suboptimal capacity utilization; customer allocation conflicts</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ULD-Based Forecasting Gap</strong></td>
+                            <td>No ULD-based forecasting approach available in current system</td>
+                            <td>Position-based capacity optimization limited; falls under ACRM team scope</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5. ALLOTMENT WORKFLOW -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <div class="card-title">ALLOTMENT LIFECYCLE WORKFLOW</div>
+            </div>
+            <div class="card-body">
+                <div class="workflow-step">
+                    <div class="workflow-step-number">1</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Allotment Request (ACRM)</div>
+                        <div class="workflow-step-desc">Sales/Station submits allotment request in ACRM for customer group or station group</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">2</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Approval Review</div>
+                        <div class="workflow-step-desc">Evaluate request against available capacity, commercial rationale, and allotment type (Schedule vs Flight)</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">3</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Allotment Creation</div>
+                        <div class="workflow-step-desc">Create allotment in ACRM or COMIS depending on configuration requirements</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">4</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">COMIS Follow-up (If Needed)</div>
+                        <div class="workflow-step-desc">Complete configurations not available in ACRM via COMIS</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">5</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Monitor & Adjust</div>
+                        <div class="workflow-step-desc">Track allotment usage, partial utilization, and adjust during validity period as needed</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">6</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Expiry / Closure</div>
+                        <div class="workflow-step-desc">Allotment expires or is released back to free-sale capacity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. EMPATHY MAP -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <div class="card-title">EMPATHY MAP</div>
+            </div>
+            <div class="card-body">
+                <div class="empathy-map-container">
+                    <div class="empathy-quadrant thinking">
+                        <div class="empathy-title">🧠 Thinking</div>
+                        <ul class="empathy-items">
+                            <li>• "Bu tahmin ne kadar doğru?"</li>
+                            <li>• "Allotment dengesi nasıl?"</li>
+                            <li>• "Free sale ne kadar kaldı?"</li>
+                        </ul>
+                    </div>
+                    <div class="empathy-quadrant hearing">
+                        <div class="empathy-title">👂 Hearing</div>
+                        <ul class="empathy-items">
+                            <li>• ACRM forecast değişiklikleri</li>
+                            <li>• Sales allotment talepleri</li>
+                            <li>• Optimization feedback</li>
+                        </ul>
+                    </div>
+                    <div class="empathy-center">
+                        <div class="empathy-center-icon">📈</div>
+                    </div>
+                    <div class="empathy-quadrant seeing">
+                        <div class="empathy-title">👁️ Seeing</div>
+                        <ul class="empathy-items">
+                            <li>• ACRM tahmin ekranları</li>
+                            <li>• CAP145 kapasite view</li>
+                            <li>• Allotment kullanım oranları</li>
+                        </ul>
+                    </div>
+                    <div class="empathy-quadrant doing">
+                        <div class="empathy-title">🖐️ Doing</div>
+                        <ul class="empathy-items">
+                            <li>• Tahmin analizi</li>
+                            <li>• Allotment onaylama</li>
+                            <li>• Manuel kapasite girişi</li>
+                        </ul>
+                    </div>
+                    <div class="empathy-quadrant pain">
+                        <div class="empathy-title">😣 Pain</div>
+                        <ul class="empathy-items">
+                            <li>• ACRM-COMIS geçişleri</li>
+                            <li>• Manuel freighter girişleri</li>
+                            <li>• Edge case yönetimi</li>
+                        </ul>
+                    </div>
+                    <div class="empathy-quadrant gain">
+                        <div class="empathy-title">🎯 Gain</div>
+                        <ul class="empathy-items">
+                            <li>• Doğru kapasite planlaması</li>
+                            <li>• Optimal allotment dağılımı</li>
+                            <li>• Revenue artışı</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. ALLOTMENT CONCEPTS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <div class="card-title">ALLOTMENT KEY CONCEPTS</div>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-row-label">SCHEDULE ALLOTMENT</div>
+                    <div class="info-row-value">Long-term capacity allocation based on flight schedules; applies across multiple flights on a route</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">FLIGHT ALLOTMENT</div>
+                    <div class="info-row-value">Specific capacity reserved for a single flight instance</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">HARD ALLOTMENT</div>
+                    <div class="info-row-value">Guaranteed capacity; must be used or explicitly released</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">SOFT ALLOTMENT</div>
+                    <div class="info-row-value">Priority capacity; can be reclaimed if not used by cutoff</div>
+                </div>
+                
+                <div class="section-label">ALLOTMENT TARGETS</div>
+                <div class="tags">
+                    <span class="tag success">Customer Groups</span>
+                    <span class="tag warning">Station Groups</span>
+                    <span class="tag">Specific Routes</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. AI SUPPORT POTENTIAL -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">AI SUPPORT POTENTIAL</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div class="ai-task-card auto">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">🤖</span>
+                            <span class="ai-task-title">AUTOMATED</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • ACRM forecast accuracy tracking & reporting<br>
+                            • Allotment utilization alerts<br>
+                            • ACRM-COMIS sync reminders for pending actions
+                        </div>
+                    </div>
+                    <div class="ai-task-card suggest">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">💡</span>
+                            <span class="ai-task-title">AI SUGGESTS</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Optimal allotment split recommendations<br>
+                            • Forecast adjustment suggestions based on historical patterns<br>
+                            • Free-sale capacity release timing
+                        </div>
+                    </div>
+                    <div class="ai-task-card human">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">👤</span>
+                            <span class="ai-task-title">HUMAN DECIDES</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Allotment approval/rejection<br>
+                            • Hard vs soft allotment type selection<br>
+                            • Manual freighter capacity entry<br>
+                            • Customer/station group definitions
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. DECISION POINTS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">9</div>
+                <div class="card-title">CRITICAL DECISION POINTS</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Decision</th>
+                            <th>Data Required</th>
+                            <th>System Support</th>
+                            <th>Authority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Approve/Reject Allotment Request</strong></td>
+                            <td>Available capacity, historical usage, customer priority, route demand</td>
+                            <td>ACRM request workflow</td>
+                            <td>Self-approval for standard; manager for large allotments</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hard vs Soft Allotment Selection</strong></td>
+                            <td>Customer reliability, contract terms, capacity situation</td>
+                            <td>ACRM/COMIS allotment creation</td>
+                            <td>Self-approval based on guidelines</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manual Freighter Capacity Entry</strong></td>
+                            <td>Aircraft configuration, route constraints, operational limits</td>
+                            <td>COMIS manual entry screen</td>
+                            <td>Self-approval; validation required</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Allotment Adjustment During Validity</strong></td>
+                            <td>Current utilization, booking trends, capacity changes</td>
+                            <td>ACRM/COMIS update functions</td>
+                            <td>Self-approval for minor; commercial approval for major</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Release Unused Allotment to Free-Sale</strong></td>
+                            <td>Utilization rate, time to departure, demand forecast</td>
+                            <td>Allotment release function</td>
+                            <td>Self-approval; may need customer notification</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 10. COLLABORATION -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">10</div>
+                <div class="card-title">COLLABORATION & DATA FLOW</div>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                    <div class="system-card">
+                        <div class="system-card-name">⚡ Flight Optimization Team</div>
+                        <div class="system-card-role">Capacity Management Partner</div>
+                        <div class="system-card-data">
+                            <span>Shares: Capacity forecasts</span>
+                            <span>Receives: Utilization data</span>
+                        </div>
+                    </div>
+                    <div class="system-card">
+                        <div class="system-card-name">💼 Sales Teams</div>
+                        <div class="system-card-role">Allotment Requesters</div>
+                        <div class="system-card-data">
+                            <span>Sends: Allotment requests</span>
+                            <span>Receives: Approval/capacity info</span>
+                        </div>
+                    </div>
+                    <div class="system-card">
+                        <div class="system-card-name">🖥️ ACRM Team</div>
+                        <div class="system-card-role">System Owners</div>
+                        <div class="system-card-data">
+                            <span>Provides: Forecasting</span>
+                            <span>Supports: ULD forecasting dev</span>
+                        </div>
+                    </div>
+                    <div class="system-card">
+                        <div class="system-card-name">✈️ Flight Planning</div>
+                        <div class="system-card-role">Schedule Coordination</div>
+                        <div class="system-card-data">
+                            <span>Shares: Flight schedules</span>
+                            <span>Receives: Capacity requirements</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 10px;">
+        <p>CAM - Capacity Management Module | Capacity Analyst Persona | Generated from Key User MoM Analysis</p>
+        <p>Source: LPD-2025-12-02 to LPD-2026-02-03 Key User Capacity & Allotment Workshops</p>
+    </footer>
+</body>
+</html>

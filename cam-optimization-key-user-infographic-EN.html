@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking & Reservation - IST International Agent Persona</title>
+    <title>Capacity Management - Flight Optimization Specialist Persona</title>
     <style>
         :root {
-            --primary: #7c3aed;
-            --primary-light: #f5f3ff;
-            --primary-dark: #6d28d9;
-            --secondary: #8b5cf6;
+            --primary: #0891b2;
+            --primary-light: #ecfeff;
+            --primary-dark: #0e7490;
+            --secondary: #06b6d4;
             --success: #16a34a;
             --success-light: #f0fdf4;
             --warning: #f59e0b;
@@ -164,11 +164,16 @@
         .ai-task-title { font-size: 11px; font-weight: 600; }
         .ai-task-desc { font-size: 10px; line-height: 1.5; }
 
-        .channel-badge { padding: 4px 10px; border-radius: 6px; font-size: 9px; font-weight: 500; display: inline-block; margin: 2px; }
-        .channel-api { background: #dbeafe; color: #1d4ed8; }
-        .channel-ffr { background: #dcfce7; color: #166534; }
-        .channel-tkgo { background: #fef3c7; color: #92400e; }
-        .channel-call { background: #f3e8ff; color: #7c3aed; }
+        .workflow-step { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 8px 12px; background: var(--bg-light); border-radius: 8px; border-left: 3px solid var(--primary); }
+        .workflow-step-number { width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+        .workflow-step-content { flex: 1; }
+        .workflow-step-title { font-size: 11px; font-weight: 600; color: var(--text-dark); }
+        .workflow-step-desc { font-size: 9px; color: var(--text-muted); }
+
+        .capacity-type { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 9px; font-weight: 500; margin: 2px; }
+        .capacity-weight { background: #dbeafe; color: #1d4ed8; }
+        .capacity-volume { background: #dcfce7; color: #166534; }
+        .capacity-position { background: #fef3c7; color: #92400e; }
 
         /* Side Menu - Always Open */
         .side-menu { position: fixed; left: 0; top: 0; height: 100vh; width: 280px; background: white; box-shadow: 2px 0 20px rgba(0,0,0,0.1); z-index: 1000; display: flex; flex-direction: column; overflow: hidden; }
@@ -211,14 +216,14 @@
             </div>
             <div class="menu-section">
                 <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
-                <a href="bkr-key-user-infographic-EN.html" class="menu-link active"><span class="icon">🌍</span>IST International Agent<span class="badge badge-key">Key</span></a>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link"><span class="icon">🌍</span>IST International Agent<span class="badge badge-key">Key</span></a>
                 <a href="bkr-domestic-key-user-infographic-EN.html" class="menu-link"><span class="icon">🏠</span>Domestic Agent<span class="badge badge-key">Key</span></a>
                 <a href="bkr-uld-key-user-infographic-EN.html" class="menu-link"><span class="icon">📦</span>ULD Specialist<span class="badge badge-key">Key</span></a>
                 <a href="bkr-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
             </div>
-                        <div class="menu-section">
+            <div class="menu-section">
                 <div class="menu-section-title">📊 CAM - Capacity Management</div>
-                <a href="cam-optimization-key-user-infographic-EN.html" class="menu-link"><span class="icon">⚡</span>Flight Optimization Specialist<span class="badge badge-key">Key</span></a>
+                <a href="cam-optimization-key-user-infographic-EN.html" class="menu-link active"><span class="icon">⚡</span>Flight Optimization Specialist<span class="badge badge-key">Key</span></a>
                 <a href="cam-analyst-key-user-infographic-EN.html" class="menu-link"><span class="icon">📈</span>Capacity Analyst<span class="badge badge-key">Key</span></a>
             </div>
             <div class="menu-section">
@@ -244,9 +249,9 @@
     </nav>
 
     <header class="header">
-        <h1>🌍 IST OUTBOUND INTERNATIONAL AGENT PERSONA</h1>
-        <p>BKR - Booking & Reservation Module | IST Hub Outbound International Key User Profile</p>
-        <div class="header-tagline">"6.5 saat kısıtı ile dünyanın her yerine kargo rezervasyonu yapıyoruz"</div>
+        <h1>⚡ FLIGHT OPTIMIZATION SPECIALIST PERSONA</h1>
+        <p>CAM - Capacity Management Module | Revenue Optimization Team Key User Profile</p>
+        <div class="header-tagline">"Her uçuştan maksimum geliri sağlamak için kapasite ve booking'leri optimize ediyoruz"</div>
     </header>
 
     <main class="main-grid">
@@ -258,32 +263,31 @@
             </div>
             <div class="card-body">
                 <div class="persona-center">
-                    <div class="persona-avatar">🌍</div>
-                    <div class="persona-name">IST International Agent</div>
-                    <div class="persona-role">Outbound International Reservations</div>
+                    <div class="persona-avatar">⚡</div>
+                    <div class="persona-name">Flight Optimization Specialist</div>
+                    <div class="persona-role">Revenue Optimization / Uçuş Optimizasyon Şefliği</div>
                 </div>
                 
                 <div class="info-row">
                     <div class="info-row-label">PRIMARY GOAL</div>
-                    <div class="info-row-value">Process international cargo bookings via multiple channels (API, FFR, TK GO) with embargo/Accuity checks and ACRM pricing</div>
+                    <div class="info-row-value">Ensure aircraft carries optimal load by managing capacity, resolving TBA flights, and reassigning bookings for maximum revenue</div>
                 </div>
                 
                 <div class="info-row">
                     <div class="info-row-label">KEY USERS</div>
-                    <div class="info-row-value">Mehtap Çevik, Hasan Çengel, Cevdet Umutlu</div>
+                    <div class="info-row-value">Kerem Hazım Aydemir, Onur İskender, Ezgi Karatepe (Flight Optimization Chef)</div>
                 </div>
                 
                 <div class="info-row">
-                    <div class="info-row-label">PRIMARY SCREEN</div>
-                    <div class="info-row-value">CAP018 - International Reservation Entry</div>
+                    <div class="info-row-label">DEPARTMENT</div>
+                    <div class="info-row-value">Kargo Gelir Optimizasyon Müdürlüğü - Uçuş Optimizasyon Şefliği</div>
                 </div>
                 
-                <div class="section-label">BOOKING CHANNELS</div>
+                <div class="section-label">CAPACITY TYPES MANAGED</div>
                 <div class="tags">
-                    <span class="channel-badge channel-api">📡 API (70%)</span>
-                    <span class="channel-badge channel-ffr">📨 FFR (20%)</span>
-                    <span class="channel-badge channel-tkgo">🖥️ TK GO (5%)</span>
-                    <span class="channel-badge channel-call">📞 Call (5%)</span>
+                    <span class="capacity-type capacity-weight">⚖️ Weight-Based</span>
+                    <span class="capacity-type capacity-volume">📦 Volume-Based</span>
+                    <span class="capacity-type capacity-position">📍 Position-Based</span>
                 </div>
             </div>
         </div>
@@ -296,28 +300,28 @@
             </div>
             <div class="card-body">
                 <div class="job-card">
-                    <div class="job-card-title">📋 Process Reservation Requests</div>
-                    <div class="job-card-desc">Receive bookings via API, FFR, TK GO, and phone. Validate cargo details, routes, and special requirements.</div>
+                    <div class="job-card-title">🔄 TBA Flight Resolution</div>
+                    <div class="job-card-desc">Identify flights in TBA status (To Be Advised) due to capacity overflow or restrictions. Investigate root cause via Flight History and resolve by capacity adjustment or booking reassignment.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">🛡️ Embargo & Accuity Checks</div>
-                    <div class="job-card-desc">Perform compliance checks for international shipments, embargo controls, and Accuity/sanction screening.</div>
+                    <div class="job-card-title">✈️ Booking Reassignment</div>
+                    <div class="job-card-desc">Move bookings between flights when capacity issues arise. Select alternative flights, capture irregularity reasons, handle spot booking cancellations, and check embargo lists.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">💰 ACRM Pricing Integration</div>
-                    <div class="job-card-desc">Apply contract rates from ACRM (Agent Contract Rate Management) system for pricing calculations.</div>
+                    <div class="job-card-title">📊 Segment Capacity Management</div>
+                    <div class="job-card-desc">Define and adjust segment-level capacities. Handle multi-leg flights where each segment may have different capacity constraints.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">🔄 Routing & Allotment</div>
-                    <div class="job-card-desc">Find optimal routing with available capacity. Manage allotments and blocking for key customers.</div>
+                    <div class="job-card-title">🔒 Flight Control & Access</div>
+                    <div class="job-card-desc">Control flight booking access by station. Allow/restrict specific stations from booking on open/closed flights.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">⏰ 6.5 Hour Constraint</div>
-                    <div class="job-card-desc">Ensure all reservations are finalized minimum 6.5 hours before flight departure (Cut-off time).</div>
+                    <div class="job-card-title">📈 Last-Minute Capacity Optimization</div>
+                    <div class="job-card-desc">Monitor and adjust capacity close to departure. Check OPR010 for ready-to-load shipments that can be moved to earlier flights.</div>
                 </div>
             </div>
         </div>
@@ -330,43 +334,44 @@
             </div>
             <div class="card-body">
                 <div class="system-card">
-                    <div class="system-card-name">🖥️ CAP018</div>
-                    <div class="system-card-role">Main International Reservation Screen</div>
+                    <div class="system-card-name">🖥️ CAP147</div>
+                    <div class="system-card-role">Booking List & Status Management</div>
                     <div class="system-card-data">
-                        <span>Booking Entry</span>
-                        <span>Routing</span>
-                        <span>Capacity Check</span>
-                        <span>Rate Apply</span>
+                        <span>Confirmed Bookings</span>
+                        <span>Queued Bookings</span>
+                        <span>Affected List (TBA)</span>
+                        <span>Flight Control</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">💰 ACRM</div>
-                    <div class="system-card-role">Agent Contract Rate Management</div>
+                    <div class="system-card-name">📋 CAP018</div>
+                    <div class="system-card-role">Maintain Booking Screen</div>
                     <div class="system-card-data">
-                        <span>Contract Rates</span>
-                        <span>Spot Rates</span>
-                        <span>Discounts</span>
+                        <span>Weight/Volume Entry</span>
+                        <span>Chargeable Weight</span>
+                        <span>Reassign Flight</span>
+                        <span>Irregularity Capture</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">🛡️ Accuity</div>
-                    <div class="system-card-role">Sanction & Compliance Screening</div>
+                    <div class="system-card-name">✈️ FLT002</div>
+                    <div class="system-card-role">Flight Management</div>
                     <div class="system-card-data">
-                        <span>Shipper Check</span>
-                        <span>Consignee Check</span>
-                        <span>Embargo</span>
+                        <span>Active Flights</span>
+                        <span>Revalidate TBA</span>
+                        <span>Flight History (SHR011)</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">📡 Integration Channels</div>
-                    <div class="system-card-role">External Systems</div>
+                    <div class="system-card-name">🔍 CAP145 / CAP149</div>
+                    <div class="system-card-role">Flight Search & Closure</div>
                     <div class="system-card-data">
-                        <span>API</span>
-                        <span>SITA FFR</span>
-                        <span>TK GO Portal</span>
+                        <span>Close Segment</span>
+                        <span>Search Flight</span>
+                        <span>Capacity View</span>
                     </div>
                 </div>
             </div>
@@ -390,39 +395,33 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Cut-off Time Pressure</strong></td>
-                            <td>Must finalize all bookings 6.5 hours before departure</td>
-                            <td>Last-minute changes cause capacity loss</td>
+                            <td><strong>TBA Root Cause Investigation</strong></td>
+                            <td>When flight goes TBA, must navigate to SHR011 via FLT002 to find root cause from logs/messages</td>
+                            <td>Time-consuming investigation delays resolution; flights stay in limbo</td>
                             <td><span class="severity-badge critical">CRITICAL</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Accuity Manual Re-check</strong></td>
-                            <td>System requires manual sanctions check for each shipper/consignee</td>
-                            <td>Delays booking confirmation, repetitive work</td>
+                            <td><strong>Multi-Step Reassignment Process</strong></td>
+                            <td>Reassigning booking requires: Select flight → Capture Irregularity → Handle Spot Booking warning → Check Embargo</td>
+                            <td>Complex workflow increases error risk and processing time</td>
                             <td><span class="severity-badge high">HIGH</span></td>
                         </tr>
                         <tr>
-                            <td><strong>ACRM-COMIS Price Sync</strong></td>
-                            <td>Contract rates sometimes don't pull correctly from ACRM</td>
-                            <td>Wrong pricing, revenue leakage, agent disputes</td>
+                            <td><strong>Segment vs Flight Capacity Confusion</strong></td>
+                            <td>Multi-leg flights show same total capacity for all legs; must check each segment separately</td>
+                            <td>Misleading capacity view can cause overbooking or underutilization</td>
                             <td><span class="severity-badge high">HIGH</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Multi-leg Routing Complexity</strong></td>
-                            <td>Hub connections (IST-DOH-destination) need manual capacity check per leg</td>
-                            <td>Suboptimal routing, missed connections</td>
+                            <td><strong>Physical vs Commercial Capacity Gap</strong></td>
+                            <td>Discrepancy between physical aircraft capacity and commercially available capacity causes confusion</td>
+                            <td>Difficult to explain to sales teams; revenue optimization decisions affected</td>
                             <td><span class="severity-badge medium">MEDIUM</span></td>
                         </tr>
                         <tr>
-                            <td><strong>API Error Handling</strong></td>
-                            <td>Rejected API bookings require manual follow-up with agents</td>
-                            <td>Lost bookings, customer dissatisfaction</td>
-                            <td><span class="severity-badge medium">MEDIUM</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Allotment Visibility</strong></td>
-                            <td>Difficult to see real-time allotment consumption per customer</td>
-                            <td>Overbooking or underutilization of contracts</td>
+                            <td><strong>Netline Data Sync Issues</strong></td>
+                            <td>Must verify flight info matches between Netline and COMIS; discrepancies require manual correction</td>
+                            <td>Data inconsistency leads to operational errors</td>
                             <td><span class="severity-badge medium">MEDIUM</span></td>
                         </tr>
                     </tbody>
@@ -431,72 +430,59 @@
         </div>
 
         <!-- 5. WORKFLOW -->
-        <div class="card grid-span-3">
+        <div class="card grid-span-2">
             <div class="card-header">
                 <div class="card-number">5</div>
-                <div class="card-title">BOOKING WORKFLOW</div>
+                <div class="card-title">TBA RESOLUTION WORKFLOW</div>
             </div>
             <div class="card-body">
-                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin-bottom: 16px; padding: 16px; background: var(--bg-light); border-radius: 12px;">
-                    <div style="padding: 10px 14px; background: #dbeafe; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">📡</div>
-                        <div style="font-size: 9px; font-weight: 600;">API/FFR/TKGO</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--success-light); border-radius: 8px; text-align: center; border: 1px solid var(--success);">
-                        <div style="font-size: 16px;">🖥️</div>
-                        <div style="font-size: 9px; font-weight: 600;">CAP018</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--warning-light); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">🛡️</div>
-                        <div style="font-size: 9px; font-weight: 600;">Embargo Check</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--primary-light); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">🔍</div>
-                        <div style="font-size: 9px; font-weight: 600;">Accuity</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: #fef3c7; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">💰</div>
-                        <div style="font-size: 9px; font-weight: 600;">ACRM Price</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: #ecfdf5; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">📊</div>
-                        <div style="font-size: 9px; font-weight: 600;">Capacity</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--success-light); border-radius: 8px; text-align: center; border: 2px solid var(--success);">
-                        <div style="font-size: 16px;">✅</div>
-                        <div style="font-size: 9px; font-weight: 600;">Confirmed</div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">1</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Detect TBA Flight</div>
+                        <div class="workflow-step-desc">Flight enters TBA status due to restriction or capacity overflow - visible in CAP147 Affected List</div>
                     </div>
                 </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-                    <div style="background: #dbeafe; padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: #1d4ed8; margin-bottom: 6px;">📡 Channel Reception</div>
-                        <div style="font-size: 9px; color: #1e40af;">70% via API integration, 20% SITA FFR messages, rest TK GO portal and phone calls</div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">2</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Identify TBA Reason</div>
+                        <div class="workflow-step-desc">Check CAP147 → View TBA reasons next to bookings in Affected List tab</div>
                     </div>
-                    <div style="background: var(--warning-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: #92400e; margin-bottom: 6px;">🛡️ Compliance Checks</div>
-                        <div style="font-size: 9px; color: #78350f;">Embargo validation per destination, Accuity sanction screening for shipper/consignee</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">3</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Investigate Root Cause</div>
+                        <div class="workflow-step-desc">FLT002 → Flight History → SHR011 to see all logs and messages</div>
                     </div>
-                    <div style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: var(--primary-dark); margin-bottom: 6px;">💰 Pricing Application</div>
-                        <div style="font-size: 9px; color: #5b21b6;">Pull rates from ACRM (contract/spot), apply surcharges, calculate final price</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">4</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Resolve: Capacity Increase</div>
+                        <div class="workflow-step-desc">If capacity overflow: temporarily increase segment capacity via CAP145</div>
                     </div>
-                    <div style="background: var(--success-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: var(--success); margin-bottom: 6px;">✅ Confirmation</div>
-                        <div style="font-size: 9px; color: #166534;">Send booking confirmation via same channel, must be 6.5h before departure</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">5</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Resolve: Booking Reassignment</div>
+                        <div class="workflow-step-desc">CAP018 → Reassign → Select Flight (CAP149) → Capture Irregularity → Check Embargo</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">6</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Reactivate Flight</div>
+                        <div class="workflow-step-desc">FLT002 → Select flight → Revalidate to make flight active again</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 6. EMPATHY MAP -->
-        <div class="card grid-span-2">
+        <div class="card">
             <div class="card-header">
                 <div class="card-number">6</div>
                 <div class="card-title">EMPATHY MAP</div>
@@ -504,110 +490,196 @@
             <div class="card-body">
                 <div class="empathy-map-container">
                     <div class="empathy-quadrant thinking">
-                        <div class="empathy-title">🧠 THINKING</div>
+                        <div class="empathy-title">🧠 Thinking</div>
                         <ul class="empathy-items">
-                            <li>"Is this shipper on the sanctions list?"</li>
-                            <li>"Will this route have available capacity?"</li>
-                            <li>"Is the ACRM contract rate applied correctly?"</li>
+                            <li>• "Hangi booking'ler öncelikli?"</li>
+                            <li>• "Bu uçuş neden TBA'ya düştü?"</li>
+                            <li>• "En iyi capacity allocation ne?"</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant hearing">
-                        <div class="empathy-title">👂 HEARING</div>
+                        <div class="empathy-title">👂 Hearing</div>
                         <ul class="empathy-items">
-                            <li>"We need urgent booking to JFK today"</li>
-                            <li>"Why is this rate higher than our contract?"</li>
-                            <li>"The API rejected our booking again"</li>
+                            <li>• Sales: "Müşterimiz acil!"</li>
+                            <li>• Ops: "Uçuş kalkış saatine az kaldı"</li>
+                            <li>• ACRM forecasts</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-center">
-                        <div class="empathy-center-icon">🌍</div>
+                        <div class="empathy-center-icon">⚡</div>
                     </div>
-                    
                     <div class="empathy-quadrant seeing">
-                        <div class="empathy-title">👀 SEEING</div>
+                        <div class="empathy-title">👁️ Seeing</div>
                         <ul class="empathy-items">
-                            <li>CAP018 with booking queue backlog</li>
-                            <li>FFR messages piling up</li>
-                            <li>Cut-off countdown timer</li>
+                            <li>• CAP147 booking listesi</li>
+                            <li>• Segment kapasite dolulukları</li>
+                            <li>• TBA affected flights</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant doing">
-                        <div class="empathy-title">✋ DOING</div>
+                        <div class="empathy-title">🖐️ Doing</div>
                         <ul class="empathy-items">
-                            <li>Running Accuity checks repeatedly</li>
-                            <li>Cross-checking ACRM contract rates</li>
-                            <li>Searching for alternative routing</li>
+                            <li>• Booking reassignment</li>
+                            <li>• Kapasite ayarlama</li>
+                            <li>• Flight revalidation</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant pain">
-                        <div class="empathy-title">😫 PAINS</div>
+                        <div class="empathy-title">😣 Pain</div>
                         <ul class="empathy-items">
-                            <li>Time pressure with 6.5h cut-off</li>
-                            <li>Manual compliance re-checks</li>
-                            <li>ACRM pricing sync issues</li>
+                            <li>• Çok adımlı süreçler</li>
+                            <li>• Netline-COMIS sync hataları</li>
+                            <li>• Zaman baskısı</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant gain">
-                        <div class="empathy-title">🎯 GAINS</div>
+                        <div class="empathy-title">🎯 Gain</div>
                         <ul class="empathy-items">
-                            <li>API automation reduces manual entry</li>
-                            <li>Real-time capacity visibility</li>
-                            <li>Global reach from IST hub</li>
+                            <li>• Optimum load factor</li>
+                            <li>• Revenue maksimizasyonu</li>
+                            <li>• Sorunsuz operasyon</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 7. AI SUPPORT OPPORTUNITIES -->
-        <div class="card">
+        <!-- 7. AI SUPPORT POTENTIAL -->
+        <div class="card grid-span-2">
             <div class="card-header">
                 <div class="card-number">7</div>
-                <div class="card-title">AI OPPORTUNITIES</div>
+                <div class="card-title">AI SUPPORT POTENTIAL</div>
             </div>
             <div class="card-body">
-                <div class="ai-task-card auto">
-                    <div class="ai-task-header">
-                        <span class="ai-task-icon">🤖</span>
-                        <span class="ai-task-title">AUTOMATE</span>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div class="ai-task-card auto">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">🤖</span>
+                            <span class="ai-task-title">AUTOMATED</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • TBA root cause auto-detection from SHR011 logs<br>
+                            • Netline-COMIS data discrepancy alerts<br>
+                            • Capacity overflow early warnings
+                        </div>
                     </div>
-                    <div class="ai-task-desc">
-                        • Auto-Accuity check with caching<br>
-                        • ACRM rate auto-apply<br>
-                        • API error auto-retry logic
+                    <div class="ai-task-card suggest">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">💡</span>
+                            <span class="ai-task-title">AI SUGGESTS</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Alternative flight recommendations for reassignment<br>
+                            • Optimal booking prioritization based on revenue<br>
+                            • Segment capacity adjustment recommendations
+                        </div>
                     </div>
-                </div>
-                
-                <div class="ai-task-card suggest">
-                    <div class="ai-task-header">
-                        <span class="ai-task-icon">💡</span>
-                        <span class="ai-task-title">AI-ASSIST</span>
-                    </div>
-                    <div class="ai-task-desc">
-                        • Optimal routing suggestions<br>
-                        • Cut-off risk alerts<br>
-                        • Allotment consumption warnings
-                    </div>
-                </div>
-                
-                <div class="ai-task-card human">
-                    <div class="ai-task-header">
-                        <span class="ai-task-icon">👤</span>
-                        <span class="ai-task-title">HUMAN</span>
-                    </div>
-                    <div class="ai-task-desc">
-                        • Complex multi-leg negotiations<br>
-                        • Embargo exception decisions<br>
-                        • VIP customer handling
+                    <div class="ai-task-card human">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">👤</span>
+                            <span class="ai-task-title">HUMAN DECIDES</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Final booking reassignment approval<br>
+                            • Flight revalidation decision<br>
+                            • Station access control changes<br>
+                            • Spot booking cancellation
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- 8. KEY SCREENS DETAIL -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">KEY SCREEN INTERACTIONS</div>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-row-label">CAP147 → CAP018</div>
+                    <div class="info-row-value">Click booking details to open Maintain Booking screen</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">CAP018 → CAP149</div>
+                    <div class="info-row-value">Reassign action opens Select Flight search popup</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">FLT002 → SHR011</div>
+                    <div class="info-row-value">Flight History button shows all logs and messages</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">CAP147 → Flight Control</div>
+                    <div class="info-row-value">Manage station-level booking permissions</div>
+                </div>
+                
+                <div class="section-label">COLLABORATION</div>
+                <div class="tags">
+                    <span class="tag success">Flight Planning Team</span>
+                    <span class="tag warning">Sales Teams</span>
+                    <span class="tag">ACRM System</span>
+                    <span class="tag">Netline</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. DECISION POINTS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">9</div>
+                <div class="card-title">CRITICAL DECISION POINTS</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Decision</th>
+                            <th>Data Required</th>
+                            <th>System Support</th>
+                            <th>Authority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Increase Segment Capacity</strong></td>
+                            <td>Current utilization, physical limits, forecasted demand</td>
+                            <td>CAP145 - temporary capacity adjustment</td>
+                            <td>Self-approval for temporary; manager for permanent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reassign Booking to Another Flight</strong></td>
+                            <td>Alternative flight availability, customer priority, embargo status</td>
+                            <td>CAP018 → CAP149 with Irregularity capture</td>
+                            <td>Self-approval; must document reason</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Revalidate TBA Flight</strong></td>
+                            <td>TBA root cause resolution confirmation</td>
+                            <td>FLT002 Revalidate function</td>
+                            <td>Self-approval after issue resolution</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Close/Open Flight for Station</strong></td>
+                            <td>Station booking patterns, capacity situation</td>
+                            <td>CAP147 Flight Control</td>
+                            <td>Self-approval; reversible action</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cancel Spot Booking</strong></td>
+                            <td>Spot booking details, replacement availability</td>
+                            <td>System warning during reassignment</td>
+                            <td>Requires confirmation; may need commercial approval</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
+
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 10px;">
+        <p>CAM - Capacity Management Module | Flight Optimization Specialist Persona | Generated from Key User MoM Analysis</p>
+        <p>Source: LPD-2025-12-02 to LPD-2026-02-03 Key User Capacity Workshops</p>
+    </footer>
 </body>
 </html>
