@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking & Reservation - IST International Agent Persona</title>
+    <title>COM - Sanctions Compliance Specialist Persona</title>
     <style>
         :root {
-            --primary: #7c3aed;
-            --primary-light: #f5f3ff;
-            --primary-dark: #6d28d9;
-            --secondary: #8b5cf6;
+            --primary: #dc2626;
+            --primary-light: #fef2f2;
+            --primary-dark: #b91c1c;
+            --secondary: #7c3aed;
             --success: #16a34a;
             --success-light: #f0fdf4;
             --warning: #f59e0b;
             --warning-light: #fef3c7;
             --danger: #dc2626;
             --danger-light: #fef2f2;
-            --orange: #ea580c;
-            --orange-light: #fff7ed;
             --text-dark: #1f2937;
             --text-muted: #6b7280;
             --bg-light: #f9fafb;
@@ -29,7 +27,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, var(--primary-light) 0%, #f8fafc 100%);
+            background: linear-gradient(180deg, var(--primary-light) 0%, #fef2f2 100%);
             min-height: 100vh;
             font-size: 12px;
             color: var(--text-dark);
@@ -75,8 +73,8 @@
         }
         
         .card-header {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            color: #1e3a5f;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #991b1b;
             padding: 10px 14px;
             display: flex;
             align-items: center;
@@ -143,7 +141,7 @@
         
         .empathy-map-container { display: grid; grid-template-columns: 1fr 80px 1fr; grid-template-rows: repeat(3, auto); gap: 12px; margin-bottom: 14px; }
         .empathy-quadrant { padding: 12px; border-radius: 10px; font-size: 10px; }
-        .empathy-quadrant.thinking { background: #eff6ff; grid-column: 1; grid-row: 1; }
+        .empathy-quadrant.thinking { background: #fef2f2; grid-column: 1; grid-row: 1; }
         .empathy-quadrant.hearing { background: #fef3c7; grid-column: 3; grid-row: 1; }
         .empathy-quadrant.seeing { background: #f3e8ff; grid-column: 1; grid-row: 2; }
         .empathy-quadrant.doing { background: #ecfdf5; grid-column: 3; grid-row: 2; }
@@ -164,11 +162,11 @@
         .ai-task-title { font-size: 11px; font-weight: 600; }
         .ai-task-desc { font-size: 10px; line-height: 1.5; }
 
-        .channel-badge { padding: 4px 10px; border-radius: 6px; font-size: 9px; font-weight: 500; display: inline-block; margin: 2px; }
-        .channel-api { background: #dbeafe; color: #1d4ed8; }
-        .channel-ffr { background: #dcfce7; color: #166534; }
-        .channel-tkgo { background: #fef3c7; color: #92400e; }
-        .channel-call { background: #f3e8ff; color: #7c3aed; }
+        .workflow-step { display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--bg-light); border-radius: 8px; margin-bottom: 8px; }
+        .workflow-number { width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+        .workflow-content { flex: 1; }
+        .workflow-title { font-size: 11px; font-weight: 600; color: var(--primary); }
+        .workflow-desc { font-size: 9px; color: var(--text-muted); }
 
         /* Side Menu - Always Open */
         .side-menu { position: fixed; left: 0; top: 0; height: 100vh; width: 280px; background: white; box-shadow: 2px 0 20px rgba(0,0,0,0.1); z-index: 1000; display: flex; flex-direction: column; overflow: hidden; }
@@ -199,7 +197,7 @@
             <div><h2>🛫 Cargo Personas</h2><p>Module Navigation</p></div>
         </div>
         <div class="menu-content">
-                        <div class="menu-section">
+            <div class="menu-section">
                 <div class="menu-section-title">✈️ FLM - Flight Management</div>
                 <a href="flm-network-planner-infographic-EN.html" class="menu-link"><span class="icon">🌐</span>Network Planner<span class="badge badge-key">Key</span></a>
                 <a href="flm-key-user-infographic-EN.html" class="menu-link"><span class="icon">📅</span>Schedule Planner<span class="badge badge-key">Key</span></a>
@@ -213,23 +211,23 @@
             </div>
             <div class="menu-section">
                 <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
-                <a href="bkr-key-user-infographic-EN.html" class="menu-link active"><span class="icon">🌍</span>IST International Agent<span class="badge badge-key">Key</span></a>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link"><span class="icon">🌍</span>IST International Agent<span class="badge badge-key">Key</span></a>
                 <a href="bkr-domestic-key-user-infographic-EN.html" class="menu-link"><span class="icon">🏠</span>Domestic Agent<span class="badge badge-key">Key</span></a>
                 <a href="bkr-uld-key-user-infographic-EN.html" class="menu-link"><span class="icon">📦</span>ULD Specialist<span class="badge badge-key">Key</span></a>
                 <a href="bkr-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
             </div>
-                        <div class="menu-section">
+            <div class="menu-section">
                 <div class="menu-section-title">📊 CAM - Capacity Management</div>
                 <a href="cam-optimization-key-user-infographic-EN.html" class="menu-link"><span class="icon">⚡</span>Flight Optimization Specialist<span class="badge badge-key">Key</span></a>
                 <a href="cam-analyst-key-user-infographic-EN.html" class="menu-link"><span class="icon">📈</span>Capacity Analyst<span class="badge badge-key">Key</span></a>
             </div>
-                        <div class="menu-section">
+            <div class="menu-section">
                 <div class="menu-section-title">🛡️ COM - Compliance Management</div>
-                <a href="com-sanctions-key-user-infographic-EN.html" class="menu-link"><span class="icon">⚠️</span>Sanctions Specialist<span class="badge badge-key">Key</span></a>
+                <a href="com-sanctions-key-user-infographic-EN.html" class="menu-link active"><span class="icon">⚠️</span>Sanctions Specialist<span class="badge badge-key">Key</span></a>
                 <a href="com-embargo-key-user-infographic-EN.html" class="menu-link"><span class="icon">🚫</span>Embargo & Restriction Spec.<span class="badge badge-key">Key</span></a>
                 <a href="com-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
             </div>
-<div class="menu-section">
+            <div class="menu-section">
                 <div class="menu-section-title">💰 PCM - Pricing Management</div>
                 <a href="pcm-key-user-infographic-EN.html" class="menu-link"><span class="icon">💰</span>Pricing Analyst<span class="badge badge-key">Key</span></a>
                 <a href="pcm-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
@@ -247,9 +245,9 @@
     </nav>
 
     <header class="header">
-        <h1>🌍 IST OUTBOUND INTERNATIONAL AGENT PERSONA</h1>
-        <p>BKR - Booking & Reservation Module | IST Hub Outbound International Key User Profile</p>
-        <div class="header-tagline">"6.5 saat kısıtı ile dünyanın her yerine kargo rezervasyonu yapıyoruz"</div>
+        <h1>⚠️ SANCTIONS COMPLIANCE SPECIALIST PERSONA</h1>
+        <p>COM - Compliance Management Module | Accuity/LexisNexis Sanctions Screening Team</p>
+        <div class="header-tagline">"24/7 yaptırım listelerini tarayarak THY Cargo'yu koruyoruz"</div>
     </header>
 
     <main class="main-grid">
@@ -261,32 +259,37 @@
             </div>
             <div class="card-body">
                 <div class="persona-center">
-                    <div class="persona-avatar">🌍</div>
-                    <div class="persona-name">IST International Agent</div>
-                    <div class="persona-role">Outbound International Reservations</div>
+                    <div class="persona-avatar">⚠️</div>
+                    <div class="persona-name">Sanctions Compliance Specialist</div>
+                    <div class="persona-role">Kargo Uyumluluk ve Standardizasyon Md.</div>
                 </div>
                 
                 <div class="info-row">
                     <div class="info-row-label">PRIMARY GOAL</div>
-                    <div class="info-row-value">Process international cargo bookings via multiple channels (API, FFR, TK GO) with embargo/Accuity checks and ACRM pricing</div>
+                    <div class="info-row-value">Monitor and review Accuity system alerts for US/EU sanctions compliance, process open cases, and protect company from regulatory violations</div>
                 </div>
                 
                 <div class="info-row">
                     <div class="info-row-label">KEY USERS</div>
-                    <div class="info-row-value">Mehtap Çevik, Hasan Çengel, Cevdet Umutlu</div>
+                    <div class="info-row-value">Gizem Ercan (Kargo Uyumluluk ve Standardizas.Muduru), Nurseli Kaçar</div>
                 </div>
                 
                 <div class="info-row">
-                    <div class="info-row-label">PRIMARY SCREEN</div>
-                    <div class="info-row-value">CAP018 - International Reservation Entry</div>
+                    <div class="info-row-label">DEPARTMENT</div>
+                    <div class="info-row-value">Quality and Documentation Directorate - Compliance Department</div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-row-label">WORKING PATTERN</div>
+                    <div class="info-row-value">24/7 Shift Operations - Continuous monitoring</div>
                 </div>
                 
-                <div class="section-label">BOOKING CHANNELS</div>
+                <div class="section-label">SANCTION LISTS MONITORED</div>
                 <div class="tags">
-                    <span class="channel-badge channel-api">📡 API (70%)</span>
-                    <span class="channel-badge channel-ffr">📨 FFR (20%)</span>
-                    <span class="channel-badge channel-tkgo">🖥️ TK GO (5%)</span>
-                    <span class="channel-badge channel-call">📞 Call (5%)</span>
+                    <span class="tag danger">🇺🇸 OFAC (US)</span>
+                    <span class="tag danger">🇪🇺 EU Sanctions</span>
+                    <span class="tag warning">🇬🇧 UK Sanctions</span>
+                    <span class="tag">🇺🇳 UN Lists</span>
                 </div>
             </div>
         </div>
@@ -299,28 +302,28 @@
             </div>
             <div class="card-body">
                 <div class="job-card">
-                    <div class="job-card-title">📋 Process Reservation Requests</div>
-                    <div class="job-card-desc">Receive bookings via API, FFR, TK GO, and phone. Validate cargo details, routes, and special requirements.</div>
+                    <div class="job-card-title">🔍 Monitor Open Cases in Accuity</div>
+                    <div class="job-card-desc">24/7 shift team reviews risky matches that appear as "open case". Analyze name/company similarity scores and determine true positives.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">🛡️ Embargo & Accuity Checks</div>
-                    <div class="job-card-desc">Perform compliance checks for international shipments, embargo controls, and Accuity/sanction screening.</div>
+                    <div class="job-card-title">⚡ Real-time Booking Screening</div>
+                    <div class="job-card-desc">Every booking flows to Accuity within 2-3 seconds. System automatically evaluates shipper, consignee, forwarder against sanction lists.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">💰 ACRM Pricing Integration</div>
-                    <div class="job-card-desc">Apply contract rates from ACRM (Agent Contract Rate Management) system for pricing calculations.</div>
+                    <div class="job-card-title">🚫 Block Sanctioned Shipments</div>
+                    <div class="job-card-desc">When confirmed match found, block booking immediately. If cargo already in transit, coordinate return to origin point.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">🔄 Routing & Allotment</div>
-                    <div class="job-card-desc">Find optimal routing with available capacity. Manage allotments and blocking for key customers.</div>
+                    <div class="job-card-title">📋 Handle Receiver Changes</div>
+                    <div class="job-card-desc">Critical pain point: receiver info can change even after cargo reaches destination. Re-screen and potentially stop shipment mid-journey.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">⏰ 6.5 Hour Constraint</div>
-                    <div class="job-card-desc">Ensure all reservations are finalized minimum 6.5 hours before flight departure (Cut-off time).</div>
+                    <div class="job-card-title">📊 Risk Parameter Review</div>
+                    <div class="job-card-desc">Evaluate similarity thresholds, false positive rates. Manual review required as no direct customer communication - system works automatically.</div>
                 </div>
             </div>
         </div>
@@ -333,166 +336,143 @@
             </div>
             <div class="card-body">
                 <div class="system-card">
-                    <div class="system-card-name">🖥️ CAP018</div>
-                    <div class="system-card-role">Main International Reservation Screen</div>
+                    <div class="system-card-name">🛡️ Accuity (LexisNexis)</div>
+                    <div class="system-card-role">Primary Sanctions Screening Platform</div>
                     <div class="system-card-data">
-                        <span>Booking Entry</span>
-                        <span>Routing</span>
-                        <span>Capacity Check</span>
-                        <span>Rate Apply</span>
+                        <span>Open Cases</span>
+                        <span>Risk Scores</span>
+                        <span>Match Analysis</span>
+                        <span>Block Actions</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">💰 ACRM</div>
-                    <div class="system-card-role">Agent Contract Rate Management</div>
+                    <div class="system-card-name">📦 COMIS Integration</div>
+                    <div class="system-card-role">Booking Data Flow to Accuity</div>
                     <div class="system-card-data">
-                        <span>Contract Rates</span>
-                        <span>Spot Rates</span>
-                        <span>Discounts</span>
+                        <span>AWB Number</span>
+                        <span>Shipper Info</span>
+                        <span>Consignee Info</span>
+                        <span>Origin/Dest</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">🛡️ Accuity</div>
-                    <div class="system-card-role">Sanction & Compliance Screening</div>
+                    <div class="system-card-name">🚀 Sungur (Future)</div>
+                    <div class="system-card-role">Integrated Reservation Module</div>
                     <div class="system-card-data">
-                        <span>Shipper Check</span>
-                        <span>Consignee Check</span>
-                        <span>Embargo</span>
+                        <span>Built-in Accuity</span>
+                        <span>Real-time Check</span>
                     </div>
                 </div>
-                
-                <div class="system-card">
-                    <div class="system-card-name">📡 Integration Channels</div>
-                    <div class="system-card-role">External Systems</div>
-                    <div class="system-card-data">
-                        <span>API</span>
-                        <span>SITA FFR</span>
-                        <span>TK GO Portal</span>
-                    </div>
+
+                <div class="section-label">DATA TRANSFERRED TO ACCUITY</div>
+                <div class="tags">
+                    <span class="tag success">✓ AWB Number</span>
+                    <span class="tag success">✓ Shipper</span>
+                    <span class="tag success">✓ Consignee</span>
+                    <span class="tag success">✓ Forwarder</span>
+                    <span class="tag success">✓ Goods Desc</span>
+                    <span class="tag success">✓ HS Code</span>
+                </div>
+                <div class="section-label" style="margin-top:8px;">NOT TRANSFERRED (GAPS)</div>
+                <div class="tags">
+                    <span class="tag danger">✗ Flight Number</span>
+                    <span class="tag danger">✗ Flight Date</span>
+                    <span class="tag danger">✗ Piece/Kilo</span>
                 </div>
             </div>
         </div>
 
-        <!-- 4. PAIN POINTS -->
-        <div class="card grid-span-3">
+        <!-- 4. PAIN POINTS & FRUSTRATIONS -->
+        <div class="card grid-span-2">
             <div class="card-header">
                 <div class="card-number">4</div>
-                <div class="card-title">PAIN POINTS MATRIX</div>
+                <div class="card-title">PAIN POINTS & FRUSTRATIONS</div>
             </div>
             <div class="card-body">
                 <table class="mega-matrix-table">
                     <thead>
                         <tr>
                             <th>Pain Point</th>
-                            <th>Description</th>
-                            <th>Business Impact</th>
+                            <th>Impact</th>
+                            <th>Current Workaround</th>
                             <th>Severity</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Cut-off Time Pressure</strong></td>
-                            <td>Must finalize all bookings 6.5 hours before departure</td>
-                            <td>Last-minute changes cause capacity loss</td>
-                            <td><span class="severity-badge critical">CRITICAL</span></td>
+                            <td><strong>Incomplete Receiver Info at Booking</strong></td>
+                            <td>Can't properly screen consignee until late stage</td>
+                            <td>Re-screen on every booking update</td>
+                            <td><span class="severity-badge critical">Critical</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Accuity Manual Re-check</strong></td>
-                            <td>System requires manual sanctions check for each shipper/consignee</td>
-                            <td>Delays booking confirmation, repetitive work</td>
-                            <td><span class="severity-badge high">HIGH</span></td>
+                            <td><strong>Receiver Changes After Departure</strong></td>
+                            <td>Sanctioned party entered post-shipment, cargo must return</td>
+                            <td>Manual tracking, coordinate return logistics</td>
+                            <td><span class="severity-badge critical">Critical</span></td>
                         </tr>
                         <tr>
-                            <td><strong>ACRM-COMIS Price Sync</strong></td>
-                            <td>Contract rates sometimes don't pull correctly from ACRM</td>
-                            <td>Wrong pricing, revenue leakage, agent disputes</td>
-                            <td><span class="severity-badge high">HIGH</span></td>
+                            <td><strong>No Flight Info in Accuity</strong></td>
+                            <td>Cannot prioritize urgent cases by departure time</td>
+                            <td>Manual cross-reference with COMIS</td>
+                            <td><span class="severity-badge high">High</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Multi-leg Routing Complexity</strong></td>
-                            <td>Hub connections (IST-DOH-destination) need manual capacity check per leg</td>
-                            <td>Suboptimal routing, missed connections</td>
-                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                            <td><strong>High False Positive Rate</strong></td>
+                            <td>Name similarities trigger many non-matches</td>
+                            <td>Manual review of each open case</td>
+                            <td><span class="severity-badge medium">Medium</span></td>
                         </tr>
                         <tr>
-                            <td><strong>API Error Handling</strong></td>
-                            <td>Rejected API bookings require manual follow-up with agents</td>
-                            <td>Lost bookings, customer dissatisfaction</td>
-                            <td><span class="severity-badge medium">MEDIUM</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Allotment Visibility</strong></td>
-                            <td>Difficult to see real-time allotment consumption per customer</td>
-                            <td>Overbooking or underutilization of contracts</td>
-                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                            <td><strong>24/7 Shift Staffing</strong></td>
+                            <td>Continuous monitoring required, fatigue risk</td>
+                            <td>Rotating shift schedules</td>
+                            <td><span class="severity-badge medium">Medium</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 5. WORKFLOW -->
-        <div class="card grid-span-3">
+        <!-- 5. KEY DISTINCTION -->
+        <div class="card">
             <div class="card-header">
                 <div class="card-number">5</div>
-                <div class="card-title">BOOKING WORKFLOW</div>
+                <div class="card-title">EMBARGO ≠ SANCTION</div>
             </div>
             <div class="card-body">
-                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin-bottom: 16px; padding: 16px; background: var(--bg-light); border-radius: 12px;">
-                    <div style="padding: 10px 14px; background: #dbeafe; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">📡</div>
-                        <div style="font-size: 9px; font-weight: 600;">API/FFR/TKGO</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--success-light); border-radius: 8px; text-align: center; border: 1px solid var(--success);">
-                        <div style="font-size: 16px;">🖥️</div>
-                        <div style="font-size: 9px; font-weight: 600;">CAP018</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--warning-light); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">🛡️</div>
-                        <div style="font-size: 9px; font-weight: 600;">Embargo Check</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--primary-light); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">🔍</div>
-                        <div style="font-size: 9px; font-weight: 600;">Accuity</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: #fef3c7; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">💰</div>
-                        <div style="font-size: 9px; font-weight: 600;">ACRM Price</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: #ecfdf5; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">📊</div>
-                        <div style="font-size: 9px; font-weight: 600;">Capacity</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--success-light); border-radius: 8px; text-align: center; border: 2px solid var(--success);">
-                        <div style="font-size: 16px;">✅</div>
-                        <div style="font-size: 9px; font-weight: 600;">Confirmed</div>
-                    </div>
+                <div class="job-card" style="background: #fef2f2; border-left: 4px solid #dc2626;">
+                    <div class="job-card-title">⚠️ SANCTION (This Team)</div>
+                    <div class="job-card-desc">US/EU determined person/company lists, country-based restrictions. Legal/regulatory compliance. Managed via Accuity.</div>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-                    <div style="background: #dbeafe; padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: #1d4ed8; margin-bottom: 6px;">📡 Channel Reception</div>
-                        <div style="font-size: 9px; color: #1e40af;">70% via API integration, 20% SITA FFR messages, rest TK GO portal and phone calls</div>
+                <div class="job-card" style="background: #fef3c7; border-left: 4px solid #f59e0b;">
+                    <div class="job-card-title">🚫 EMBARGO (Different Team)</div>
+                    <div class="job-card-desc">IATA rules, country rules-based restrictions. E.g., cats/dogs under 10 weeks cannot be transported, mercury not accepted.</div>
+                </div>
+
+                <div class="section-label">INTEGRATION TRIGGERS</div>
+                <div class="workflow-step">
+                    <div class="workflow-number">1</div>
+                    <div class="workflow-content">
+                        <div class="workflow-title">Creation</div>
+                        <div class="workflow-desc">When initial booking is created</div>
                     </div>
-                    <div style="background: var(--warning-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: #92400e; margin-bottom: 6px;">🛡️ Compliance Checks</div>
-                        <div style="font-size: 9px; color: #78350f;">Embargo validation per destination, Accuity sanction screening for shipper/consignee</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-number">2</div>
+                    <div class="workflow-content">
+                        <div class="workflow-title">Execution</div>
+                        <div class="workflow-desc">At cargo acceptance stage</div>
                     </div>
-                    <div style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: var(--primary-dark); margin-bottom: 6px;">💰 Pricing Application</div>
-                        <div style="font-size: 9px; color: #5b21b6;">Pull rates from ACRM (contract/spot), apply surcharges, calculate final price</div>
-                    </div>
-                    <div style="background: var(--success-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: var(--success); margin-bottom: 6px;">✅ Confirmation</div>
-                        <div style="font-size: 9px; color: #166534;">Send booking confirmation via same channel, must be 6.5h before departure</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-number">3</div>
+                    <div class="workflow-content">
+                        <div class="workflow-title">Every Update</div>
+                        <div class="workflow-desc">New scan triggered on any change</div>
                     </div>
                 </div>
             </div>
@@ -509,69 +489,75 @@
                     <div class="empathy-quadrant thinking">
                         <div class="empathy-title">🧠 THINKING</div>
                         <ul class="empathy-items">
-                            <li>"Is this shipper on the sanctions list?"</li>
-                            <li>"Will this route have available capacity?"</li>
-                            <li>"Is the ACRM contract rate applied correctly?"</li>
+                            <li>• Is this name match a real sanctioned party?</li>
+                            <li>• How do I prioritize cases without flight info?</li>
+                            <li>• What if receiver changes after cargo departs?</li>
+                            <li>• Am I missing any critical high-risk shipments?</li>
                         </ul>
+                    </div>
+                    
+                    <div class="empathy-center">
+                        <div class="empathy-center-icon">⚠️</div>
                     </div>
                     
                     <div class="empathy-quadrant hearing">
                         <div class="empathy-title">👂 HEARING</div>
                         <ul class="empathy-items">
-                            <li>"We need urgent booking to JFK today"</li>
-                            <li>"Why is this rate higher than our contract?"</li>
-                            <li>"The API rejected our booking again"</li>
+                            <li>• "Accuity alert triggered for booking X"</li>
+                            <li>• "Consignee updated - need re-screen"</li>
+                            <li>• "Similar name but different company"</li>
+                            <li>• "Cargo already departed, stop at destination"</li>
                         </ul>
-                    </div>
-                    
-                    <div class="empathy-center">
-                        <div class="empathy-center-icon">🌍</div>
                     </div>
                     
                     <div class="empathy-quadrant seeing">
                         <div class="empathy-title">👀 SEEING</div>
                         <ul class="empathy-items">
-                            <li>CAP018 with booking queue backlog</li>
-                            <li>FFR messages piling up</li>
-                            <li>Cut-off countdown timer</li>
+                            <li>• Open cases queue in Accuity dashboard</li>
+                            <li>• Risk similarity scores (name, company)</li>
+                            <li>• AWB details cross-referenced with COMIS</li>
+                            <li>• Sanction list updates from OFAC/EU</li>
                         </ul>
                     </div>
                     
                     <div class="empathy-quadrant doing">
                         <div class="empathy-title">✋ DOING</div>
                         <ul class="empathy-items">
-                            <li>Running Accuity checks repeatedly</li>
-                            <li>Cross-checking ACRM contract rates</li>
-                            <li>Searching for alternative routing</li>
+                            <li>• Reviewing each open case manually</li>
+                            <li>• Cross-checking COMIS for flight details</li>
+                            <li>• Blocking confirmed sanctioned bookings</li>
+                            <li>• Coordinating cargo returns when needed</li>
                         </ul>
                     </div>
                     
                     <div class="empathy-quadrant pain">
-                        <div class="empathy-title">😫 PAINS</div>
+                        <div class="empathy-title">😫 PAIN</div>
                         <ul class="empathy-items">
-                            <li>Time pressure with 6.5h cut-off</li>
-                            <li>Manual compliance re-checks</li>
-                            <li>ACRM pricing sync issues</li>
+                            <li>• High false positive rate wastes time</li>
+                            <li>• No flight priority info in Accuity</li>
+                            <li>• Late receiver changes create chaos</li>
+                            <li>• 24/7 shift fatigue</li>
                         </ul>
                     </div>
                     
                     <div class="empathy-quadrant gain">
-                        <div class="empathy-title">🎯 GAINS</div>
+                        <div class="empathy-title">🎯 GAIN</div>
                         <ul class="empathy-items">
-                            <li>API automation reduces manual entry</li>
-                            <li>Real-time capacity visibility</li>
-                            <li>Global reach from IST hub</li>
+                            <li>• Protecting THY from regulatory fines</li>
+                            <li>• Real-time integration with COMIS works well</li>
+                            <li>• Accuity almost monopoly - industry standard</li>
+                            <li>• Sungur will have built-in screening</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 7. AI SUPPORT OPPORTUNITIES -->
+        <!-- 7. AI OPPORTUNITY ANALYSIS -->
         <div class="card">
             <div class="card-header">
                 <div class="card-number">7</div>
-                <div class="card-title">AI OPPORTUNITIES</div>
+                <div class="card-title">AI OPPORTUNITY ANALYSIS</div>
             </div>
             <div class="card-body">
                 <div class="ai-task-card auto">
@@ -579,38 +565,82 @@
                         <span class="ai-task-icon">🤖</span>
                         <span class="ai-task-title">AUTOMATE</span>
                     </div>
-                    <div class="ai-task-desc">
-                        • Auto-Accuity check with caching<br>
-                        • ACRM rate auto-apply<br>
-                        • API error auto-retry logic
-                    </div>
+                    <div class="ai-task-desc">False positive filtering based on historical patterns, auto-close obvious non-matches (e.g., common names with verified entities)</div>
                 </div>
                 
                 <div class="ai-task-card suggest">
                     <div class="ai-task-header">
                         <span class="ai-task-icon">💡</span>
-                        <span class="ai-task-title">AI-ASSIST</span>
+                        <span class="ai-task-title">AI-SUGGEST</span>
                     </div>
-                    <div class="ai-task-desc">
-                        • Optimal routing suggestions<br>
-                        • Cut-off risk alerts<br>
-                        • Allotment consumption warnings
-                    </div>
+                    <div class="ai-task-desc">Prioritize open cases by flight departure time, suggest urgency ranking, recommend similar historical case decisions</div>
                 </div>
                 
                 <div class="ai-task-card human">
                     <div class="ai-task-header">
                         <span class="ai-task-icon">👤</span>
-                        <span class="ai-task-title">HUMAN</span>
+                        <span class="ai-task-title">HUMAN DECISION</span>
                     </div>
-                    <div class="ai-task-desc">
-                        • Complex multi-leg negotiations<br>
-                        • Embargo exception decisions<br>
-                        • VIP customer handling
-                    </div>
+                    <div class="ai-task-desc">Final sanction match confirmation, blocking decisions, return logistics coordination, regulatory reporting</div>
                 </div>
             </div>
         </div>
+
+        <!-- 8. USER STORY MAP -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">USER STORY MAP - SANCTIONS SCREENING WORKFLOW</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>User Story</th>
+                            <th>Acceptance Criteria</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>📥 Booking Creation</strong></td>
+                            <td>As a sanctions specialist, I need bookings to flow to Accuity within seconds</td>
+                            <td>All AWB, shipper, consignee, forwarder data transferred in &lt;3 seconds</td>
+                            <td><span class="severity-badge critical">P0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔍 Case Review</strong></td>
+                            <td>As a sanctions specialist, I need to see open cases with flight priority</td>
+                            <td>Cases sorted by departure time, risk score visible, one-click COMIS access</td>
+                            <td><span class="severity-badge critical">P0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔄 Update Trigger</strong></td>
+                            <td>As a sanctions specialist, I need every booking update to re-trigger screening</td>
+                            <td>Receiver change → new scan → alert if match found</td>
+                            <td><span class="severity-badge critical">P0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🚫 Block Action</strong></td>
+                            <td>As a sanctions specialist, I need to block confirmed matches immediately</td>
+                            <td>One-click block with audit trail, notification to booking team</td>
+                            <td><span class="severity-badge high">P1</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>📊 Reporting</strong></td>
+                            <td>As a compliance manager, I need audit reports for regulatory purposes</td>
+                            <td>Full history of decisions, timestamps, approvers exportable</td>
+                            <td><span class="severity-badge high">P1</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
+
+    <footer style="text-align:center; padding:20px; color:var(--text-muted); font-size:10px;">
+        COM - Compliance Management | Sanctions Compliance Specialist Persona | Generated from MoM Analysis | May 2026
+    </footer>
 </body>
 </html>
