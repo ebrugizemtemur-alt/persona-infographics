@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking & Reservation - Domestic Key User Persona</title>
+    <style>
+        :root {
+            --primary: #ea580c;
+            --primary-light: #fff7ed;
+            --primary-dark: #c2410c;
+            --secondary: #f97316;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --purple: #7c3aed;
+            --purple-light: #f5f3ff;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, var(--primary-light) 0%, #f8fafc 100%);
+            min-height: 100vh;
+            font-size: 12px;
+            color: var(--text-dark);
+            padding-left: 70px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 32px;
+            text-align: center;
+        }
+        
+        .header h1 { font-size: 26px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; color: white; }
+        .header p { font-size: 11px; opacity: 0.85; }
+        
+        .header-tagline {
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 10px 24px;
+            margin-top: 14px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 16px 24px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
+        .grid-span-2 { grid-column: span 2; }
+        .grid-span-3 { grid-column: span 3; }
+        
+        .card {
+            background: var(--bg-white);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #1e3a5f;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-number {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+        }
+        
+        .card-title { font-size: 12px; font-weight: 600; }
+        .card-body { padding: 14px; }
+        
+        .persona-center { text-align: center; margin-bottom: 16px; }
+        
+        .persona-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 40px;
+        }
+        
+        .persona-name { font-size: 16px; font-weight: 700; color: var(--primary); }
+        .persona-role { font-size: 12px; color: var(--text-muted); }
+        
+        .info-row { margin-bottom: 12px; }
+        .info-row-label { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+        .info-row-value { font-size: 11px; color: var(--text-dark); line-height: 1.4; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { font-size: 9px; padding: 4px 10px; border-radius: 12px; background: var(--primary-light); color: var(--primary-dark); }
+        
+        .section-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; margin-top: 12px; }
+        
+        .system-card { padding: 10px; background: var(--bg-light); border-radius: 8px; text-align: center; margin-bottom: 8px; }
+        .system-card-name { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .system-card-role { font-size: 9px; color: var(--text-muted); margin-bottom: 6px; }
+        .system-card-data { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
+        .system-card-data span { font-size: 8px; background: white; border: 1px solid var(--border); padding: 2px 5px; border-radius: 4px; }
+        
+        .mega-matrix-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .mega-matrix-table th { background: var(--bg-light); padding: 10px 6px; text-align: left; font-weight: 600; font-size: 10px; color: var(--primary); border-bottom: 2px solid var(--primary); }
+        .mega-matrix-table td { padding: 10px 6px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 10px; }
+        .mega-matrix-table tbody tr:hover { background: var(--bg-light); }
+        
+        .severity-badge { padding: 3px 10px; border-radius: 12px; font-size: 9px; font-weight: 500; }
+        .severity-badge.critical { background: var(--danger-light); color: var(--danger); }
+        .severity-badge.high { background: #fee2e2; color: #b91c1c; }
+        .severity-badge.medium { background: var(--warning-light); color: #92400e; }
+        
+        .empathy-map-container { display: grid; grid-template-columns: 1fr 80px 1fr; grid-template-rows: repeat(3, auto); gap: 12px; margin-bottom: 14px; }
+        .empathy-quadrant { padding: 12px; border-radius: 10px; font-size: 10px; }
+        .empathy-quadrant.thinking { background: #eff6ff; grid-column: 1; grid-row: 1; }
+        .empathy-quadrant.hearing { background: #fef3c7; grid-column: 3; grid-row: 1; }
+        .empathy-quadrant.seeing { background: #f3e8ff; grid-column: 1; grid-row: 2; }
+        .empathy-quadrant.doing { background: #ecfdf5; grid-column: 3; grid-row: 2; }
+        .empathy-quadrant.pain { background: #fef2f2; grid-column: 1; grid-row: 3; }
+        .empathy-quadrant.gain { background: #f0fdf4; grid-column: 3; grid-row: 3; }
+        .empathy-center { grid-column: 2; grid-row: 1 / 4; display: flex; align-items: center; justify-content: center; }
+        .empathy-center-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid var(--primary); }
+        .empathy-title { font-weight: 600; margin-bottom: 8px; font-size: 11px; }
+        .empathy-items { list-style: none; }
+        .empathy-items li { margin-bottom: 4px; line-height: 1.4; }
+        
+        .ai-tasks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+        .ai-task-card { padding: 12px; border-radius: 10px; }
+        .ai-task-card.auto { background: #f0fdf4; border: 2px solid #bbf7d0; color: #166534; }
+        .ai-task-card.suggest { background: #f5f3ff; border: 2px solid #ddd6fe; color: #5b21b6; }
+        .ai-task-card.human { background: #fffbeb; border: 2px solid #fde68a; color: #92400e; }
+        .ai-task-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .ai-task-icon { font-size: 18px; }
+        .ai-task-title { font-size: 11px; font-weight: 600; }
+        .ai-task-desc { font-size: 10px; line-height: 1.5; }
+
+        .highlight-box { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 12px; border-radius: 8px; margin-bottom: 12px; }
+        .highlight-title { font-size: 11px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .highlight-text { font-size: 10px; color: var(--text-dark); }
+
+        /* Collapsible Side Menu */
+        .side-menu { position: fixed; left: 0; top: 0; height: 100vh; width: 60px; background: white; box-shadow: 2px 0 20px rgba(0,0,0,0.1); z-index: 1000; transition: width 0.3s ease; display: flex; flex-direction: column; overflow: hidden; }
+        .side-menu:hover, .side-menu.expanded { width: 280px; }
+        .menu-header { background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%); color: white; padding: 16px; text-align: center; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+        .menu-header-icon { font-size: 24px; }
+        .menu-header-text { display: none; flex-direction: column; }
+        .side-menu:hover .menu-header-icon, .side-menu.expanded .menu-header-icon { display: none; }
+        .side-menu:hover .menu-header-text, .side-menu.expanded .menu-header-text { display: flex; }
+        .menu-header h2 { font-size: 15px; margin: 0; font-weight: 600; white-space: nowrap; }
+        .menu-header p { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+        .menu-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px; }
+        .menu-section { margin-bottom: 8px; }
+        .menu-section-title { font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 8px; margin-bottom: 2px; white-space: nowrap; opacity: 0; height: 0; padding: 0; overflow: hidden; transition: all 0.3s ease; }
+        .side-menu:hover .menu-section-title, .side-menu.expanded .menu-section-title { opacity: 1; height: auto; padding: 6px 8px; }
+        .menu-link { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 8px; text-decoration: none; color: #334155; font-size: 12px; transition: all 0.2s ease; margin-bottom: 2px; white-space: nowrap; justify-content: center; }
+        .side-menu:hover .menu-link, .side-menu.expanded .menu-link { justify-content: flex-start; padding: 10px 12px; }
+        .menu-link:hover { background: #f1f5f9; color: #1e3a5f; }
+        .menu-link.active { background: var(--primary); color: white; }
+        .menu-link .icon { font-size: 18px; min-width: 24px; text-align: center; flex-shrink: 0; }
+        .menu-link .link-text { display: none; overflow: hidden; }
+        .side-menu:hover .menu-link .link-text, .side-menu.expanded .menu-link .link-text { display: inline; }
+        .menu-link .badge { margin-left: auto; font-size: 8px; padding: 2px 5px; border-radius: 4px; font-weight: 600; display: none; }
+        .side-menu:hover .menu-link .badge, .side-menu.expanded .menu-link .badge { display: inline; }
+        .badge-key { background: #dbeafe; color: #1d4ed8; }
+        .badge-sol { background: #f3e8ff; color: #7c3aed; }
+        .menu-footer { padding: 8px; border-top: 1px solid #e2e8f0; text-align: center; }
+        .menu-footer a { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; background: #f1f5f9; color: #1e3a5f; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        .menu-footer a:hover { background: #e2e8f0; }
+        .menu-footer .footer-text { display: none; }
+        .side-menu:hover .menu-footer .footer-text, .side-menu.expanded .menu-footer .footer-text { display: inline; }
+        
+        @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+    </style>
+</head>
+<body>
+    <!-- Collapsible Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <span class="menu-header-icon">🛫</span>
+            <div class="menu-header-text"><h2>🛫 Cargo Personas</h2><p>Module Navigation</p></div>
+        </div>
+        <div class="menu-content">
+            <div class="menu-section">
+                <div class="menu-section-title">✈️ FLM - Flight Management</div>
+                <a href="flm-key-user-infographic-EN.html" class="menu-link" title="Schedule Planner"><span class="icon">👨‍✈️</span><span class="link-text">Schedule Planner</span><span class="badge badge-key">Key</span></a>
+                <a href="flm-solution-team-infographic-EN.html" class="menu-link" title="Solution Team"><span class="icon">⚙️</span><span class="link-text">Solution Team</span><span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">📦 AWB - Stock Management</div>
+                <a href="awb-key-user-infographic-EN.html" class="menu-link" title="Stock Controller"><span class="icon">📋</span><span class="link-text">Stock Controller</span><span class="badge badge-key">Key</span></a>
+                <a href="awb-solution-team-infographic-EN.html" class="menu-link" title="Solution Team"><span class="icon">⚙️</span><span class="link-text">Solution Team</span><span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link" title="IST International"><span class="icon">🌍</span><span class="link-text">IST International Agent</span><span class="badge badge-key">Key</span></a>
+                <a href="bkr-domestic-key-user-infographic-EN.html" class="menu-link active" title="Domestic Agent"><span class="icon">🏠</span><span class="link-text">Domestic Agent</span><span class="badge badge-key">Key</span></a>
+                <a href="bkr-uld-key-user-infographic-EN.html" class="menu-link" title="ULD Specialist"><span class="icon">📦</span><span class="link-text">ULD Specialist</span><span class="badge badge-key">Key</span></a>
+                <a href="bkr-solution-team-infographic-EN.html" class="menu-link" title="Solution Team"><span class="icon">⚙️</span><span class="link-text">Solution Team</span><span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">📊 CAM - Capacity Management</div>
+                <a href="cam-key-user-infographic-EN.html" class="menu-link" title="Capacity Analyst"><span class="icon">📊</span><span class="link-text">Capacity Analyst</span><span class="badge badge-key">Key</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">🛡️ COM - Compliance Management</div>
+                <a href="com-key-user-infographic-EN.html" class="menu-link" title="Compliance Officer"><span class="icon">🛡️</span><span class="link-text">Compliance Officer</span><span class="badge badge-key">Key</span></a>
+                <a href="com-solution-team-infographic-EN.html" class="menu-link" title="Solution Team"><span class="icon">⚙️</span><span class="link-text">Solution Team</span><span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">💰 PCM - Pricing Management</div>
+                <a href="pcm-key-user-infographic-EN.html" class="menu-link" title="Pricing Analyst"><span class="icon">💰</span><span class="link-text">Pricing Analyst</span><span class="badge badge-key">Key</span></a>
+                <a href="pcm-solution-team-infographic-EN.html" class="menu-link" title="Solution Team"><span class="icon">⚙️</span><span class="link-text">Solution Team</span><span class="badge badge-sol">Sol</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">🔴 SCM - Special Cargo</div>
+                <a href="scm-key-user-infographic-EN.html" class="menu-link" title="Special Cargo Specialist"><span class="icon">🔴</span><span class="link-text">Special Cargo Specialist</span><span class="badge badge-key">Key</span></a>
+            </div>
+            <div class="menu-section">
+                <div class="menu-section-title">💵 CRA - Revenue Accounting</div>
+                <a href="cra-key-user-infographic-EN.html" class="menu-link" title="Revenue Accountant"><span class="icon">💵</span><span class="link-text">Revenue Accountant</span><span class="badge badge-key">Key</span></a>
+            </div>
+        </div>
+        <div class="menu-footer"><a href="persona-hub.html" title="Persona Hub"><span>🏠</span><span class="footer-text">Persona Hub</span></a></div>
+    </nav>
+
+    <header class="header">
+        <h1>🏠 DOMESTIC RESERVATION AGENT PERSONA</h1>
+        <p>BKR - Booking & Reservation Module | Domestic Key User Profile</p>
+        <div class="header-tagline">"Yurt içi kargo müşterisi kapıda beklemez, hızlı ve doğru işlem şart"</div>
+    </header>
+
+    <main class="main-grid">
+        <!-- 1. PERSONA SNAPSHOT -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <div class="card-title">PERSONA SNAPSHOT</div>
+            </div>
+            <div class="card-body">
+                <div class="persona-center">
+                    <div class="persona-avatar">🏠</div>
+                    <div class="persona-name">Domestic Reservation Agent</div>
+                    <div class="persona-role">Walk-in Customer & Credit Customer Handling</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-row-label">PRIMARY GOAL</div>
+                    <div class="info-row-value">Process domestic cargo reservations quickly for walk-in customers and credit accounts using THY AWB pool</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-row-label">KEY USERS</div>
+                    <div class="info-row-value">Mahmut Zekeriyya Yaltırak, Kadir Seven, Yener Sutanrıkulu</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-row-label">DAILY VOLUME</div>
+                    <div class="info-row-value">~12,000 AWBs/month in Istanbul alone</div>
+                </div>
+                
+                <div class="section-label">KEY DIFFERENTIATORS</div>
+                <div class="tags">
+                    <span class="tag">🚶 ~60% Walk-in Customers</span>
+                    <span class="tag">🎫 THY AWB Pool (no agent AWB)</span>
+                    <span class="tag">💵 Cash/Card/Credit</span>
+                    <span class="tag">🖥️ OPR026 Screen (not CAP018)</span>
+                    <span class="tag">₺ TRY Currency</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. JOBS TO BE DONE -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <div class="card-title">JOBS TO BE DONE</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Job Category</th>
+                            <th>Description</th>
+                            <th>Key Difference from International</th>
+                            <th>Frequency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>📋 Reservation Create</strong></td>
+                            <td>Create domestic flight reservations via OPR026</td>
+                            <td>Uses OPR026 (not CAP018), single screen for all tasks</td>
+                            <td>Continuous</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🎫 AWB Assignment</strong></td>
+                            <td>Assign AWB from THY station pool</td>
+                            <td>Customer has NO AWB stock, uses THY pool (e.g., THYIST)</td>
+                            <td>Per reservation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>👤 Customer Registration</strong></td>
+                            <td>Register walk-in or credit customers in CMT008</td>
+                            <td>Walk-in = WALKINCUSTOMERS code, Credit = Accounting team</td>
+                            <td>As needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>💳 Payment Processing</strong></td>
+                            <td>Handle cash, credit card, or credit account payments</td>
+                            <td>Cash/Card common (no CASS), credit = monthly invoice</td>
+                            <td>Per shipment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔍 Customer Verification</strong></td>
+                            <td>Verify customer identity via ID card vs company personnel list</td>
+                            <td>Manual Excel lists for authorized personnel</td>
+                            <td>Per shipment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>📝 Form Management</strong></td>
+                            <td>Store domestic reservation create forms (legal requirement)</td>
+                            <td>Physical/scanned forms required by law</td>
+                            <td>Per shipment</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. SYSTEMS & SCREENS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <div class="card-title">SYSTEMS & SCREENS</div>
+            </div>
+            <div class="card-body">
+                <div class="highlight-box">
+                    <div class="highlight-title">⚠️ KEY DIFFERENCE</div>
+                    <div class="highlight-text">Domestic teams use <strong>OPR026 (Capture AWB)</strong> instead of CAP018 because one team handles all tasks (reservation, capacity, acceptance)</div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">💻 OPR026 - Capture AWB</div>
+                    <div class="system-card-role">Primary screen for all domestic operations</div>
+                    <div class="system-card-data">
+                        <span>Reservation</span>
+                        <span>Acceptance</span>
+                        <span>Documents</span>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">👥 CMT008</div>
+                    <div class="system-card-role">Customer master data management</div>
+                    <div class="system-card-data">
+                        <span>Walk-in</span>
+                        <span>Credit</span>
+                        <span>Personnel</span>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">🎫 STK007</div>
+                    <div class="system-card-role">AWB stock pool management</div>
+                    <div class="system-card-data">
+                        <span>THYIST</span>
+                        <span>THYCOV</span>
+                        <span>THYESB</span>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-card-name">❌ TK GO (Not Available)</div>
+                    <div class="system-card-role">Cannot create domestic reservations</div>
+                    <div class="system-card-data">
+                        <span>Agent# Required</span>
+                        <span>USD Only</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PAIN POINTS & FRICTION -->
+        <div class="card grid-span-2">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <div class="card-title">PAIN POINTS & FRICTION</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Pain Point</th>
+                            <th>Impact</th>
+                            <th>Current Workaround</th>
+                            <th>Severity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>TK GO Not Available for Domestic</strong></td>
+                            <td>Customers can't self-serve, all via call/counter</td>
+                            <td>100% manual reservation creation by staff</td>
+                            <td><span class="severity-badge critical">CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Too Many Clicks in Application</strong></td>
+                            <td>Slow processing, customer waiting time</td>
+                            <td>None - staff work as fast as possible</td>
+                            <td><span class="severity-badge critical">CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>No Keyboard Shortcuts</strong></td>
+                            <td>Cannot process quickly during rush hours</td>
+                            <td>None - mouse-based navigation only</td>
+                            <td><span class="severity-badge high">HIGH</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personnel List in Excel</strong></td>
+                            <td>Hard to verify authorized cargo handlers</td>
+                            <td>Manual Excel maintenance, frequent updates</td>
+                            <td><span class="severity-badge high">HIGH</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>CMT008 Data Quality</strong></td>
+                            <td>Typos, duplicates from any station</td>
+                            <td>Manual cleanup, search difficulties</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manual Reservation Forms</strong></td>
+                            <td>Legal requirement, storage burden</td>
+                            <td>Physical/scanned document archiving</td>
+                            <td><span class="severity-badge medium">MEDIUM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5. WORKFLOW -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <div class="card-title">DOMESTIC RESERVATION WORKFLOW</div>
+            </div>
+            <div class="card-body">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin-bottom: 16px; padding: 16px; background: var(--bg-light); border-radius: 12px;">
+                    <div style="padding: 10px 14px; background: #fef3c7; border-radius: 8px; text-align: center; border: 2px dashed #f59e0b;">
+                        <div style="font-size: 16px;">🚶</div>
+                        <div style="font-size: 9px; font-weight: 600;">Walk-in Customer</div>
+                    </div>
+                    <span style="color: #9ca3af; font-size: 16px;">→</span>
+                    <div style="padding: 10px 14px; background: white; border-radius: 8px; text-align: center; border: 1px solid var(--border);">
+                        <div style="font-size: 16px;">🪪</div>
+                        <div style="font-size: 9px; font-weight: 600;">ID Verification</div>
+                    </div>
+                    <span style="color: #9ca3af; font-size: 16px;">→</span>
+                    <div style="padding: 10px 14px; background: var(--primary-light); border-radius: 8px; text-align: center; border: 1px solid var(--primary);">
+                        <div style="font-size: 16px;">🖥️</div>
+                        <div style="font-size: 9px; font-weight: 600;">OPR026 Entry</div>
+                    </div>
+                    <span style="color: #9ca3af; font-size: 16px;">→</span>
+                    <div style="padding: 10px 14px; background: white; border-radius: 8px; text-align: center; border: 1px solid var(--border);">
+                        <div style="font-size: 16px;">🎫</div>
+                        <div style="font-size: 9px; font-weight: 600;">AWB from Pool</div>
+                    </div>
+                    <span style="color: #9ca3af; font-size: 16px;">→</span>
+                    <div style="padding: 10px 14px; background: white; border-radius: 8px; text-align: center; border: 1px solid var(--border);">
+                        <div style="font-size: 16px;">✈️</div>
+                        <div style="font-size: 9px; font-weight: 600;">Flight Selection</div>
+                    </div>
+                    <span style="color: #9ca3af; font-size: 16px;">→</span>
+                    <div style="padding: 10px 14px; background: white; border-radius: 8px; text-align: center; border: 1px solid var(--border);">
+                        <div style="font-size: 16px;">💳</div>
+                        <div style="font-size: 9px; font-weight: 600;">Payment</div>
+                    </div>
+                    <span style="color: #9ca3af; font-size: 16px;">→</span>
+                    <div style="padding: 10px 14px; background: #ecfdf5; border-radius: 8px; text-align: center; border: 1px solid #10b981;">
+                        <div style="font-size: 16px;">✅</div>
+                        <div style="font-size: 9px; font-weight: 600;">Confirmed</div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div style="background: var(--bg-light); padding: 12px; border-radius: 8px;">
+                        <div style="font-size: 10px; font-weight: 600; color: var(--primary); margin-bottom: 6px;">🏠 Domestic Only Features</div>
+                        <ul style="font-size: 9px; color: var(--text-muted); margin-left: 12px;">
+                            <li>Passenger planes only (no cargo planes)</li>
+                            <li>Default destination can be IST</li>
+                            <li>Via point (intermediate) supported</li>
+                            <li>TRY currency by default</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--bg-light); padding: 12px; border-radius: 8px;">
+                        <div style="font-size: 10px; font-weight: 600; color: var(--primary); margin-bottom: 6px;">💳 Payment Types</div>
+                        <ul style="font-size: 9px; color: var(--text-muted); margin-left: 12px;">
+                            <li><strong>Cash:</strong> Direct counter payment</li>
+                            <li><strong>Credit Card:</strong> POS terminal</li>
+                            <li><strong>Credit Account:</strong> Monthly invoice (DHL, Yurtiçi etc.)</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--bg-light); padding: 12px; border-radius: 8px;">
+                        <div style="font-size: 10px; font-weight: 600; color: var(--primary); margin-bottom: 6px;">👤 Customer Types</div>
+                        <ul style="font-size: 9px; color: var(--text-muted); margin-left: 12px;">
+                            <li><strong>Walk-in:</strong> WALKINCUSTOMERS code</li>
+                            <li><strong>Registered:</strong> CMT008 with auth form</li>
+                            <li><strong>Credit:</strong> Accounting team registers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. EMPATHY MAP -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <div class="card-title">EMPATHY MAP</div>
+            </div>
+            <div class="card-body">
+                <div class="empathy-map-container">
+                    <div class="empathy-quadrant thinking">
+                        <div class="empathy-title">🧠 THINKING</div>
+                        <ul class="empathy-items">
+                            <li>"Is this person authorized to send cargo for this company?"</li>
+                            <li>"Which flight has space for this last-minute cargo?"</li>
+                            <li>"Did I check the credit balance before accepting?"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant hearing">
+                        <div class="empathy-title">👂 HEARING</div>
+                        <ul class="empathy-items">
+                            <li>"I need this on the next flight, it's urgent!"</li>
+                            <li>"Can I pay by card? I don't have cash."</li>
+                            <li>"My company has credit with THY."</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-center">
+                        <div class="empathy-center-icon">🏠</div>
+                    </div>
+                    
+                    <div class="empathy-quadrant seeing">
+                        <div class="empathy-title">👀 SEEING</div>
+                        <ul class="empathy-items">
+                            <li>Long queue of walk-in customers</li>
+                            <li>OPR026 screen with many required fields</li>
+                            <li>Excel sheet for personnel verification</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant doing">
+                        <div class="empathy-title">✋ DOING</div>
+                        <ul class="empathy-items">
+                            <li>Clicking through multiple screens</li>
+                            <li>Checking ID against Excel personnel list</li>
+                            <li>Assigning AWB from station pool</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant pain">
+                        <div class="empathy-title">😫 PAINS</div>
+                        <ul class="empathy-items">
+                            <li>Speed is critical but system is slow</li>
+                            <li>No keyboard shortcuts for fast entry</li>
+                            <li>Customers can't self-serve via TK GO</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="empathy-quadrant gain">
+                        <div class="empathy-title">🎯 GAINS</div>
+                        <ul class="empathy-items">
+                            <li>Single screen (OPR026) for all tasks</li>
+                            <li>Direct customer interaction</li>
+                            <li>Immediate payment confirmation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. AI SUPPORT OPPORTUNITIES -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <div class="card-title">AI SUPPORT OPPORTUNITIES</div>
+            </div>
+            <div class="card-body">
+                <div class="ai-tasks-grid">
+                    <div class="ai-task-card auto">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">🤖</span>
+                            <span class="ai-task-title">FULLY AUTOMATE</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Turkish ID verification integration<br>
+                            • AWB auto-assignment from pool<br>
+                            • Credit balance real-time check<br>
+                            • Flight availability auto-suggestion<br>
+                            • Digital form storage & retrieval
+                        </div>
+                    </div>
+                    
+                    <div class="ai-task-card suggest">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">💡</span>
+                            <span class="ai-task-title">AI-ASSISTED</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Customer recognition from history<br>
+                            • Optimal flight recommendation<br>
+                            • Personnel authorization lookup<br>
+                            • Duplicate customer detection<br>
+                            • Payment method suggestion
+                        </div>
+                    </div>
+                    
+                    <div class="ai-task-card human">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">👤</span>
+                            <span class="ai-task-title">HUMAN DECISION</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Special cargo exceptions<br>
+                            • Credit limit overrides<br>
+                            • Unauthorized personnel handling<br>
+                            • Customer dispute resolution<br>
+                            • Free of Charge approvals
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: var(--primary-light); border-radius: 8px; padding: 12px; border-left: 4px solid var(--primary);">
+                    <div style="font-size: 11px; color: var(--primary-dark); margin-bottom: 6px;"><strong>🎯 SUNGUR OPPORTUNITY</strong></div>
+                    <div style="font-size: 10px; color: #78350f; line-height: 1.5;">
+                        Enable domestic reservations via TK GO with TRY currency support. This would allow customers to self-serve and reduce counter workload by up to 40%. AWB stock assignment rules need to be redesigned to support: Agent (International), GSA (International), Station (TK), and Domestic Customer types.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
