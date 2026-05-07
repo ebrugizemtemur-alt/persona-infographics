@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking & Reservation - IST International Agent Persona</title>
+    <title>Flight Management - Network Planner Persona</title>
     <style>
         :root {
-            --primary: #7c3aed;
-            --primary-light: #f5f3ff;
-            --primary-dark: #6d28d9;
-            --secondary: #8b5cf6;
+            --primary: #1e40af;
+            --primary-light: #eff6ff;
+            --primary-dark: #1e3a8a;
+            --secondary: #3b82f6;
             --success: #16a34a;
             --success-light: #f0fdf4;
             --warning: #f59e0b;
@@ -164,11 +164,15 @@
         .ai-task-title { font-size: 11px; font-weight: 600; }
         .ai-task-desc { font-size: 10px; line-height: 1.5; }
 
-        .channel-badge { padding: 4px 10px; border-radius: 6px; font-size: 9px; font-weight: 500; display: inline-block; margin: 2px; }
-        .channel-api { background: #dbeafe; color: #1d4ed8; }
-        .channel-ffr { background: #dcfce7; color: #166534; }
-        .channel-tkgo { background: #fef3c7; color: #92400e; }
-        .channel-call { background: #f3e8ff; color: #7c3aed; }
+        .workflow-step { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 8px 12px; background: var(--bg-light); border-radius: 8px; border-left: 3px solid var(--primary); }
+        .workflow-step-number { width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+        .workflow-step-content { flex: 1; }
+        .workflow-step-title { font-size: 11px; font-weight: 600; color: var(--text-dark); }
+        .workflow-step-desc { font-size: 9px; color: var(--text-muted); }
+
+        .season-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 9px; font-weight: 500; margin: 2px; }
+        .season-summer { background: #fef3c7; color: #92400e; }
+        .season-winter { background: #dbeafe; color: #1d4ed8; }
 
         /* Side Menu - Always Open */
         .side-menu { position: fixed; left: 0; top: 0; height: 100vh; width: 280px; background: white; box-shadow: 2px 0 20px rgba(0,0,0,0.1); z-index: 1000; display: flex; flex-direction: column; overflow: hidden; }
@@ -199,9 +203,9 @@
             <div><h2>🛫 Cargo Personas</h2><p>Module Navigation</p></div>
         </div>
         <div class="menu-content">
-                        <div class="menu-section">
+            <div class="menu-section">
                 <div class="menu-section-title">✈️ FLM - Flight Management</div>
-                <a href="flm-network-planner-infographic-EN.html" class="menu-link"><span class="icon">🌐</span>Network Planner<span class="badge badge-key">Key</span></a>
+                <a href="flm-network-planner-infographic-EN.html" class="menu-link active"><span class="icon">🌐</span>Network Planner<span class="badge badge-key">Key</span></a>
                 <a href="flm-key-user-infographic-EN.html" class="menu-link"><span class="icon">📅</span>Schedule Planner<span class="badge badge-key">Key</span></a>
                 <a href="flm-cocc-infographic-EN.html" class="menu-link"><span class="icon">🎯</span>Operations Coordinator<span class="badge badge-key">Key</span></a>
                 <a href="flm-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
@@ -213,12 +217,12 @@
             </div>
             <div class="menu-section">
                 <div class="menu-section-title">📅 BKR - Booking & Reservation</div>
-                <a href="bkr-key-user-infographic-EN.html" class="menu-link active"><span class="icon">🌍</span>IST International Agent<span class="badge badge-key">Key</span></a>
+                <a href="bkr-key-user-infographic-EN.html" class="menu-link"><span class="icon">🌍</span>IST International Agent<span class="badge badge-key">Key</span></a>
                 <a href="bkr-domestic-key-user-infographic-EN.html" class="menu-link"><span class="icon">🏠</span>Domestic Agent<span class="badge badge-key">Key</span></a>
                 <a href="bkr-uld-key-user-infographic-EN.html" class="menu-link"><span class="icon">📦</span>ULD Specialist<span class="badge badge-key">Key</span></a>
                 <a href="bkr-solution-team-infographic-EN.html" class="menu-link"><span class="icon">⚙️</span>Solution Team<span class="badge badge-sol">Sol</span></a>
             </div>
-                        <div class="menu-section">
+            <div class="menu-section">
                 <div class="menu-section-title">📊 CAM - Capacity Management</div>
                 <a href="cam-optimization-key-user-infographic-EN.html" class="menu-link"><span class="icon">⚡</span>Flight Optimization Specialist<span class="badge badge-key">Key</span></a>
                 <a href="cam-analyst-key-user-infographic-EN.html" class="menu-link"><span class="icon">📈</span>Capacity Analyst<span class="badge badge-key">Key</span></a>
@@ -246,9 +250,9 @@
     </nav>
 
     <header class="header">
-        <h1>🌍 IST OUTBOUND INTERNATIONAL AGENT PERSONA</h1>
-        <p>BKR - Booking & Reservation Module | IST Hub Outbound International Key User Profile</p>
-        <div class="header-tagline">"6.5 saat kısıtı ile dünyanın her yerine kargo rezervasyonu yapıyoruz"</div>
+        <h1>🌐 NETWORK PLANNER PERSONA</h1>
+        <p>FLM - Flight Management Module | Cargo Network Planning Department Key User Profile</p>
+        <div class="header-tagline">"Sezonluk uçuş ağını tasarlayıp slot konferanslarında hattı savunuyoruz"</div>
     </header>
 
     <main class="main-grid">
@@ -260,32 +264,30 @@
             </div>
             <div class="card-body">
                 <div class="persona-center">
-                    <div class="persona-avatar">🌍</div>
-                    <div class="persona-name">IST International Agent</div>
-                    <div class="persona-role">Outbound International Reservations</div>
+                    <div class="persona-avatar">🌐</div>
+                    <div class="persona-name">Network Planner</div>
+                    <div class="persona-role">Kargo Network Planlama Müdürlüğü</div>
                 </div>
                 
                 <div class="info-row">
                     <div class="info-row-label">PRIMARY GOAL</div>
-                    <div class="info-row-value">Process international cargo bookings via multiple channels (API, FFR, TK GO) with embargo/Accuity checks and ACRM pricing</div>
+                    <div class="info-row-value">Design seasonal flight network, coordinate slot conferences, evaluate regional route requests, and optimize cargo route profitability</div>
                 </div>
                 
                 <div class="info-row">
                     <div class="info-row-label">KEY USERS</div>
-                    <div class="info-row-value">Mehtap Çevik, Hasan Çengel, Cevdet Umutlu</div>
+                    <div class="info-row-value">Sena Ekinay, Bahadır Bozatlı (Network Planning)</div>
                 </div>
                 
                 <div class="info-row">
-                    <div class="info-row-label">PRIMARY SCREEN</div>
-                    <div class="info-row-value">CAP018 - International Reservation Entry</div>
+                    <div class="info-row-label">DEPARTMENT</div>
+                    <div class="info-row-value">Kargo Pazarlama ve Satış Çözümleri Direktörlüğü - Network Planlama Md.</div>
                 </div>
                 
-                <div class="section-label">BOOKING CHANNELS</div>
+                <div class="section-label">PLANNING CYCLES</div>
                 <div class="tags">
-                    <span class="channel-badge channel-api">📡 API (70%)</span>
-                    <span class="channel-badge channel-ffr">📨 FFR (20%)</span>
-                    <span class="channel-badge channel-tkgo">🖥️ TK GO (5%)</span>
-                    <span class="channel-badge channel-call">📞 Call (5%)</span>
+                    <span class="season-badge season-summer">☀️ Summer Season (IATA)</span>
+                    <span class="season-badge season-winter">❄️ Winter Season (IATA)</span>
                 </div>
             </div>
         </div>
@@ -298,28 +300,28 @@
             </div>
             <div class="card-body">
                 <div class="job-card">
-                    <div class="job-card-title">📋 Process Reservation Requests</div>
-                    <div class="job-card-desc">Receive bookings via API, FFR, TK GO, and phone. Validate cargo details, routes, and special requirements.</div>
+                    <div class="job-card-title">📅 Seasonal Flight Network Design</div>
+                    <div class="job-card-desc">Create draft seasonal schedule before slot conference. Design cargo flight network based on market analysis, regional demand, and feasibility studies.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">🛡️ Embargo & Accuity Checks</div>
-                    <div class="job-card-desc">Perform compliance checks for international shipments, embargo controls, and Accuity/sanction screening.</div>
+                    <div class="job-card-title">🎫 Slot Conference Coordination</div>
+                    <div class="job-card-desc">Prepare draft schedule for IATA slot conferences. Coordinate slot approvals with airports and authorities. Revise schedule after conference feedback.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">💰 ACRM Pricing Integration</div>
-                    <div class="job-card-desc">Apply contract rates from ACRM (Agent Contract Rate Management) system for pricing calculations.</div>
+                    <div class="job-card-title">📊 Regional Request Evaluation</div>
+                    <div class="job-card-desc">Collect route requests via email from regional chiefs. Evaluate feasibility for both new and existing routes. Assess market potential and profitability.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">🔄 Routing & Allotment</div>
-                    <div class="job-card-desc">Find optimal routing with available capacity. Manage allotments and blocking for key customers.</div>
+                    <div class="job-card-title">🤝 Cross-Team Coordination</div>
+                    <div class="job-card-desc">Share draft plan with Operations and Sales teams. Consider airport congestion and time slot constraints. Incorporate feedback and make mutual revisions.</div>
                 </div>
                 
                 <div class="job-card">
-                    <div class="job-card-title">⏰ 6.5 Hour Constraint</div>
-                    <div class="job-card-desc">Ensure all reservations are finalized minimum 6.5 hours before flight departure (Cut-off time).</div>
+                    <div class="job-card-title">🚀 Season Plan Launch</div>
+                    <div class="job-card-desc">Open season plan for sale 45 days before season starts. Coordinate with COMIS and Netline systems for consistent data. Get upper management approvals.</div>
                 </div>
             </div>
         </div>
@@ -332,43 +334,43 @@
             </div>
             <div class="card-body">
                 <div class="system-card">
-                    <div class="system-card-name">🖥️ CAP018</div>
-                    <div class="system-card-role">Main International Reservation Screen</div>
+                    <div class="system-card-name">🖥️ Netline</div>
+                    <div class="system-card-role">Flight Schedule Management</div>
                     <div class="system-card-data">
-                        <span>Booking Entry</span>
-                        <span>Routing</span>
-                        <span>Capacity Check</span>
-                        <span>Rate Apply</span>
+                        <span>Route Design</span>
+                        <span>Gantt Chart</span>
+                        <span>Segment Entry</span>
+                        <span>Maintenance Planning</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">💰 ACRM</div>
-                    <div class="system-card-role">Agent Contract Rate Management</div>
+                    <div class="system-card-name">📋 COMIS</div>
+                    <div class="system-card-role">Cargo Operations Integration</div>
                     <div class="system-card-data">
-                        <span>Contract Rates</span>
-                        <span>Spot Rates</span>
-                        <span>Discounts</span>
+                        <span>CAP145</span>
+                        <span>Flight Details</span>
+                        <span>Capacity View</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">🛡️ Accuity</div>
-                    <div class="system-card-role">Sanction & Compliance Screening</div>
+                    <div class="system-card-name">📊 Excel Tools</div>
+                    <div class="system-card-role">Profitability Analysis</div>
                     <div class="system-card-data">
-                        <span>Shipper Check</span>
-                        <span>Consignee Check</span>
-                        <span>Embargo</span>
+                        <span>Flight Feasibility</span>
+                        <span>Route Analysis</span>
+                        <span>Regional Requests</span>
                     </div>
                 </div>
                 
                 <div class="system-card">
-                    <div class="system-card-name">📡 Integration Channels</div>
-                    <div class="system-card-role">External Systems</div>
+                    <div class="system-card-name">📧 Email / Portal</div>
+                    <div class="system-card-role">Request Collection</div>
                     <div class="system-card-data">
-                        <span>API</span>
-                        <span>SITA FFR</span>
-                        <span>TK GO Portal</span>
+                        <span>Regional Chiefs</span>
+                        <span>Station Requests</span>
+                        <span>Sales Feedback</span>
                     </div>
                 </div>
             </div>
@@ -392,39 +394,33 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Cut-off Time Pressure</strong></td>
-                            <td>Must finalize all bookings 6.5 hours before departure</td>
-                            <td>Last-minute changes cause capacity loss</td>
+                            <td><strong>No Reverse Netline-COMIS Integration</strong></td>
+                            <td>No integration from COMIS back to Netline. Changes in COMIS don't reflect automatically</td>
+                            <td>Manual sync required; data inconsistencies between systems</td>
                             <td><span class="severity-badge critical">CRITICAL</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Accuity Manual Re-check</strong></td>
-                            <td>System requires manual sanctions check for each shipper/consignee</td>
-                            <td>Delays booking confirmation, repetitive work</td>
+                            <td><strong>Email-Based Request Collection</strong></td>
+                            <td>Regional route requests collected via email without structured system</td>
+                            <td>Requests can be missed; difficult to track and prioritize</td>
                             <td><span class="severity-badge high">HIGH</span></td>
                         </tr>
                         <tr>
-                            <td><strong>ACRM-COMIS Price Sync</strong></td>
-                            <td>Contract rates sometimes don't pull correctly from ACRM</td>
-                            <td>Wrong pricing, revenue leakage, agent disputes</td>
+                            <td><strong>Excel-Based Feasibility Analysis</strong></td>
+                            <td>Flight profitability calculated in Excel; not integrated with live data</td>
+                            <td>Manual work; outdated data; calculation errors possible</td>
                             <td><span class="severity-badge high">HIGH</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Multi-leg Routing Complexity</strong></td>
-                            <td>Hub connections (IST-DOH-destination) need manual capacity check per leg</td>
-                            <td>Suboptimal routing, missed connections</td>
+                            <td><strong>Capacity Not Visible in Netline</strong></td>
+                            <td>Flight capacity managed by another department; not visible in Netline</td>
+                            <td>Network planners can't see capacity impact of their decisions</td>
                             <td><span class="severity-badge medium">MEDIUM</span></td>
                         </tr>
                         <tr>
-                            <td><strong>API Error Handling</strong></td>
-                            <td>Rejected API bookings require manual follow-up with agents</td>
-                            <td>Lost bookings, customer dissatisfaction</td>
-                            <td><span class="severity-badge medium">MEDIUM</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Allotment Visibility</strong></td>
-                            <td>Difficult to see real-time allotment consumption per customer</td>
-                            <td>Overbooking or underutilization of contracts</td>
+                            <td><strong>45-Day Sales Opening Constraint</strong></td>
+                            <td>Season must be opened for sale 45 days in advance; tight timeline for coordination</td>
+                            <td>Rushed approvals; limited time for revision</td>
                             <td><span class="severity-badge medium">MEDIUM</span></td>
                         </tr>
                     </tbody>
@@ -432,73 +428,60 @@
             </div>
         </div>
 
-        <!-- 5. WORKFLOW -->
-        <div class="card grid-span-3">
+        <!-- 5. SEASONAL PLANNING WORKFLOW -->
+        <div class="card grid-span-2">
             <div class="card-header">
                 <div class="card-number">5</div>
-                <div class="card-title">BOOKING WORKFLOW</div>
+                <div class="card-title">SEASONAL PLANNING WORKFLOW</div>
             </div>
             <div class="card-body">
-                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin-bottom: 16px; padding: 16px; background: var(--bg-light); border-radius: 12px;">
-                    <div style="padding: 10px 14px; background: #dbeafe; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">📡</div>
-                        <div style="font-size: 9px; font-weight: 600;">API/FFR/TKGO</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--success-light); border-radius: 8px; text-align: center; border: 1px solid var(--success);">
-                        <div style="font-size: 16px;">🖥️</div>
-                        <div style="font-size: 9px; font-weight: 600;">CAP018</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--warning-light); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">🛡️</div>
-                        <div style="font-size: 9px; font-weight: 600;">Embargo Check</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--primary-light); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">🔍</div>
-                        <div style="font-size: 9px; font-weight: 600;">Accuity</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: #fef3c7; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">💰</div>
-                        <div style="font-size: 9px; font-weight: 600;">ACRM Price</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: #ecfdf5; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 16px;">📊</div>
-                        <div style="font-size: 9px; font-weight: 600;">Capacity</div>
-                    </div>
-                    <span style="color: #9ca3af; font-size: 16px;">→</span>
-                    <div style="padding: 10px 14px; background: var(--success-light); border-radius: 8px; text-align: center; border: 2px solid var(--success);">
-                        <div style="font-size: 16px;">✅</div>
-                        <div style="font-size: 9px; font-weight: 600;">Confirmed</div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">1</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Collect Regional Requests</div>
+                        <div class="workflow-step-desc">Gather route requests from regional chiefs via email. Evaluate both past and new feasibilities.</div>
                     </div>
                 </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-                    <div style="background: #dbeafe; padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: #1d4ed8; margin-bottom: 6px;">📡 Channel Reception</div>
-                        <div style="font-size: 9px; color: #1e40af;">70% via API integration, 20% SITA FFR messages, rest TK GO portal and phone calls</div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">2</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Market & Feasibility Analysis</div>
+                        <div class="workflow-step-desc">Run profitability analysis using Excel tools. Assess market potential and route viability.</div>
                     </div>
-                    <div style="background: var(--warning-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: #92400e; margin-bottom: 6px;">🛡️ Compliance Checks</div>
-                        <div style="font-size: 9px; color: #78350f;">Embargo validation per destination, Accuity sanction screening for shipper/consignee</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">3</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Draft Schedule Creation</div>
+                        <div class="workflow-step-desc">Design draft seasonal schedule in Netline. Create Gantt chart for flight sequences.</div>
                     </div>
-                    <div style="background: var(--primary-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: var(--primary-dark); margin-bottom: 6px;">💰 Pricing Application</div>
-                        <div style="font-size: 9px; color: #5b21b6;">Pull rates from ACRM (contract/spot), apply surcharges, calculate final price</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">4</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Slot Conference Participation</div>
+                        <div class="workflow-step-desc">Present schedule at IATA slot conference. Negotiate and secure airport slots.</div>
                     </div>
-                    <div style="background: var(--success-light); padding: 12px; border-radius: 8px;">
-                        <div style="font-size: 10px; font-weight: 600; color: var(--success); margin-bottom: 6px;">✅ Confirmation</div>
-                        <div style="font-size: 9px; color: #166534;">Send booking confirmation via same channel, must be 6.5h before departure</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">5</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Operations & Sales Coordination</div>
+                        <div class="workflow-step-desc">Share with Ops/Sales teams. Consider congestion, time slots. Get feedback and revise.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-step-number">6</div>
+                    <div class="workflow-step-content">
+                        <div class="workflow-step-title">Management Approval & Launch</div>
+                        <div class="workflow-step-desc">Get upper management approval. Open for sale 45 days before season. SS file to Schedule team.</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 6. EMPATHY MAP -->
-        <div class="card grid-span-2">
+        <div class="card">
             <div class="card-header">
                 <div class="card-number">6</div>
                 <div class="card-title">EMPATHY MAP</div>
@@ -506,110 +489,196 @@
             <div class="card-body">
                 <div class="empathy-map-container">
                     <div class="empathy-quadrant thinking">
-                        <div class="empathy-title">🧠 THINKING</div>
+                        <div class="empathy-title">🧠 Thinking</div>
                         <ul class="empathy-items">
-                            <li>"Is this shipper on the sanctions list?"</li>
-                            <li>"Will this route have available capacity?"</li>
-                            <li>"Is the ACRM contract rate applied correctly?"</li>
+                            <li>• "Bu rota karlı olacak mı?"</li>
+                            <li>• "Slot alabilecek miyiz?"</li>
+                            <li>• "Sezon açılışına yetişir mi?"</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant hearing">
-                        <div class="empathy-title">👂 HEARING</div>
+                        <div class="empathy-title">👂 Hearing</div>
                         <ul class="empathy-items">
-                            <li>"We need urgent booking to JFK today"</li>
-                            <li>"Why is this rate higher than our contract?"</li>
-                            <li>"The API rejected our booking again"</li>
+                            <li>• Regional chiefs' requests</li>
+                            <li>• Sales team feedback</li>
+                            <li>• Operations constraints</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-center">
-                        <div class="empathy-center-icon">🌍</div>
+                        <div class="empathy-center-icon">🌐</div>
                     </div>
-                    
                     <div class="empathy-quadrant seeing">
-                        <div class="empathy-title">👀 SEEING</div>
+                        <div class="empathy-title">👁️ Seeing</div>
                         <ul class="empathy-items">
-                            <li>CAP018 with booking queue backlog</li>
-                            <li>FFR messages piling up</li>
-                            <li>Cut-off countdown timer</li>
+                            <li>• Netline Gantt charts</li>
+                            <li>• Excel feasibility sheets</li>
+                            <li>• IATA slot allocations</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant doing">
-                        <div class="empathy-title">✋ DOING</div>
+                        <div class="empathy-title">🖐️ Doing</div>
                         <ul class="empathy-items">
-                            <li>Running Accuity checks repeatedly</li>
-                            <li>Cross-checking ACRM contract rates</li>
-                            <li>Searching for alternative routing</li>
+                            <li>• Route design in Netline</li>
+                            <li>• Profitability calculations</li>
+                            <li>• Slot conference prep</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant pain">
-                        <div class="empathy-title">😫 PAINS</div>
+                        <div class="empathy-title">😣 Pain</div>
                         <ul class="empathy-items">
-                            <li>Time pressure with 6.5h cut-off</li>
-                            <li>Manual compliance re-checks</li>
-                            <li>ACRM pricing sync issues</li>
+                            <li>• Email-based requests</li>
+                            <li>• Manual Excel work</li>
+                            <li>• No reverse integration</li>
                         </ul>
                     </div>
-                    
                     <div class="empathy-quadrant gain">
-                        <div class="empathy-title">🎯 GAINS</div>
+                        <div class="empathy-title">🎯 Gain</div>
                         <ul class="empathy-items">
-                            <li>API automation reduces manual entry</li>
-                            <li>Real-time capacity visibility</li>
-                            <li>Global reach from IST hub</li>
+                            <li>• Optimized network</li>
+                            <li>• Profitable routes</li>
+                            <li>• Secured slots</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 7. AI SUPPORT OPPORTUNITIES -->
-        <div class="card">
+        <!-- 7. AI SUPPORT POTENTIAL -->
+        <div class="card grid-span-2">
             <div class="card-header">
                 <div class="card-number">7</div>
-                <div class="card-title">AI OPPORTUNITIES</div>
+                <div class="card-title">AI SUPPORT POTENTIAL</div>
             </div>
             <div class="card-body">
-                <div class="ai-task-card auto">
-                    <div class="ai-task-header">
-                        <span class="ai-task-icon">🤖</span>
-                        <span class="ai-task-title">AUTOMATE</span>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div class="ai-task-card auto">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">🤖</span>
+                            <span class="ai-task-title">AUTOMATED</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Netline-COMIS data sync alerts<br>
+                            • Regional request intake & categorization<br>
+                            • Deadline reminders for 45-day launch
+                        </div>
                     </div>
-                    <div class="ai-task-desc">
-                        • Auto-Accuity check with caching<br>
-                        • ACRM rate auto-apply<br>
-                        • API error auto-retry logic
+                    <div class="ai-task-card suggest">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">💡</span>
+                            <span class="ai-task-title">AI SUGGESTS</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Route profitability predictions based on historical data<br>
+                            • Optimal slot times based on demand patterns<br>
+                            • Network optimization recommendations
+                        </div>
                     </div>
-                </div>
-                
-                <div class="ai-task-card suggest">
-                    <div class="ai-task-header">
-                        <span class="ai-task-icon">💡</span>
-                        <span class="ai-task-title">AI-ASSIST</span>
-                    </div>
-                    <div class="ai-task-desc">
-                        • Optimal routing suggestions<br>
-                        • Cut-off risk alerts<br>
-                        • Allotment consumption warnings
-                    </div>
-                </div>
-                
-                <div class="ai-task-card human">
-                    <div class="ai-task-header">
-                        <span class="ai-task-icon">👤</span>
-                        <span class="ai-task-title">HUMAN</span>
-                    </div>
-                    <div class="ai-task-desc">
-                        • Complex multi-leg negotiations<br>
-                        • Embargo exception decisions<br>
-                        • VIP customer handling
+                    <div class="ai-task-card human">
+                        <div class="ai-task-header">
+                            <span class="ai-task-icon">👤</span>
+                            <span class="ai-task-title">HUMAN DECIDES</span>
+                        </div>
+                        <div class="ai-task-desc">
+                            • Final route selection<br>
+                            • Slot conference negotiations<br>
+                            • Network design decisions<br>
+                            • Management presentation
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- 8. KEY CONCEPTS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">KEY CONCEPTS</div>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-row-label">SLOT CONFERENCE</div>
+                    <div class="info-row-value">IATA-organized meeting where airlines negotiate and secure airport slots for seasonal schedules</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">SS FILE</div>
+                    <div class="info-row-value">Standard Schedule file format used to communicate finalized schedule to other teams</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">5TH FREEDOM</div>
+                    <div class="info-row-value">Traffic right allowing airline to carry cargo between two foreign countries (affects route feasibility)</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">GANTT CHART</div>
+                    <div class="info-row-value">Visual timeline in Netline showing flight sequences and aircraft utilization</div>
+                </div>
+                
+                <div class="section-label">COLLABORATION</div>
+                <div class="tags">
+                    <span class="tag success">Schedule Planning Team</span>
+                    <span class="tag warning">Sales Teams</span>
+                    <span class="tag">Operations</span>
+                    <span class="tag">Regional Chiefs</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. DECISION POINTS -->
+        <div class="card grid-span-3">
+            <div class="card-header">
+                <div class="card-number">9</div>
+                <div class="card-title">CRITICAL DECISION POINTS</div>
+            </div>
+            <div class="card-body">
+                <table class="mega-matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Decision</th>
+                            <th>Data Required</th>
+                            <th>System Support</th>
+                            <th>Authority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Add New Route to Network</strong></td>
+                            <td>Market demand, profitability analysis, traffic rights, slot availability</td>
+                            <td>Excel feasibility + Netline entry</td>
+                            <td>Upper management approval required</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Accept/Reject Regional Request</strong></td>
+                            <td>Request details, feasibility study, capacity situation</td>
+                            <td>Email + Excel analysis</td>
+                            <td>Self-approval for evaluation; escalate for implementation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Slot Conference Negotiation</strong></td>
+                            <td>Draft schedule, airport constraints, competitor slots</td>
+                            <td>Netline draft + IATA portal</td>
+                            <td>Team decision with management backing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Finalize Seasonal Schedule</strong></td>
+                            <td>Ops/Sales feedback, slot confirmations, management approval</td>
+                            <td>Netline publish + SS file generation</td>
+                            <td>Department head approval</td>
+                        </tr>
+                        <tr>
+                            <td><strong>In-Season Route Changes (e.g., war)</strong></td>
+                            <td>External situation, alternative routes, capacity impact</td>
+                            <td>Ad-hoc process via portal</td>
+                            <td>Emergency decision with management</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
+
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 10px;">
+        <p>FLM - Flight Management Module | Network Planner Persona | Generated from Key User MoM Analysis</p>
+        <p>Source: LPD-2025-12-09 & LPD-2026-01-15 Network Planning Key User Workshops</p>
+    </footer>
 </body>
 </html>
